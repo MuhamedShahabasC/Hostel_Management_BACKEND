@@ -1,22 +1,28 @@
 "use strict";
 // Module for managing passwords
 // Current: bcrypt
-// import bcrypt from "bcrypt";
-// const saltRounds = 10;
-// export const hashPassword = async (inputPassword: string): Promise<string> => {
-//   try {
-//     return await bcrypt.hash(inputPassword, saltRounds);
-//   } catch (error) {
-//     throw new Error("Error hashing password : " + error);
-//   }
-// };
-// export const comparePassword = async (
-//   inputPassword: string,
-//   hashedPassword: string
-// ): Promise<boolean | undefined> => {
-//   try {
-//     return await bcrypt.compare(inputPassword, hashedPassword);
-//   } catch (error) {
-//     throw new Error("Error comparing password : " + error);
-//   }
-// };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.comparePassword = exports.hashPassword = void 0;
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const saltRounds = 10;
+const hashPassword = async (inputPassword) => {
+    try {
+        return await bcrypt_1.default.hash(inputPassword, saltRounds);
+    }
+    catch (error) {
+        throw new Error("Error hashing password : " + error);
+    }
+};
+exports.hashPassword = hashPassword;
+const comparePassword = async (inputPassword, hashedPassword) => {
+    try {
+        return await bcrypt_1.default.compare(inputPassword, hashedPassword);
+    }
+    catch (error) {
+        throw new Error("Error comparing password : " + error);
+    }
+};
+exports.comparePassword = comparePassword;
