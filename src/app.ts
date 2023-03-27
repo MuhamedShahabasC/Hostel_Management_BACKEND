@@ -1,6 +1,9 @@
 import express, { Request, Response } from "express";
 import * as dotenv from "dotenv";
 import connectDB from "./config/database";
+import chiefWardenRoutes from "./routes/chiefWarden.routes";
+import globalErrorHandler from "./error/AppError";
+import endPointNotFound from "./routes/404";
 
 class App {
   public app: express.Application;
@@ -10,6 +13,7 @@ class App {
     this.app = express();
     this.bodyParser();
     this.routes();
+    this.errorHandler();
     this.connectDB();
   }
 
@@ -20,31 +24,33 @@ class App {
 
   // Body Parser
   private bodyParser(): void {
-    this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(express.json());
   }
 
   // Routing
   private routes(): void {
-  
     this.app.all("/api/v1", (req: Request, res: Response) => {
       res.json("Welcome to Hostel Management App 🏨");
     });
 
-    // Student routes
-    this.app.use('/api/v1/students', (req: Request, res: Response) => {
+    this.app.use("/api/v1/students", (req: Request, res: Response) => {
       res.json("The student side of the Hostel Management App");
-    })
+    });
 
-    // Staff routes
-    this.app.use('/api/v1/staffs', (req: Request, res: Response) => {
+    this.app.use("/api/v1/staffs", (req: Request, res: Response) => {
       res.json("The Staff side of the Hostel Management App");
-    })
+    });
 
-    // Chief Warden routes
-    this.app.use('/api/v1/chief-warden', (req: Request, res: Response) => {
-      res.json("The Chief-Warden side of the Hostel Management App");
-    })
+    this.app.use("/api/v1/chief-warden", chiefWardenRoutes);
+    
+    // Handling 404 API endpoints
+    this.app.use("*", endPointNotFound);
+  }
+
+  // Global Error Handler
+  private errorHandler(): void {
+    this.app.use(globalErrorHandler);
   }
 
   // Connecting the database - MongoDB
@@ -54,28 +60,3 @@ class App {
 }
 
 export default new App().app;
-
-// import * as dotenv from "dotenv";
-// dotenv.config();
-// import express, { Application, Request, Response } from "express";
-// import connectDB from "./config/database";
-
-// // Express
-// const app: Application = express();
-
-// // Req.body
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-
-// // Routes
-// app.get("/", (req: Request, res: Response) => {
-//   res.json("Server is running");
-// });
-
-// // Connect Database
-// connectDB();
-
-// // Server
-// app.listen(process.env.PORT, () => {
-//   console.log(`Server is running on ${process.env.PORT}`);
-// });

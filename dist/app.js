@@ -29,12 +29,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv = __importStar(require("dotenv"));
 const database_1 = __importDefault(require("./config/database"));
+const chiefWarden_routes_1 = __importDefault(require("./routes/chiefWarden.routes"));
+const AppError_1 = __importDefault(require("./error/AppError"));
+const _404_1 = __importDefault(require("./routes/404"));
 class App {
     constructor() {
         this.dotenvConfig();
         this.app = (0, express_1.default)();
         this.bodyParser();
         this.routes();
+        this.errorHandler();
         this.connectDB();
     }
     // dotenv Configuration
@@ -43,26 +47,27 @@ class App {
     }
     // Body Parser
     bodyParser() {
-        this.app.use(express_1.default.json());
         this.app.use(express_1.default.urlencoded({ extended: true }));
+        this.app.use(express_1.default.json());
     }
     // Routing
     routes() {
         this.app.all("/api/v1", (req, res) => {
             res.json("Welcome to Hostel Management App 🏨");
         });
-        // Student routes
-        this.app.use('/api/v1/students', (req, res) => {
+        this.app.use("/api/v1/students", (req, res) => {
             res.json("The student side of the Hostel Management App");
         });
-        // Staff routes
-        this.app.use('/api/v1/staffs', (req, res) => {
+        this.app.use("/api/v1/staffs", (req, res) => {
             res.json("The Staff side of the Hostel Management App");
         });
-        // Chief Warden routes
-        this.app.use('/api/v1/chief-warden', (req, res) => {
-            res.json("The Chief-Warden side of the Hostel Management App");
-        });
+        this.app.use("/api/v1/chief-warden", chiefWarden_routes_1.default);
+        // Handling 404 API endpoints
+        this.app.use("*", _404_1.default);
+    }
+    // Global Error Handler
+    errorHandler() {
+        this.app.use(AppError_1.default);
     }
     // Connecting the database - MongoDB
     connectDB() {
@@ -70,22 +75,3 @@ class App {
     }
 }
 exports.default = new App().app;
-// import * as dotenv from "dotenv";
-// dotenv.config();
-// import express, { Application, Request, Response } from "express";
-// import connectDB from "./config/database";
-// // Express
-// const app: Application = express();
-// // Req.body
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-// // Routes
-// app.get("/", (req: Request, res: Response) => {
-//   res.json("Server is running");
-// });
-// // Connect Database
-// connectDB();
-// // Server
-// app.listen(process.env.PORT, () => {
-//   console.log(`Server is running on ${process.env.PORT}`);
-// });
