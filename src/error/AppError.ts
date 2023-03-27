@@ -8,9 +8,15 @@ export const appError = (
   next: NextFunction
 ) => {
   if (err instanceof ErrorResponses) {
-    return res.status(err.StatusCode).json(err.message);
+    return res.status(err.StatusCode).json({
+      status: "fail",
+      message: err.message,
+    });
   }
-  return res.status(500).json(err.message);
+  return res.status(500).json({
+    status: "error",
+    message: err.message,
+  });
 };
 
 export default appError;

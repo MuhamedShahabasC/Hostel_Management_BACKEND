@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import * as dotenv from "dotenv";
 import connectDB from "./config/database";
 import chiefWardenRoutes from "./routes/chiefWarden.routes";
-import globalErrorHandler from "./error/AppError";
+import globalErrorHandler from "./error/AppError"; // udane pottum appError
 import endPointNotFound from "./routes/404";
 
 class App {
@@ -43,7 +43,7 @@ class App {
     });
 
     this.app.use("/api/v1/chief-warden", chiefWardenRoutes);
-    
+
     // Handling 404 API endpoints
     this.app.use("*", endPointNotFound);
   }

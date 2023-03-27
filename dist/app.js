@@ -30,7 +30,7 @@ const express_1 = __importDefault(require("express"));
 const dotenv = __importStar(require("dotenv"));
 const database_1 = __importDefault(require("./config/database"));
 const chiefWarden_routes_1 = __importDefault(require("./routes/chiefWarden.routes"));
-const AppError_1 = __importDefault(require("./error/AppError"));
+const AppError_1 = __importDefault(require("./error/AppError")); // udane pottum appError
 const _404_1 = __importDefault(require("./routes/404"));
 class App {
     constructor() {

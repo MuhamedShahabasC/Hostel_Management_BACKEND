@@ -7,9 +7,15 @@ exports.appError = void 0;
 const ErrorResponses_1 = __importDefault(require("./ErrorResponses"));
 const appError = (err, req, res, next) => {
     if (err instanceof ErrorResponses_1.default) {
-        return res.status(err.StatusCode).json(err.message);
+        return res.status(err.StatusCode).json({
+            status: "fail",
+            message: err.message,
+        });
     }
-    return res.status(500).json(err.message);
+    return res.status(500).json({
+        status: "error",
+        message: err.message,
+    });
 };
 exports.appError = appError;
 exports.default = exports.appError;
