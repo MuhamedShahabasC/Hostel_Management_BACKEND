@@ -11,7 +11,7 @@ A personal project using TypeScript, NodeJs and MongoDB
   - Check out the code for more 😉
 - **Double layer validation**:
   - Yup Module: Validates request object.
-  - Mongoose: Validates the data accessing the database.
+  - Mongoose: Validates the data accessing the database using inbuilt validator and validator module.
 - **Error handling**
   - Error handled globally.
   - Errors handled through OOPS programming paradigm.
