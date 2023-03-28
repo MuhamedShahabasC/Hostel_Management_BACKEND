@@ -26,20 +26,6 @@ export const updateSingleStaff: RequestHandler = asyncHandler(
       gender,
       address,
     };
-    // Checking for corrupted data
-    // for (const property in inputData) {
-    //   if (!inputData[property] || !inputData[property].toString().length)
-    //     throw ErrorResponses.unautharized("Invalid data provided");
-    //   if (property === "address") {
-    //     for (const address in inputData[property]) {
-    //       if (
-    //         !inputData[property][address] ||
-    //         !inputData[property].toString().length
-    //       )
-    //         throw ErrorResponses.unautharized("Invalid data provided");
-    //     }
-    //   }
-    // }
     const updatedData = await staff.updateStaff(inputData);
     if (!updatedData) throw ErrorResponses.unautharized("No data provided");
     res.json(dataFormattor(updatedData));
