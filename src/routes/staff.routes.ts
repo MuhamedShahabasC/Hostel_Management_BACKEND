@@ -1,5 +1,9 @@
-import { Request, Response, Router } from "express";
-import { newStaff } from "../controllers/staff/index.staff";
+import { Router } from "express";
+import {
+  singleDetails,
+  updateSingleStaff,
+} from "../controllers/staff/crud.staff";
+import { newStaff, login, getAll } from "../controllers/staff/auth.staff";
 
 const staff = Router();
 
@@ -9,10 +13,10 @@ const staff = Router();
 //     res.json("The Staff side of the Hostel Management App 👲");
 //   })
 
-staff.route("/").post(newStaff).get(/*GET ALL STAFFS*/);
+staff.route("/").post(newStaff).get(getAll);
 
-staff.route("/:staffId").put(/* UPDATE STAFF*/).get(/*SINGLE STAFF*/);
+staff.route("/:staff").get(singleDetails).patch(updateSingleStaff);
 
-staff.route("/auth").post(/* LOGIN*/);
+staff.route("/auth").post(login);
 
 export default staff;

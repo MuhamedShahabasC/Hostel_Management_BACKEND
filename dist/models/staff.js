@@ -14,14 +14,20 @@ const staffSchema = new mongoose_1.Schema({
         minlength: [3, "Name must be longer than 3 characters"],
         maxlength: [20, "Name must be shorter than 20 characters"],
         trim: true,
-        validate: { validator: validator_1.default.isAlpha, message: "Invalid Name" },
+        validate: {
+            validator: validator_1.default.isAlpha,
+            message: "Invalid Name",
+        },
     },
     email: {
         type: String,
         trim: true,
         lowercase: true,
         required: [true, "A Staff must have an email."],
-        validate: { validator: validator_1.default.isEmail, message: "Invalid e-Mail" },
+        validate: {
+            validator: validator_1.default.isEmail,
+            message: "Invalid e-Mail",
+        },
     },
     password: {
         type: String,
@@ -83,5 +89,5 @@ const staffSchema = new mongoose_1.Schema({
         },
         required: [true, "Invalid address"],
     },
-});
+}, { timestamps: true });
 exports.StaffModel = (0, mongoose_1.model)("Staff", staffSchema);

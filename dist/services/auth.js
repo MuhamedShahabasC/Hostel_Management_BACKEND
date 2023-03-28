@@ -11,12 +11,11 @@ const passwordManager_1 = require("../utils/passwordManager");
 class AuthService {
     // Generic Login Function for all
     async login(email, password) {
-        const existingUser = await this.find(email.toLowerCase());
+        const existingUser = await this.find(email.trim().toLowerCase());
         if (!existingUser) {
             throw ErrorResponses_1.default.noDataFound(this.role);
         }
-        const savedPassword = existingUser.password;
-        const validPassword = await (0, passwordManager_1.comparePassword)(password, savedPassword);
+        const validPassword = await (0, passwordManager_1.comparePassword)(password, existingUser.password);
         if (!validPassword) {
             throw ErrorResponses_1.default.unautharized("Invalid Password");
         }

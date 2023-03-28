@@ -4,10 +4,7 @@ import ErrorResponses from "../error/ErrorResponses";
 import { comparePassword, hashPassword } from "../utils/passwordManager";
 import { LoginCred } from "../interfaces/auth";
 
-
-
 // Unified authentication service for everyone using Generic functions
-
 
 export type AuthRoles = "student" | "staff" | "chief-warden";
 export abstract class AuthService {
@@ -19,12 +16,14 @@ export abstract class AuthService {
     email: string,
     password: string
   ): Promise<T> {
-    const existingUser: T | null = await this.find(email.toLowerCase());
+    const existingUser: T | null = await this.find(email.trim().toLowerCase());
     if (!existingUser) {
       throw ErrorResponses.noDataFound(this.role);
     }
-    const savedPassword = existingUser.password;
-    const validPassword = await comparePassword(password, savedPassword);
+    const validPassword = await comparePassword(
+      password,
+      existingUser.password
+    );
     if (!validPassword) {
       throw ErrorResponses.unautharized("Invalid Password");
     }

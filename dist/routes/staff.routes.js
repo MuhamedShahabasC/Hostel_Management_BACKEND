@@ -1,14 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const index_staff_1 = require("../controllers/staff/index.staff");
+const crud_staff_1 = require("../controllers/staff/crud.staff");
+const auth_staff_1 = require("../controllers/staff/auth.staff");
 const staff = (0, express_1.Router)();
 // staff
 //   .route("/")
 //   .get((req: Request, res: Response) => {
 //     res.json("The Staff side of the Hostel Management App 👲");
 //   })
-staff.route("/").post(index_staff_1.newStaff).get( /*GET ALL STAFFS*/);
-staff.route("/:staffId").put( /* UPDATE STAFF*/).get( /*SINGLE STAFF*/);
-staff.route("/auth").post( /* LOGIN*/);
+staff.route("/").post(auth_staff_1.newStaff).get(auth_staff_1.getAll);
+staff.route("/:staff").get(crud_staff_1.singleDetails).patch(crud_staff_1.updateSingleStaff);
+staff.route("/auth").post(auth_staff_1.login);
 exports.default = staff;
