@@ -12,6 +12,12 @@ const dataFormattor = (data) => {
         };
     }
     else {
+        // if (!data) {
+        //   return {
+        //     status: "success",
+        //     data: false,
+        //   };
+        // }
         return {
             status: "success",
             data,

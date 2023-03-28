@@ -4,6 +4,7 @@ import {
   updateSingleStaff,
 } from "../controllers/staff/crud.staff";
 import { newStaff, login, getAll } from "../controllers/staff/auth.staff";
+import { validateLogin, validateStaff } from "../middlewares/validateBody";
 
 const staff = Router();
 
@@ -13,10 +14,13 @@ const staff = Router();
 //     res.json("The Staff side of the Hostel Management App 👲");
 //   })
 
-staff.route("/").post(newStaff).get(getAll);
+staff.route("/").post(validateStaff, newStaff).get(getAll);
 
-staff.route("/:staff").get(singleDetails).patch(updateSingleStaff);
+staff
+  .route("/:staff")
+  .get(singleDetails)
+  .patch(validateStaff, updateSingleStaff);
 
-staff.route("/auth").post(login);
+staff.route("/auth").post(validateLogin, login);
 
 export default staff;

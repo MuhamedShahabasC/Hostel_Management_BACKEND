@@ -9,7 +9,7 @@ export const hashPassword = async (inputPassword: string): Promise<string> => {
   try {
     return await bcrypt.hash(inputPassword, saltRounds);
   } catch (error) {
-    throw new Error("Error hashing password : " + error);
+    throw new Error("Error hashing password");
   }
 };
 
@@ -20,6 +20,6 @@ export const comparePassword = async (
   try {
     return await bcrypt.compare(inputPassword, hashedPassword);
   } catch (error) {
-    throw new Error("Error comparing password : " + error);
+    throw new Error("Error comparing password");
   }
 };

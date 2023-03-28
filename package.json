@@ -23,7 +23,8 @@
     "tls": "^0.0.1",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.5",
-    "validator": "^13.9.0"
+    "validator": "^13.9.0",
+    "yup": "^1.0.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

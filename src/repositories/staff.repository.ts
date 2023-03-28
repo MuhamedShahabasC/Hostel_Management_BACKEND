@@ -1,6 +1,7 @@
 import { StaffModel } from "../models/staff";
 import { IStaff } from "../interfaces/IStaff";
 import { AuthRoles, AuthService } from "../services/auth";
+import { hashPassword } from "../utils/passwordManager";
 
 export class StaffRepo extends AuthService {
   // Role of User
@@ -14,5 +15,14 @@ export class StaffRepo extends AuthService {
   // Fetching all staffs
   async getAll() {
     return await StaffModel.find({}, { password: 0, __v: 0 });
+  }
+
+  // Update single staff
+  async updateStaff(data: any): Promise<IStaff | null> {
+    data.password = await hashPassword(data.password);
+    return await StaffModel.findOneAndUpdate({ email: data.email }, data, {
+      runValidators: true,
+      new: true,
+    });
   }
 }

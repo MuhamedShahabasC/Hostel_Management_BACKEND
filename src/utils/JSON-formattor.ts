@@ -9,6 +9,12 @@ export const dataFormattor = (data: any) => {
       data,
     };
   } else {
+    // if (!data) {
+    //   return {
+    //     status: "success",
+    //     data: false,
+    //   };
+    // }
     return {
       status: "success",
       data,
