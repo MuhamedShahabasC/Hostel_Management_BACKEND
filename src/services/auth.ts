@@ -1,33 +1,37 @@
 import { ChiefWardenModel } from "../models/chiefWarden";
 import { StaffModel } from "../models/staff";
 import ErrorResponses from "../error/ErrorResponses";
-import { IChiefWarden } from "../interfaces/IChiefWarden";
 import { comparePassword, hashPassword } from "../utils/passwordManager";
-import { IMongooseError } from "../interfaces/IMongooseValidation";
+import { LoginCred } from "../interfaces/auth";
 
-// Unified authentication service for everyone
+
+
+// Unified authentication service for everyone using Generic functions
+
 
 export type AuthRoles = "student" | "staff" | "chief-warden";
-
 export abstract class AuthService {
   abstract role: AuthRoles;
-  abstract find(email: string): Promise<IChiefWarden | null>;
+  abstract find<T>(email: string): Promise<T | null>;
 
-  async login(email: string, password: string): Promise<IChiefWarden> {
-    const existingUser = await this.find(email.toLowerCase());
+  // Generic Login Function for all
+  async login<T extends LoginCred>(
+    email: string,
+    password: string
+  ): Promise<T> {
+    const existingUser: T | null = await this.find(email.toLowerCase());
     if (!existingUser) {
       throw ErrorResponses.noDataFound(this.role);
     }
-    const validPassword = await comparePassword(
-      password,
-      existingUser.password
-    );
+    const savedPassword = existingUser.password;
+    const validPassword = await comparePassword(password, savedPassword);
     if (!validPassword) {
       throw ErrorResponses.unautharized("Invalid Password");
     }
     return existingUser;
   }
 
+  // Generic Sign Up for all
   async signUp(data: any, role: AuthRoles): Promise<Error | void> {
     try {
       let collection;

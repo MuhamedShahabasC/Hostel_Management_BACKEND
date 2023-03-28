@@ -9,17 +9,20 @@ const staff_1 = require("../models/staff");
 const ErrorResponses_1 = __importDefault(require("../error/ErrorResponses"));
 const passwordManager_1 = require("../utils/passwordManager");
 class AuthService {
+    // Generic Login Function for all
     async login(email, password) {
         const existingUser = await this.find(email.toLowerCase());
         if (!existingUser) {
             throw ErrorResponses_1.default.noDataFound(this.role);
         }
-        const validPassword = await (0, passwordManager_1.comparePassword)(password, existingUser.password);
+        const savedPassword = existingUser.password;
+        const validPassword = await (0, passwordManager_1.comparePassword)(password, savedPassword);
         if (!validPassword) {
             throw ErrorResponses_1.default.unautharized("Invalid Password");
         }
         return existingUser;
     }
+    // Generic Sign Up for all
     async signUp(data, role) {
         try {
             let collection;
