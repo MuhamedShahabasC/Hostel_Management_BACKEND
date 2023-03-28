@@ -2,6 +2,8 @@ import { model, Model, Schema } from "mongoose";
 import { IStaff } from "../interfaces/IStaff";
 import validator from "validator";
 
+// STAFF Schema with Validation
+
 const staffSchema = new Schema<IStaff>({
   name: {
     type: String,

@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StaffModel = void 0;
 const mongoose_1 = require("mongoose");
 const validator_1 = __importDefault(require("validator"));
+// STAFF Schema with Validation
 const staffSchema = new mongoose_1.Schema({
     name: {
         type: String,
