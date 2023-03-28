@@ -7,9 +7,10 @@ exports.login = void 0;
 const chiefWarden_1 = require("../../repositories/chiefWarden");
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
 const JSON_formattor_1 = require("../../utils/JSON-formattor");
+const tokenManager_1 = require("../../utils/tokenManager");
 const chiefWardenAuth = new chiefWarden_1.CWAuthRepo();
 exports.login = (0, express_async_handler_1.default)(async (req, res) => {
     const { email, password } = req.body;
     const userData = await chiefWardenAuth.login(email, password);
-    res.json((0, JSON_formattor_1.dataFormattor)(userData));
+    res.json({ ...(0, JSON_formattor_1.dataFormattor)(userData), token: (0, tokenManager_1.signToken)(userData.password) });
 });

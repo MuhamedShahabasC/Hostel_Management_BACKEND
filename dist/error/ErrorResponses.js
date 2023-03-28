@@ -15,6 +15,13 @@ class ErrorResponses extends Error {
     static noDataFound(data) {
         return new ErrorResponses(404, `No ${data} found.`);
     }
+    // MongoDB Error (including Validation)
+    static mongoError(mongoError) {
+        for (const err in mongoError.errors) {
+            return new ErrorResponses(403, mongoError.errors[err].properties.message);
+        }
+        return new ErrorResponses(500, "Internal server error");
+    }
     // Not found API end points
     static endPointNotFound(url) {
         return new ErrorResponses(404, `Cannot find ${url} on this server.`);

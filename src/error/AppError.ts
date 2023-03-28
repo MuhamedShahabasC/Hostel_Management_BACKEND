@@ -13,10 +13,23 @@ export const appError = (
       message: err.message,
     });
   }
+  // if (err.message === "ValidationError")
+  //   return res
+  //     .status(403)
+  //     .json({ status: "fail", message: err.message, name: err.name });
+
   return res.status(500).json({
     status: "error",
     message: err.message,
+    // message: 'Something went wrong!',
   });
+
+  // DEV ERROR
+  // console.log(err);
+  // return res.status(500).json({
+  //   error: err,
+  //   message: err.message,
+  // });
 };
 
 export default appError;

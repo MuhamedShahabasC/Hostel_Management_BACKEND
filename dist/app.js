@@ -30,8 +30,9 @@ const express_1 = __importDefault(require("express"));
 const dotenv = __importStar(require("dotenv"));
 const database_1 = __importDefault(require("./config/database"));
 const chiefWarden_routes_1 = __importDefault(require("./routes/chiefWarden.routes"));
-const AppError_1 = __importDefault(require("./error/AppError")); // udane pottum appError
+const appError_1 = __importDefault(require("./error/appError"));
 const _404_1 = __importDefault(require("./routes/404"));
+const staff_routes_1 = __importDefault(require("./routes/staff.routes"));
 class App {
     constructor() {
         this.dotenvConfig();
@@ -58,16 +59,14 @@ class App {
         this.app.use("/api/v1/students", (req, res) => {
             res.json("The student side of the Hostel Management App");
         });
-        this.app.use("/api/v1/staffs", (req, res) => {
-            res.json("The Staff side of the Hostel Management App");
-        });
+        this.app.use("/api/v1/staffs", staff_routes_1.default);
         this.app.use("/api/v1/chief-warden", chiefWarden_routes_1.default);
         // Handling 404 API endpoints
         this.app.use("*", _404_1.default);
     }
     // Global Error Handler
     errorHandler() {
-        this.app.use(AppError_1.default);
+        this.app.use(appError_1.default);
     }
     // Connecting the database - MongoDB
     connectDB() {

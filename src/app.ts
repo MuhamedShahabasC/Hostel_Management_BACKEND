@@ -2,8 +2,9 @@ import express, { Request, Response } from "express";
 import * as dotenv from "dotenv";
 import connectDB from "./config/database";
 import chiefWardenRoutes from "./routes/chiefWarden.routes";
-import globalErrorHandler from "./error/AppError"; // udane pottum appError
+import globalErrorHandler from "./error/appError";
 import endPointNotFound from "./routes/404";
+import staffRoutes from "./routes/staff.routes";
 
 class App {
   public app: express.Application;
@@ -38,9 +39,7 @@ class App {
       res.json("The student side of the Hostel Management App");
     });
 
-    this.app.use("/api/v1/staffs", (req: Request, res: Response) => {
-      res.json("The Staff side of the Hostel Management App");
-    });
+    this.app.use("/api/v1/staffs", staffRoutes);
 
     this.app.use("/api/v1/chief-warden", chiefWardenRoutes);
 
