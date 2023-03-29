@@ -6,22 +6,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.appError = void 0;
 const ErrorResponses_1 = __importDefault(require("./ErrorResponses"));
 const appError = (err, req, res, next) => {
+    // Custom and expected errors handler
     if (err instanceof ErrorResponses_1.default) {
         return res.status(err.StatusCode).json({
             status: "fail",
+            operational: true,
             message: err.message,
         });
     }
-    // if (err.message === "ValidationError")
-    //   return res
-    //     .status(403)
-    //     .json({ status: "fail", message: err.message, name: err.name });
+    // Unexpected errors handler
+    console.log(err);
     return res.status(500).json({
         status: "error",
-        message: err.message,
-        // message: 'Something went wrong!',
+        message: 'Something went wrong!',
     });
-    // DEV ERROR
+    // Error Handler for development
     // console.log(err);
     // return res.status(500).json({
     //   error: err,

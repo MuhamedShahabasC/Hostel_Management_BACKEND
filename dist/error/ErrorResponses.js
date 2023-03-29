@@ -15,7 +15,7 @@ class ErrorResponses extends Error {
     static noDataFound(data) {
         return new ErrorResponses(404, `No ${data} found.`);
     }
-    // MongoDB Error (including Validation)
+    // MongoDB Error (including MongoDB Validation)
     static mongoError(mongoError) {
         for (const err in mongoError.errors) {
             return new ErrorResponses(403, mongoError.errors[err].properties.message);

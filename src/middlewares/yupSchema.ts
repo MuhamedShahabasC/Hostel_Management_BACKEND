@@ -1,5 +1,18 @@
 import * as yup from "yup";
 
+// Login Schema
+export const loginSchema = yup.object().shape({
+  email: yup
+    .string()
+    .trim()
+    .required()
+    .test("isvalidEmail", "Invalid e-Mail", (arg) =>
+      /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(arg)
+    ),
+  password: yup.string().trim().required().min(8).max(16),
+});
+
+// Staff Schema
 export const staffSchema = yup.object().shape({
   name: yup
     .string()
@@ -14,9 +27,6 @@ export const staffSchema = yup.object().shape({
       /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(arg)
     ),
   password: yup.string().trim().required().min(8).max(16),
-  // .test("isPerfectPasswrod", "Enter a strong password", (arg) =>
-  //   /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W])(?!.*\s).{8,16})/.test(arg)
-  // ),
   mobile: yup
     .string()
     .trim()
@@ -49,16 +59,24 @@ export const staffSchema = yup.object().shape({
   }),
 });
 
-export const login = yup.object().shape({
-  email: yup
+// New Block Schema
+export const newBlockSchema = yup.object().shape({
+  name: yup
     .string()
+    .required("Name is required")
     .trim()
-    .required()
-    .test("isvalidEmail", "Invalid e-Mail", (arg) =>
-      /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(arg)
-    ),
-  password: yup.string().trim().required().min(8).max(16),
-  // .test("isPerfectPasswrod", "Enter a strong password", (arg) =>
-  //   /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W])(?!.*\s).{8,16})/.test(arg)
-  // ),
+    .min(3, "Invalid Name")
+    .matches(/^[a-zA-Z][a-zA-Z ]*$/, "Invalid Name"),
+  code: yup
+    .string()
+    .required("Block code is required")
+    .trim()
+    .matches(/^[A-Z]$/, "Invalid block code"),
+  numberOfRooms: yup
+    .number()
+    .required("Number of rooms is required")
+    .positive()
+    .integer()
+    .min(10, "Minimum 10 rooms")
+    .max(20, "Maximum 20 rooms"),
 });
