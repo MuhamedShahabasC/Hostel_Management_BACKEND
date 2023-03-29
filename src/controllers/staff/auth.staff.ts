@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import asyncHandler from "express-async-handler";
-import { IStaff } from "../../interfaces/IStaff";
+import { IStaff } from "../../interfaces/staff";
 import { dataFormattor } from "../../utils/JSON-formattor";
 import { StaffRepo } from "../../repositories/staff.repository";
 import { signToken } from "../../utils/tokenManager";

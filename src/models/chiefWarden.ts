@@ -1,5 +1,5 @@
 import { Schema , Model, model } from "mongoose";
-import { IChiefWarden } from "../interfaces/IChiefWarden";
+import { IChiefWarden } from "../interfaces/chiefWarden";
 import validator from "validator";
 
 // Chief Warden Schema with Validation

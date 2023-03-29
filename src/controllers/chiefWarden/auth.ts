@@ -3,7 +3,7 @@ import { CWAuthRepo } from "../../repositories/chiefWarden";
 import asyncHandler from "express-async-handler";
 import { dataFormattor } from "../../utils/JSON-formattor";
 import { signToken } from "../../utils/tokenManager";
-import { IChiefWarden } from "../../interfaces/IChiefWarden";
+import { IChiefWarden } from "../../interfaces/chiefWarden";
 
 const chiefWardenAuth = new CWAuthRepo();
 

@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import asyncHandler from "express-async-handler";
 import { dataFormattor } from "../../utils/JSON-formattor";
 import { StaffRepo } from "../../repositories/staff.repository";
-import { IStaff } from "../../interfaces/IStaff";
+import { IStaff } from "../../interfaces/staff";
 import ErrorResponses from "../../error/ErrorResponses";
 
 const staff = new StaffRepo();

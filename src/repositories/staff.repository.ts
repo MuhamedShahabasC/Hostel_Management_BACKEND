@@ -1,5 +1,5 @@
 import { StaffModel } from "../models/staff";
-import { IStaff } from "../interfaces/IStaff";
+import { IStaff } from "../interfaces/staff";
 import { AuthRoles, AuthService } from "../services/auth";
 import { hashPassword } from "../utils/passwordManager";
 

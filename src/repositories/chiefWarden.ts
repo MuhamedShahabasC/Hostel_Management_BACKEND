@@ -1,6 +1,6 @@
 import { AuthService, AuthRoles } from "../services/auth";
 import { ChiefWardenModel } from "../models/chiefWarden";
-import { IChiefWarden } from "../interfaces/IChiefWarden";
+import { IChiefWarden } from "../interfaces/chiefWarden";
 
 export class CWAuthRepo extends AuthService {
   public role: AuthRoles = "chief-warden";

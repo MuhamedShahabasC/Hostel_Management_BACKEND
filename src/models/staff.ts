@@ -1,5 +1,5 @@
 import { model, Model, Schema } from "mongoose";
-import { IStaff } from "../interfaces/IStaff";
+import { IStaff } from "../interfaces/staff";
 import validator from "validator";
 
 // STAFF Schema with Validation
