@@ -7,6 +7,7 @@ A personal project using TypeScript, NodeJs and MongoDB
 - **Node Repository Pattern**:
   - Extensive use of **OOPS programming paradigm**.
   - Access to database is from repository only.
+  - Easy to replace database.
   - Easy to replace third-party modules.
   - Check out the code for more 😉
 - **Backend Validation**:
