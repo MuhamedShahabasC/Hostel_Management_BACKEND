@@ -12,7 +12,7 @@ class ChiefWardenRepo extends auth_1.AuthService {
     async find(email) {
         return await chiefWarden_1.ChiefWardenModel.findOne({ email });
     }
-    // New block
+    // Create a new block
     async createBlock(data) {
         return await block_1.BlockModel.create(data);
     }

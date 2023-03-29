@@ -10,7 +10,7 @@ export class ChiefWardenRepo extends AuthService {
     return await ChiefWardenModel.findOne({ email });
   }
 
-  // New block
+  // Create a new block
   protected async createBlock(data: IBlock): Promise<IBlock | null> {
     return await BlockModel.create(data);
   }
