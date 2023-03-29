@@ -9,9 +9,9 @@ A personal project using TypeScript, NodeJs and MongoDB
   - Access to database is from repository only.
   - Easy to replace third-party modules.
   - Check out the code for more 😉
-- **Double layer validation**:
-  - Yup Module: Validates request object.
-  - Mongoose: Validates the data accessing the database using inbuilt validator and validator module.
+- **Backend Validation**:
+  - Request Body: Yup module and custom RegEx.
+  - MongoDB: Validator module and in-built validator.
 - **Error handling**
   - Error handled globally.
   - Errors handled through OOPS programming paradigm.
