@@ -14,7 +14,7 @@ export default class ErrorResponses extends Error {
     return new ErrorResponses(404, `No ${data} found.`);
   }
 
-  // MongoDB Error (including Validation)
+  // MongoDB Error (including MongoDB Validation)
   static mongoError(mongoError: any): ErrorResponses {
     for (const err in mongoError.errors) {
       return new ErrorResponses(
