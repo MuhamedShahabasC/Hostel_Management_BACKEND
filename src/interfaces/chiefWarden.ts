@@ -6,3 +6,13 @@ export interface IChiefWarden extends Document {
   password: string;
   mobile: number;
 }
+
+export interface INotice {
+  title: string;
+  message: string;
+  audience: {
+    staff: boolean;
+    student: boolean;
+  };
+  date: Date;
+}

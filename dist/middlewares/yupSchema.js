@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.newBlockSchema = exports.staffSchema = exports.loginSchema = void 0;
+exports.noticeSchema = exports.newBlockSchema = exports.staffSchema = exports.loginSchema = void 0;
 const yup = __importStar(require("yup"));
 // Login Schema
 exports.loginSchema = yup.object().shape({
@@ -98,4 +98,29 @@ exports.newBlockSchema = yup.object().shape({
         .integer()
         .min(10, "Minimum 10 rooms")
         .max(20, "Maximum 20 rooms"),
+});
+// Notice Schema
+exports.noticeSchema = yup.object().shape({
+    title: yup
+        .string()
+        .required("Title is required")
+        .trim()
+        .min(5, "Title must be longer than 5 characters"),
+    message: yup
+        .string()
+        .required("Message is required")
+        .trim()
+        .min(10, "Message must be longer than 10 characters")
+        .max(200, "Message must be shorter than 200 characters"),
+    audience: yup.object().shape({
+        student: yup
+            .bool()
+            .required("Specify audience")
+            .oneOf([true, false], "Specify audience"),
+        staff: yup
+            .bool()
+            .required("Specify audience")
+            .oneOf([true, false], "Specify audience"),
+    }),
+    date: yup.date(),
 });
