@@ -5,6 +5,11 @@ import { NoticeRepo } from "../repositories/notice";
 // Notice Service
 
 export class NoticeService extends NoticeRepo {
+
+    // Get all notices
+    async allNotices(){
+        return await this.getAll()
+    }
     
     // Post new notice
     async newNotice(data: INotice){

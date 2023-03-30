@@ -6,20 +6,31 @@ import { Model } from "mongoose";
 // Notice Repository
 
 export class NoticeRepo extends CRUD {
+  
+  // Notice Model
   model: Model<INotice> = NoticeModel;
-  protected async update(_id: string, data: INotice) {
-    console.log(data);
-    return await this.idAndUpdate(_id, data);
+
+  // All notices
+  protected async getAll(){
+    return await this.findAll();
   }
 
+  // New notice
   protected async post(data: INotice) {
     return await this.create(data);
   }
 
+  // Get single notice
   protected async single(_id: string) {
     return await this.findOne({ _id });
   }
 
+  // Update notice
+  protected async update(_id: string, data: INotice) {
+    return await this.idAndUpdate(_id, data);
+  }
+
+  // Delete a notice
   protected async remove(_id: string) {
     return await this.idAndDelete({ _id });
   }
