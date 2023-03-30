@@ -14,12 +14,13 @@ chiefWarden.get("/", async (req: Request, res: Response) => {
 chiefWarden.post("/login", login);
 chiefWarden.route("/blocks").post(validate(newBlockSchema), newBlock);
 
-// chiefWarden
-//   .route("/notices/:_id?")
-//   .get(singleNotice)
-//   .post(validate(noticeSchema), newNotice)
-//   .put(validate_id, validate(noticeSchema), updateNotice)
-//   .patch(validate_id,validate(noticeSchema), changeVisiblity)
-//   .delete(validate_id, deleteNotice)
+// Notices  
+chiefWarden
+  .route("/notices/:_id?")
+  .get(singleNotice)
+  .post(validate(noticeSchema), newNotice)
+  .put(validate_id, validate(noticeSchema), updateNotice)
+  .patch(validate_id,validate(noticeSchema), changeVisiblity)
+  .delete(validate_id, deleteNotice)
 
 export default chiefWarden;
