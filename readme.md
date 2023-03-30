@@ -12,8 +12,9 @@ A personal project using TypeScript, NodeJs and MongoDB
   - Easy to replace third-party modules.
   - Check out the code for more 😉
 - **Backend Validation**:
+  - MongoDB Schema: Validator module and in-built validator.
   - Request Body: Yup module and custom RegEx.
-  - MongoDB: Validator module and in-built validator.
+  - Request Params: Validator module.
 - **Error handling**
   - Error handled globally.
   - Errors handled through OOPS programming paradigm.
