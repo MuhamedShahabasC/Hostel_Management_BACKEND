@@ -15,6 +15,10 @@ class ErrorResponses extends Error {
     static noDataFound(data) {
         return new ErrorResponses(404, `No ${data} found.`);
     }
+    // Bad Request / Invalid MongoDB ID
+    static badRequest() {
+        return new ErrorResponses(400, 'Bad Request');
+    }
     // MongoDB Error (including MongoDB Validation)
     static mongoError(mongoError) {
         for (const err in mongoError.errors) {

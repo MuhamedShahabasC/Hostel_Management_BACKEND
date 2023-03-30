@@ -122,5 +122,8 @@ exports.noticeSchema = yup.object().shape({
             .required("Specify audience")
             .oneOf([true, false], "Specify audience"),
     }),
+    visibility: yup
+        .bool()
+        .oneOf([true, false], "Specify visibility"),
     date: yup.date(),
 });

@@ -28,6 +28,10 @@ const noticeSchema = new Schema<INotice>({
     type: Date,
     default: Date.now(),
   },
+  visibility: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 export const NoticeModel: Model<INotice> = model("Notice", noticeSchema);

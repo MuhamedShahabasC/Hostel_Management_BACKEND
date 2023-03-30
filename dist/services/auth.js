@@ -38,7 +38,7 @@ class AuthService {
             if (!collection)
                 throw new Error("Error signin up " + role);
             data.password = await (0, passwordManager_1.hashPassword)(data.password);
-            const newData = new collection(data);
+            const newData = new collection(data); // change to .create method <<<<<<<<<<<<<<<<
             await newData.save();
         }
         catch (error) {

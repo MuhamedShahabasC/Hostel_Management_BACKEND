@@ -8,11 +8,12 @@ export interface IChiefWarden extends Document {
 }
 
 export interface INotice {
-  title: string;
-  message: string;
-  audience: {
+  title?: string;
+  message?: string;
+  audience?: {
     staff: boolean;
     student: boolean;
   };
-  date: Date;
+  date?: Date;
+  visibility?: boolean
 }

@@ -4,7 +4,7 @@ import asyncHandler from "express-async-handler";
 
 const notFound = Router();
 
-// Handling 404 endpoints 
+// Handling 404 endpoints
 notFound.all(
   "/",
   asyncHandler(async (req: Request, res: Response) => {

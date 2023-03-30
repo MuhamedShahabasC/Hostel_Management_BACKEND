@@ -7,6 +7,7 @@ import { LoginCred } from "../interfaces/auth";
 // Unified authentication service for everyone using Generic functions
 
 export type AuthRoles = "student" | "staff" | "chief-warden";
+
 export abstract class AuthService {
   abstract role: AuthRoles;
   abstract find<T>(email: string): Promise<T | null>;
@@ -46,7 +47,7 @@ export abstract class AuthService {
       }
       if (!collection) throw new Error("Error signin up " + role);
       data.password = await hashPassword(data.password);
-      const newData = new collection(data);
+      const newData = new collection(data); // change to .create method <<<<<<<<<<<<<<<<
       await newData.save();
     } catch (error) {
       throw ErrorResponses.mongoError(error);
