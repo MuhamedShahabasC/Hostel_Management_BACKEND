@@ -31,17 +31,8 @@ export const updateNotice = asyncHandler(async (req, res) => {
 
 // Show / Hide a notice
 export const changeVisiblity = asyncHandler(async (req, res) => {
-  const { visibility } = req.body;
-  await service.changeVisibility(req.params._id, !visibility);
-  //
-  //
-  //
-  //
-  res.json(dataFormattor(`Notice is ${!visibility ? "visible" : "hidden"}`));
-  //
-  //
-  //
-  //
+  await service.changeVisibility(req.params._id, !req.body.visibility);
+  res.json(dataFormattor(`Notice is ${!req.body.visibility ? "visible" : "hidden"}`));
 });
 
 // Delete a notice
