@@ -15,19 +15,8 @@ export default class ErrorResponses extends Error {
   }
 
   // Bad Request / Invalid MongoDB ID
-  static badRequest():ErrorResponses{
-    return new ErrorResponses(400, 'Bad Request')
-  }
-
-  // MongoDB Error (including MongoDB Validation)
-  static mongoError(mongoError: any): ErrorResponses {
-    for (const err in mongoError.errors) {
-      return new ErrorResponses(
-        403,
-        mongoError.errors[err].properties.message as string
-      );
-    }
-    return new ErrorResponses(500, "Internal server error");
+  static badRequest(): ErrorResponses {
+    return new ErrorResponses(400, "Bad Request");
   }
 
   // Not found API end points

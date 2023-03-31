@@ -8,6 +8,13 @@ export const appError = (
   next: NextFunction
 ) => {
 
+  // // Error Handler for development
+  // console.log(err);
+  // return res.status(500).json({
+  //   error: err,
+  //   message: err.message,
+  // });
+
   // Custom and expected errors handler
   if (err instanceof ErrorResponses) {
     return res.status(err.StatusCode).json({
@@ -17,19 +24,24 @@ export const appError = (
     });
   }
 
-  // Unexpected errors handler
-  console.log(err)
+  // Mongo Validation Error Handler
+  if (err.name === "ValidationError") {
+    const mongoError: any = err;
+    const validationError: any = Object.values(mongoError.errors);
+    return res.status(403).json({
+      status: "fail",
+      operational: true,
+      message: validationError[0].message,
+    });
+  }
+
+  // Unexpected error handler
+  console.log(err);
   return res.status(500).json({
     status: "error",
-    message: 'Something went wrong!',
+    message: "Something went wrong!",
   });
 
-  // Error Handler for development
-  // console.log(err);
-  // return res.status(500).json({
-  //   error: err,
-  //   message: err.message,
-  // });
 };
 
 export default appError;

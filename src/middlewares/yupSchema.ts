@@ -65,8 +65,8 @@ export const newBlockSchema = yup.object().shape({
     .string()
     .required("Name is required")
     .trim()
-    .min(3, "Invalid Name")
-    .matches(/^[a-zA-Z][a-zA-Z ]*$/, "Invalid Name"),
+    .min(3, "Invalid Name"),
+    // .matches(/^[a-zA-Z][a-zA-Z ]*$/, "Invalid Name"),
   code: yup
     .string()
     .required("Block code is required")
@@ -77,7 +77,7 @@ export const newBlockSchema = yup.object().shape({
     .required("Number of rooms is required")
     .positive()
     .integer()
-    .min(10, "Minimum 10 rooms")
+    .min(5, "Minimum 5 rooms")
     .max(20, "Maximum 20 rooms"),
 });
 
