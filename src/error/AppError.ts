@@ -7,7 +7,6 @@ export const appError = (
   res: Response,
   next: NextFunction
 ) => {
-
   // // Error Handler for development
   // console.log(err);
   // return res.status(500).json({
@@ -39,9 +38,9 @@ export const appError = (
   console.log(err);
   return res.status(500).json({
     status: "error",
+    operational: false,
     message: "Something went wrong!",
   });
-
 };
 
 export default appError;
