@@ -47,7 +47,7 @@ export abstract class AuthService {
       }
       if (!collection) throw new Error("Error signin up " + role);
       data.password = await hashPassword(data.password);
-      const newData = new collection(data); // change to .create method <<<<<<<<<<<<<<<<
+      const newData = new collection(data);
       await newData.save();
     } catch (error) {
       throw ErrorResponses.mongoError(error);

@@ -19,6 +19,11 @@ export default class ErrorResponses extends Error {
     return new ErrorResponses(400, "Bad Request");
   }
 
+  // MongoDB Error (including MongoDB Validation)
+  static mongoError(mongoError: any): ErrorResponses {
+    return new ErrorResponses(500, "Internal server error");
+  }
+
   // Not found API end points
   static endPointNotFound(url: string): ErrorResponses {
     return new ErrorResponses(404, `Cannot find ${url} on this server.`);

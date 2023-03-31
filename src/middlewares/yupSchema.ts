@@ -63,10 +63,10 @@ export const staffSchema = yup.object().shape({
 export const newBlockSchema = yup.object().shape({
   name: yup
     .string()
-    .required("Name is required")
+    .required("Block name is required")
     .trim()
-    .min(3, "Invalid Name"),
-    // .matches(/^[a-zA-Z][a-zA-Z ]*$/, "Invalid Name"),
+    .min(3, "Invalid Name")
+    .matches(/^[a-zA-Z][a-zA-Z ]*$/, "Invalid block name"),
   code: yup
     .string()
     .required("Block code is required")
@@ -104,8 +104,6 @@ export const noticeSchema = yup.object().shape({
       .required("Specify audience")
       .oneOf([true, false], "Specify audience"),
   }),
-  visibility: yup
-  .bool()
-  .oneOf([true, false], "Specify visibility"),
+  visibility: yup.bool().oneOf([true, false], "Specify visibility"),
   date: yup.date(),
 });

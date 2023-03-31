@@ -1,24 +1,19 @@
 import { Request, Response, Router } from "express";
-import { allBlocks, newBlock } from "../controllers/chiefWarden/block";
+import { allBlocks, deleteBlock, newBlock, updateRoom } from "../controllers/chiefWarden/block";
 import { login } from "../controllers/chiefWarden/auth";
 import { validate } from "../middlewares/validateBody";
 import { newBlockSchema, noticeSchema } from "../middlewares/yupSchema";
-import {
-  changeVisiblity,
-  newNotice,
-  updateNotice,
-  singleNotice,
-  deleteNotice,
-  allNotices,
-} from "../controllers/chiefWarden/notice";
+import { changeVisiblity, newNotice, updateNotice, singleNotice, deleteNotice, allNotices } from "../controllers/chiefWarden/notice";
 import { validate_id } from "../middlewares/mongoId";
 
 const chiefWarden = Router();
 
 chiefWarden
-  .route("/blocks")
+  .route("/blocks/:_id?")
   .get(allBlocks)
-  .post(validate(newBlockSchema), newBlock);
+  .post(validate(newBlockSchema), newBlock)
+  .patch(updateRoom)
+  .delete(validate_id, deleteBlock);
 
 chiefWarden.get("/", async (req: Request, res: Response) => {
   res.json("The Chief-Warden side of the Hostel Management App");
