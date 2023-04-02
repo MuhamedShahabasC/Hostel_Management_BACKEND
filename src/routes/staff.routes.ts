@@ -9,6 +9,7 @@ import { loginSchema, staffSchema } from "../middlewares/yupSchema";
 import { validate } from "../middlewares/validateBody";
 import { validate_email, validate_id } from "../middlewares/validateParams";
 import { validateRole } from "../middlewares/validateRole";
+import { newMealPlan } from "../controllers/staff/chef";
 
 const staff = Router();
 
@@ -22,7 +23,6 @@ staff
 staff.route("/auth").post(validate(loginSchema), login);
 
 // Chef routes
-staff.route("/chef/:email/:_id?").post(validate_id, validateRole("chef"));
-
+staff.route("/:email/meals/:_id?").post(validateRole("chef"), newMealPlan);
 
 export default staff;

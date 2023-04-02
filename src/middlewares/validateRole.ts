@@ -12,5 +12,6 @@ export const validateRole = (role: role): RequestHandler => {
     const currentStaff = await staffService.singleStaff(req.params.email);
     if (currentStaff.role !== role)
       throw ErrorResponses.unauthorized(`Route for ${role} staff`);
+      next()
   });
 };
