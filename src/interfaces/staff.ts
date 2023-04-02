@@ -18,3 +18,13 @@ export interface IStaff extends Document {
   profilePic: string;
   address: IStaffAddress;
 }
+
+export interface IMealPlan {
+  title: string;
+  price: number;
+  breakfast: string;
+  lunch: string;
+  evening: string;
+  dinner: string;
+  active?: boolean;
+}
