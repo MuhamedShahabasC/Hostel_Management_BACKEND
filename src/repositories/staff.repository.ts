@@ -13,7 +13,7 @@ export class StaffAuth extends AuthService {
   }
 }
 
-export class StaffRepo extends CRUD {
+export abstract class StaffRepo extends CRUD {
   model = StaffModel;
 
   // Fetching all staffs

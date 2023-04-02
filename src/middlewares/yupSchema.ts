@@ -108,7 +108,6 @@ export const noticeSchema = yup.object().shape({
   date: yup.date(),
 });
 
-
 // Meal Plan schema
 export const mealPlanSchema = yup.object().shape({
   title: yup
@@ -148,4 +147,5 @@ export const mealPlanSchema = yup.object().shape({
     .min(5, "Dinner must be longer than 10 characters")
     .max(100, "Dinner must be shorter than 200 characters"),
   active: yup.bool().oneOf([true, false], "Must be true or false"),
+  subscribers: yup.number().positive().integer(),
 });

@@ -19,7 +19,7 @@ export interface IStaff extends Document {
   address: IStaffAddress;
 }
 
-export interface IMealPlan {
+export interface IMealPlan extends Document{
   title: string;
   price: number;
   breakfast: string;
@@ -27,4 +27,5 @@ export interface IMealPlan {
   evening: string;
   dinner: string;
   active?: boolean;
+  subscribers?: number
 }

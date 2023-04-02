@@ -5,7 +5,7 @@ import { Model } from "mongoose";
 
 // Notice Repository
 
-export class NoticeRepo extends CRUD {
+export abstract class NoticeRepo extends CRUD {
   
   // Notice Model
   model: Model<INotice> = NoticeModel;

@@ -48,8 +48,15 @@ const MealPlanSchema = new Schema<IMealPlan>(
       type: Boolean,
       default: false,
     },
+    subscribers: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
 
-const MealPlanModel: Model<IMealPlan> = model("MealPlan", MealPlanSchema);
+export const MealPlanModel: Model<IMealPlan> = model(
+  "MealPlan",
+  MealPlanSchema
+);

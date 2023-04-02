@@ -14,7 +14,7 @@ export const allStaffs: RequestHandler = asyncHandler(async (req, res) => {
 });
 
 // Single staff details
-export const singleDetails: RequestHandler = asyncHandler(async (req, res) => {
+export const singleStaff: RequestHandler = asyncHandler(async (req, res) => {
   const { email } = req.params;
   const staffDetails = await service.singleStaff(email);
   res.json(dataFormattor(staffDetails));

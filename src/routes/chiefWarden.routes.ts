@@ -1,35 +1,44 @@
 import { Request, Response, Router } from "express";
-import { allBlocks, deleteBlock, newBlock, updateRoom } from "../controllers/chiefWarden/block";
+import {
+  allBlocks,
+  deleteBlock,
+  newBlock,
+  updateRoom,
+} from "../controllers/chiefWarden/block";
 import { login } from "../controllers/chiefWarden/auth";
 import { validate } from "../middlewares/validateBody";
 import { newBlockSchema, noticeSchema } from "../middlewares/yupSchema";
-import { changeVisiblity, newNotice, updateNotice, singleNotice, deleteNotice, allNotices } from "../controllers/chiefWarden/notice";
+import {
+  changeVisiblity,
+  newNotice,
+  updateNotice,
+  singleNotice,
+  deleteNotice,
+  allNotices,
+} from "../controllers/chiefWarden/notice";
 import { validate_id } from "../middlewares/validateParams";
 
 const chiefWarden = Router();
 
+// Login
+chiefWarden.post("/login", login);
+
+// Blocks and Rooms
 chiefWarden
   .route("/blocks/:_id?")
   .get(allBlocks)
   .post(validate(newBlockSchema), newBlock)
-  .patch(updateRoom)
+  .patch(updateRoom) // PENDING WORK
   .delete(validate_id, deleteBlock);
 
-chiefWarden.get("/", async (req: Request, res: Response) => {
-  res.json("The Chief-Warden side of the Hostel Management App");
-});
-
-chiefWarden.post("/login", login);
-
 // Notices
+chiefWarden.get("/notices/all", allNotices);
 chiefWarden
   .route("/notices/:_id?")
-  .get(singleNotice)
+  .get(validate_id, singleNotice)
   .post(validate(noticeSchema), newNotice)
   .put(validate_id, validate(noticeSchema), updateNotice)
   .patch(validate_id, validate(noticeSchema), changeVisiblity)
   .delete(validate_id, deleteNotice);
-
-chiefWarden.get("/notices/all", allNotices);
 
 export default chiefWarden;
