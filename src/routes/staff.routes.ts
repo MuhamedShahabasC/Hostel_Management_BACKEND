@@ -7,15 +7,10 @@ import {
 import { newStaff, login } from "../controllers/staff/auth.staff";
 import { loginSchema, staffSchema } from "../middlewares/yupSchema";
 import { validate } from "../middlewares/validateBody";
-import { validate_email } from "../middlewares/validateParams";
+import { validate_email, validate_id } from "../middlewares/validateParams";
+import { validateRole } from "../middlewares/validateRole";
 
 const staff = Router();
-
-// staff
-//   .route("/")
-//   .get((req: Request, res: Response) => {
-//     res.json("The Staff side of the Hostel Management App 👲");
-//   })
 
 staff.route("/").post(validate(staffSchema), newStaff).get(allStaffs);
 
@@ -27,5 +22,7 @@ staff
 staff.route("/auth").post(validate(loginSchema), login);
 
 // Chef routes
-staff.route('/chef/:_id?').post()
+staff.route("/chef/:email/:_id?").post(validate_id, validateRole("chef"));
+
+
 export default staff;
