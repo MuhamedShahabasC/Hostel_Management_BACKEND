@@ -2,10 +2,10 @@ import { RequestHandler } from "express";
 import asyncHandler from "express-async-handler";
 import { IStaff } from "../../interfaces/staff";
 import { dataFormattor } from "../../utils/JSON-formattor";
-import { StaffRepo } from "../../repositories/staff.repository";
+import { StaffAuth } from "../../repositories/staff.repository";
 import { signToken } from "../../utils/tokenManager";
 
-const staffAuth = new StaffRepo();
+const staffAuth = new StaffAuth();
 
 export const newStaff: RequestHandler = asyncHandler(async (req, res) => {
   const { name, email, password, mobile, role, gender, address }: IStaff =
@@ -20,7 +20,7 @@ export const newStaff: RequestHandler = asyncHandler(async (req, res) => {
     address,
   };
   await staffAuth.signUp(signUpData, "staff");
-  res.json(dataFormattor("Signed Up"));
+  res.json(dataFormattor(`Signed up successfully`));
 });
 
 export const login: RequestHandler = asyncHandler(async (req, res) => {
@@ -30,9 +30,4 @@ export const login: RequestHandler = asyncHandler(async (req, res) => {
     ...dataFormattor(staffData),
     token: signToken(staffData.password),
   });
-});
-
-export const getAll: RequestHandler = asyncHandler(async (req, res) => {
-  const allStaffs = await staffAuth.getAll();
-  res.json(dataFormattor(allStaffs));
 });

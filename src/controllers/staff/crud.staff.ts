@@ -1,33 +1,33 @@
 import { RequestHandler } from "express";
 import asyncHandler from "express-async-handler";
 import { dataFormattor } from "../../utils/JSON-formattor";
-import { StaffRepo } from "../../repositories/staff.repository";
-import { IStaff } from "../../interfaces/staff";
-import ErrorResponses from "../../error/ErrorResponses";
+import { IStaff, IStaffAddress } from "../../interfaces/staff";
+import { StaffService } from "../../services/staff";
 
-const staff = new StaffRepo();
+// Staff service instantiation
+const service = new StaffService();
 
+// Getting all staffs' data
+export const allStaffs: RequestHandler = asyncHandler(async (req, res) => {
+  const allStaffData = await service.allStaffs();
+  res.json(dataFormattor(allStaffData));
+});
+
+// Single staff details
 export const singleDetails: RequestHandler = asyncHandler(async (req, res) => {
-  const email = req.params.staff;
-  const staffDetails = await staff.find(email);
+  const { email } = req.params;
+  const staffDetails = await service.singleStaff(email);
   res.json(dataFormattor(staffDetails));
 });
 
+// Update single staff
 export const updateSingleStaff: RequestHandler = asyncHandler(
   async (req, res) => {
-    const { name, email, password, mobile, role, gender, address }: IStaff =
-      req.body;
-    let inputData: { [index: string]: any } = {
-      name,
-      email,
-      password,
-      mobile,
-      role,
-      gender,
-      address,
+    const { name,email, password, mobile, role, gender, address }: IStaff = req.body;
+    let inputData: { [index: string]: string | number | IStaffAddress } = {
+      name, password, mobile, role, gender, address,
     };
-    const updatedData = await staff.updateStaff(inputData);
-    if (!updatedData) throw ErrorResponses.unautharized("No data provided");
+    const updatedData = await service.updateStaff(email,inputData);
     res.json(dataFormattor(updatedData));
   }
 );

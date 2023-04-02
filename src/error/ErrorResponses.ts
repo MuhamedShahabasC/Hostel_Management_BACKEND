@@ -5,7 +5,7 @@ export default class ErrorResponses extends Error {
   }
 
   // Unauthorized or Invalid Credentials
-  static unautharized(invalidData: string): ErrorResponses {
+  static unauthorized(invalidData: string): ErrorResponses {
     return new ErrorResponses(401, invalidData);
   }
 
@@ -20,7 +20,7 @@ export default class ErrorResponses extends Error {
   }
 
   // MongoDB Error (including MongoDB Validation)
-  static mongoError(mongoError: any): ErrorResponses {
+  static mongoError(): ErrorResponses {
     return new ErrorResponses(500, "Internal server error");
   }
 

@@ -10,7 +10,7 @@ export const validate = (schema: any): RequestHandler => {
       req.body = await schema.validate(req.body, { stripUnknown: true });
       next();
     } catch (err: any) {
-      throw ErrorResponses.unautharized(err.errors[0]);
+      throw ErrorResponses.unauthorized(err.errors[0]);
     }
   });
 };

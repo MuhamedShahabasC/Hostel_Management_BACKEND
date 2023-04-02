@@ -26,7 +26,7 @@ export abstract class AuthService {
       existingUser.password
     );
     if (!validPassword) {
-      throw ErrorResponses.unautharized("Invalid Password");
+      throw ErrorResponses.unauthorized("Invalid Password");
     }
     return existingUser;
   }
@@ -50,7 +50,7 @@ export abstract class AuthService {
       const newData = new collection(data);
       await newData.save();
     } catch (error) {
-      throw ErrorResponses.mongoError(error);
+      throw ErrorResponses.mongoError();
     }
   }
 }

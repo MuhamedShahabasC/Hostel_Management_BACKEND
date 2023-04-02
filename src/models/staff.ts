@@ -42,8 +42,8 @@ const staffSchema = new Schema<IStaff>(
     role: {
       type: String,
       enum: {
-        values: ["warden"],
-        message: "Invalid warden ({VALUE}) : Must be warden / ...",
+        values: ["warden" , "chef" , "maintenance"],
+        message: "Invalid role ({VALUE})",
       },
     },
     gender: {

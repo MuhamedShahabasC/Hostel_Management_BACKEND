@@ -17,13 +17,21 @@ export abstract class CRUD {
   }
 
   // find()
-  protected async findAll() {
-    return this.model.find({}, { __v: 0 });
+  protected async findAll(filter?: any) {
+    return this.model.find({}, { ...filter, __v: 0 });
   }
 
   // findByIdAndUpdate()
   protected async idAndUpdate(_id: string, data: any) {
     return this.model.findByIdAndUpdate(_id, data, { runValidators: true });
+  }
+
+  // findOneAndUpdate()
+  protected async OneAndUpdate(email: string, data: any) {
+    return this.model.findOneAndUpdate({ email: email }, data, {
+      runValidators: true,
+      new: true,
+    });
   }
 
   // findByIdAndDelete()

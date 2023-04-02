@@ -4,7 +4,7 @@ import { login } from "../controllers/chiefWarden/auth";
 import { validate } from "../middlewares/validateBody";
 import { newBlockSchema, noticeSchema } from "../middlewares/yupSchema";
 import { changeVisiblity, newNotice, updateNotice, singleNotice, deleteNotice, allNotices } from "../controllers/chiefWarden/notice";
-import { validate_id } from "../middlewares/mongoId";
+import { validate_id } from "../middlewares/validateParams";
 
 const chiefWarden = Router();
 
