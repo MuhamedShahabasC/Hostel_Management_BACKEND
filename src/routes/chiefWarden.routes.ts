@@ -28,7 +28,7 @@ chiefWarden
   .route("/blocks/:_id?")
   .get(allBlocks)
   .post(validate(newBlockSchema), newBlock)
-  .patch(updateRoom) // PENDING WORK
+  .patch(validate_id,updateRoom) // PENDING WORK
   .delete(validate_id, deleteBlock);
 
 // Notices

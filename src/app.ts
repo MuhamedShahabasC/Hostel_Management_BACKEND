@@ -5,6 +5,7 @@ import chiefWardenRoutes from "./routes/chiefWarden.routes";
 import globalErrorHandler from "./error/appError";
 import endPointNotFound from "./routes/404";
 import staffRoutes from "./routes/staff.routes";
+import cors from "cors";
 
 class App {
   public app: express.Application;
@@ -12,6 +13,7 @@ class App {
   constructor() {
     this.dotenvConfig();
     this.app = express();
+    this.cors();
     this.bodyParser();
     this.routes();
     this.errorHandler();
@@ -21,6 +23,17 @@ class App {
   // dotenv Configuration
   private dotenvConfig(): void {
     dotenv.config();
+  }
+
+  // CORS Cofiguration
+  private cors(): void {
+    this.app.use(
+      cors({
+        origin: [process.env.FRONTEND as string],
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+        credentials: true,
+      })
+    );
   }
 
   // Body Parser
