@@ -17,8 +17,8 @@ export abstract class CRUD {
   }
 
   // find()
-  protected async findAll(filter?: any) {
-    return this.model.find({}, { ...filter, __v: 0 });
+  protected async findAll(filter?: Object, options?: any) {
+    return this.model.find({ ...filter }, { ...options, __v: 0 });
   }
 
   // findByIdAndUpdate()

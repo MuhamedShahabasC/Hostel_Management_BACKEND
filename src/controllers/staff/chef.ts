@@ -4,6 +4,18 @@ import { dataFormattor } from "../../utils/JSON-formattor";
 
 const service = new ChefService();
 
+// All Meal plans
+export const allMealPlans = asyncHandler(async (req, res) => {
+  const allMealPlans = await service.allMealPlans();
+  res.json(dataFormattor(allMealPlans));
+});
+
+// Get active meal plans
+export const showActiveMealPlans = asyncHandler(async (req, res) => {
+  const activePlans = await service.showActivePlans();
+  res.json(dataFormattor(activePlans));
+});
+
 // Creating new meal plan
 export const newMealPlan = asyncHandler(async (req, res) => {
   await service.newMealPlan(req.body);

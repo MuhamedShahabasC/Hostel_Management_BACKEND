@@ -4,6 +4,16 @@ import { ChefRepo } from "../repositories/chef";
 // Chef Service
 
 export class ChefService extends ChefRepo {
+  // All meal plans
+  async allMealPlans(): Promise<IMealPlan[]> {
+    return await this.findAll();
+  }
+
+  // Active meal plans
+  async showActivePlans(): Promise<IMealPlan[]> {
+    return await this.findAll({ active: true })
+  }
+
   // Adding meal plan
   async newMealPlan(data: IMealPlan): Promise<void> {
     return await this.createPlan(data);
