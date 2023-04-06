@@ -36,7 +36,8 @@ staff.route("/auth").post(validate(loginSchema), login);
 
 // -- CHEF ROUTES --
 // Middleware to validate email and chef role
-staff.use("/:email/meals/", validate_email, validateRole("chef")); // potaan chance ind
+staff.use("/:email/meals/", validate_email, validateRole("chef"));
+
 staff.route("/:email/meals/all").get(allMealPlans);
 staff.route("/:email/meals/activePlans").get(showActiveMealPlans);
 staff

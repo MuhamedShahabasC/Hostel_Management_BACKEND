@@ -24,10 +24,12 @@ export const newStaff: RequestHandler = asyncHandler(async (req, res) => {
 });
 
 export const login: RequestHandler = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-  const staffData = await staffAuth.login<IStaff>(email, password);
+  const { _id, email, password, name } = await staffAuth.login<IStaff>(
+    req.body.email,
+    req.body.password
+  );
   res.json({
-    ...dataFormattor(staffData),
-    token: signToken(staffData.password),
+    ...dataFormattor({ _id, email, name }),
+    token: signToken(password),
   });
 });

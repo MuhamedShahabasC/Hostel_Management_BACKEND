@@ -8,7 +8,10 @@ import { IChiefWarden } from "../../interfaces/chiefWarden";
 const chiefWarden = new ChiefWardenRepo();
 
 export const login: RequestHandler = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-  const userData = await chiefWarden.login<IChiefWarden>(email, password);
-  res.json({ ...dataFormattor(userData), token: signToken(userData.password) });
+  const { mobile, email, name, _id, password } =
+    await chiefWarden.login<IChiefWarden>(req.body.email, req.body.password);
+  res.json({
+    ...dataFormattor({ mobile, email, name, _id }),
+    token: signToken(password),
+  });
 });
