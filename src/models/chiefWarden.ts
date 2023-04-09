@@ -1,4 +1,4 @@
-import { Schema , Model, model } from "mongoose";
+import { Schema, Model, model } from "mongoose";
 import { IChiefWarden } from "../interfaces/chiefWarden";
 import validator from "validator";
 
@@ -18,8 +18,10 @@ const chiefWardenSchema = new Schema<IChiefWarden>({
     trim: true,
     lowercase: true,
     required: [true, "Chief Warden must have an email."],
-    validate: { validator: validator.isEmail as any, message: "Invalid e-Mail" },
-
+    validate: {
+      validator: validator.isEmail as any,
+      message: "Invalid e-Mail",
+    },
   },
   password: {
     type: String,

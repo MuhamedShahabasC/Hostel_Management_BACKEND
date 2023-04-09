@@ -4,10 +4,11 @@ import {
   singleStaff,
   updateSingleStaff,
 } from "../controllers/staff/crud.staff";
-import { newStaff, login } from "../controllers/staff/auth.staff";
+import { newStaff, login, resetPassword } from "../controllers/staff/auth.staff";
 import {
   loginSchema,
   mealPlanSchema,
+  resetPasswordSchema,
   staffSchema,
 } from "../middlewares/yupSchema";
 import { validate } from "../middlewares/validateBody";
@@ -24,15 +25,16 @@ import {
 
 const staff = Router();
 
-
 // -- STAFF ROUTES --
 staff.route("/").post(validate(staffSchema), newStaff).get(allStaffs);
 staff
   .route("/:email")
   .get(validate_email, singleStaff)
-  .patch(validate_email, validate(staffSchema), updateSingleStaff);
-staff.route("/auth").post(validate(loginSchema), login);
-
+  .post(validate_email, validate(staffSchema), updateSingleStaff);
+staff
+  .route("/auth/:email?")
+  .post(validate(loginSchema), login)
+  .patch(validate_email, validate(resetPasswordSchema), resetPassword);
 
 // -- CHEF ROUTES --
 // Middleware to validate email and chef role
@@ -46,6 +48,5 @@ staff
   .post(validate(mealPlanSchema), newMealPlan)
   .put(validate_id, validate(mealPlanSchema), updateMealPlan)
   .patch(validate_id, changeAvailability);
-
 
 export default staff;

@@ -11,6 +11,20 @@ export class StaffAuth extends AuthService {
   async find<IStaff>(email: string): Promise<IStaff | null> {
     return await StaffModel.findOne({ email });
   }
+  // Updating Password
+  async updatePassword<IStaff>(
+    email: string,
+    newPassword: string
+  ): Promise<string | null> {
+    const hashedPassword = await hashPassword(newPassword);
+    await StaffModel.findOneAndUpdate(
+      { email },
+      {
+        password: hashedPassword,
+      }
+    );
+    return "Password Updated.";
+  }
 }
 
 export abstract class StaffRepo extends CRUD {

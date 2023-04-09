@@ -11,6 +11,10 @@ export type AuthRoles = "student" | "staff" | "chief-warden";
 export abstract class AuthService {
   abstract role: AuthRoles;
   abstract find<T>(email: string): Promise<T | null>;
+  abstract updatePassword<T>(
+    email: string,
+    newPassword: string
+  ): Promise<null | string>;
 
   // Generic Login Function for all
   async login<T extends LoginCred>(
@@ -52,5 +56,15 @@ export abstract class AuthService {
     } catch (error) {
       throw ErrorResponses.mongoError();
     }
+  }
+
+  // Reset Password
+  async resetPassword(
+    email: string,
+    currentPassword: string,
+    newPassword: string
+  ): Promise<string | null> {
+    await this.login(email, currentPassword);
+    return await this.updatePassword(email, newPassword);
   }
 }

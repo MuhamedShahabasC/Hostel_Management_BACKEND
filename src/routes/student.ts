@@ -1,7 +1,7 @@
-import express, { Request, Response } from "express";
+import express from "express";
+import { newStudent } from "../controllers/student/auth";
 
 const router = express.Router();
 
-router.route("/signUp").get((req: Request, res: Response) => {
-  res.json("signup student");
-});
+// Signup student
+router.route("/signUp").post(newStudent);

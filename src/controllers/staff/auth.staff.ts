@@ -7,6 +7,7 @@ import { signToken } from "../../utils/tokenManager";
 
 const staffAuth = new StaffAuth();
 
+// New Staff
 export const newStaff: RequestHandler = asyncHandler(async (req, res) => {
   const { name, email, password, mobile, role, gender, address }: IStaff =
     req.body;
@@ -23,6 +24,7 @@ export const newStaff: RequestHandler = asyncHandler(async (req, res) => {
   res.json(dataFormattor(`Signed up successfully`));
 });
 
+// Login staff
 export const login: RequestHandler = asyncHandler(async (req, res) => {
   const { _id, email, password, name } = await staffAuth.login<IStaff>(
     req.body.email,
@@ -32,4 +34,14 @@ export const login: RequestHandler = asyncHandler(async (req, res) => {
     ...dataFormattor({ _id, email, name }),
     token: signToken(password),
   });
+});
+
+// Reset Password
+export const resetPassword: RequestHandler = asyncHandler(async (req, res) => {
+  const result = await staffAuth.resetPassword(
+    req.params.email,
+    req.body.currentPassword,
+    req.body.newPassword
+  );
+  res.json(dataFormattor(result));
 });
