@@ -8,11 +8,13 @@ export class ChiefWardenRepo extends AuthService {
   async find<IChiefWarden>(email: string): Promise<IChiefWarden | null> {
     return await ChiefWardenModel.findOne({ email });
   }
+
+  // Reset password
   async updatePassword<IChiefWarden>(
     email: string,
     newPassword: string
   ): Promise<string | null> {
-    const hashedPassword = hashPassword(newPassword);
+    const hashedPassword = await hashPassword(newPassword);
     await ChiefWardenModel.findOneAndUpdate(
       { email },
       {

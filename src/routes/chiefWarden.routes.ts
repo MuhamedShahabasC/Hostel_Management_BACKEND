@@ -1,11 +1,11 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
 import {
   allBlocks,
   deleteBlock,
   newBlock,
   updateRoom,
 } from "../controllers/chiefWarden/block";
-import { login } from "../controllers/chiefWarden/auth";
+import { login, resetPassword } from "../controllers/chiefWarden/auth";
 import { validate } from "../middlewares/validateBody";
 import { newBlockSchema, noticeSchema } from "../middlewares/yupSchema";
 import {
@@ -16,19 +16,20 @@ import {
   deleteNotice,
   allNotices,
 } from "../controllers/chiefWarden/notice";
-import { validate_id } from "../middlewares/validateParams";
+import { validate_email, validate_id } from "../middlewares/validateParams";
 
 const chiefWarden = Router();
 
 // Login
 chiefWarden.post("/login", login);
+chiefWarden.patch("/auth/:email", validate_email, resetPassword);
 
 // Blocks and Rooms
 chiefWarden
   .route("/blocks/:_id?")
   .get(allBlocks)
   .post(validate(newBlockSchema), newBlock)
-  .patch(validate_id,updateRoom) // PENDING WORK
+  .patch(validate_id, updateRoom) // PENDING WORK
   .delete(validate_id, deleteBlock);
 
 // Notices
