@@ -3,7 +3,7 @@ import * as dotenv from "dotenv";
 import connectDB from "./config/database";
 import chiefWardenRoutes from "./routes/chiefWarden.routes";
 import globalErrorHandler from "./error/appError";
-import endPointNotFound from "./routes/404";
+import { endPointNotFound, verifyAuth } from "./routes/utility";
 import staffRoutes from "./routes/staff.routes";
 import cors from "cors";
 
@@ -55,6 +55,8 @@ class App {
     this.app.use("/api/v1/staffs", staffRoutes);
 
     this.app.use("/api/v1/chief-warden", chiefWardenRoutes);
+
+    this.app.use("/api/v1/checkAuth", verifyAuth);
 
     // Handling 404 API endpoints
     this.app.use("*", endPointNotFound);

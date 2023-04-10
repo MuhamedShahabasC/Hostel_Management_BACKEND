@@ -9,11 +9,13 @@ const chiefWarden = new ChiefWardenRepo();
 
 // Login Chief warden
 export const login: RequestHandler = asyncHandler(async (req, res) => {
-  const { mobile, email, name, _id, password } =
-    await chiefWarden.login<IChiefWarden>(req.body.email, req.body.password);
+  const { mobile, email, name, _id } = await chiefWarden.login<IChiefWarden>(
+    req.body.email,
+    req.body.password
+  );
   res.json({
     ...dataFormattor({ mobile, email, name, _id }),
-    token: signToken(password),
+    token: signToken(_id),
   });
 });
 

@@ -1,8 +1,12 @@
 // Module for token handling
 // Current: JSON Web Token - JWT
 
-import { sign, JwtPayload } from "jsonwebtoken";
+import { sign, JwtPayload, verify } from "jsonwebtoken";
 
-export const signToken = (password: string): JwtPayload | string => {
-  return sign({password}, process.env.JWT_SECRET as string, { expiresIn: "1d" });
+export const signToken = (_id: string): JwtPayload | string => {
+  return sign({ _id }, process.env.JWT_SECRET as string, { expiresIn: "1d" });
+};
+
+export const verifyToken = (token: string) => {
+  return verify(token, process.env.JWT_SECRET as string);
 };
