@@ -18,7 +18,8 @@ export const staffSchema = yup.object().shape({
     .string()
     .required()
     .trim()
-    .matches(/^[a-zA-Z][a-zA-Z ]*$/, "Invalid Name"),
+    .min(4, "Invalid Name")
+    .max(16, "Invalid Name"),
   email: yup
     .string()
     .trim()
@@ -60,7 +61,6 @@ export const staffSchema = yup.object().shape({
 });
 
 // Reset Password schema
-
 export const resetPasswordSchema = yup.object().shape({
   currentPassword: yup
     .string()

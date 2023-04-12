@@ -26,12 +26,17 @@ export const newStaff: RequestHandler = asyncHandler(async (req, res) => {
 
 // Login staff
 export const login: RequestHandler = asyncHandler(async (req, res) => {
-  const { _id, email, mobile, name, role } = await staffAuth.login<IStaff>(
-    req.body.email,
-    req.body.password
-  );
+  const { _id, email, mobile, name, role, profilePic } =
+    await staffAuth.login<IStaff>(req.body.email, req.body.password);
   res.json({
-    ...dataFormattor({ _id, email, name, mobile, department: role }),
+    ...dataFormattor({
+      _id,
+      email,
+      name,
+      mobile,
+      profilePic,
+      department: role,
+    }),
     token: signToken(_id),
   });
 });
