@@ -7,7 +7,7 @@ export const loginSchema = yup.object().shape({
     .trim()
     .required()
     .test("isvalidEmail", "Invalid e-Mail", (arg) =>
-      /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(arg)
+      /[a-z0-9]+@floreat.edu.com/i.test(arg)
     ),
   password: yup.string().trim().required().min(8).max(16),
 });
@@ -25,7 +25,7 @@ export const staffSchema = yup.object().shape({
     .trim()
     .required()
     .test("isvalidEmail", "Invalid e-Mail", (arg) =>
-      /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(arg)
+      /[a-z0-9]+@floreat.edu.com/i.test(arg)
     ),
   password: yup.string().trim().required().min(8).max(16),
   mobile: yup
