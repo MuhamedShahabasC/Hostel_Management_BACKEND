@@ -41,6 +41,8 @@ staff
   .post(validate_email, validate(staffSchema), updateSingleStaff);
 
 // -- CHEF ROUTES --
+staff.route("/meals/activePlans").get(showActiveMealPlans);
+
 // Middleware to validate email and chef role
 staff.use("/:email/meals/", validate_email, validateRole("chef"));
 
