@@ -1,31 +1,11 @@
 import { Router } from "express";
-import {
-  allStaffs,
-  singleStaff,
-  updateSingleStaff,
-} from "../controllers/staff/crud.staff";
-import {
-  newStaff,
-  login,
-  resetPassword,
-} from "../controllers/staff/auth.staff";
-import {
-  loginSchema,
-  mealPlanSchema,
-  resetPasswordSchema,
-  staffSchema,
-} from "../middlewares/yupSchema";
+import {  allStaffs,  singleStaff,  updateProfileImage,  updateSingleStaff,} from "../controllers/staff/crud.staff";
+import {  newStaff,  login,  resetPassword,} from "../controllers/staff/auth.staff";
+import {  loginSchema,  mealPlanSchema,  resetPasswordSchema,  staffSchema } from "../middlewares/yupSchema";
 import { validate } from "../middlewares/validateBody";
 import { validate_email, validate_id } from "../middlewares/validateParams";
 import { validateRole } from "../middlewares/validateRole";
-import {
-  allMealPlans,
-  changeAvailability,
-  newMealPlan,
-  showActiveMealPlans,
-  singleMealPlan,
-  updateMealPlan,
-} from "../controllers/staff/chef";
+import {  allMealPlans,  changeAvailability,  newMealPlan,  showActiveMealPlans,  singleMealPlan,  updateMealPlan,} from "../controllers/staff/chef";
 
 const staff = Router();
 
@@ -38,7 +18,8 @@ staff
 staff
   .route("/:email")
   .get(validate_email, singleStaff)
-  .post(validate_email, validate(staffSchema), updateSingleStaff);
+  .post(validate_email, validate(staffSchema), updateSingleStaff)
+  .patch(validate_email, updateProfileImage)
 
 // -- CHEF ROUTES --
 staff.route("/meals/activePlans").get(showActiveMealPlans);

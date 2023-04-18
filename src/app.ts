@@ -6,6 +6,7 @@ import globalErrorHandler from "./error/appError";
 import { endPointNotFound, verifyAuth } from "./routes/utility";
 import staffRoutes from "./routes/staff.routes";
 import cors from "cors";
+import studentRoutes from "./routes/student.routes";
 
 class App {
   public app: express.Application;
@@ -48,9 +49,7 @@ class App {
       res.json("Welcome to Hostel Management App 🏨");
     });
 
-    this.app.use("/api/v1/students", (req: Request, res: Response) => {
-      res.json("The student side of the Hostel Management App");
-    });
+    this.app.use("/api/v1/students", studentRoutes);
 
     this.app.use("/api/v1/staffs", staffRoutes);
 
