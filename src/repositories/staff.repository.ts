@@ -28,6 +28,7 @@ export class StaffAuth extends AuthService {
 }
 
 export abstract class StaffRepo extends CRUD {
+  // Staff Model
   model = StaffModel;
 
   // Fetching all staffs

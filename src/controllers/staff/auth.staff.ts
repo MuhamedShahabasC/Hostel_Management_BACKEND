@@ -20,7 +20,7 @@ export const newStaff: RequestHandler = asyncHandler(async (req, res) => {
     gender,
     address,
   };
-  await staffAuth.signUp(signUpData, "staff");
+  await staffAuth.signUp(signUpData);
   res.json(dataFormattor(`Signed up successfully`));
 });
 
