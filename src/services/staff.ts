@@ -1,4 +1,4 @@
-import { StaffRepo } from "../repositories/staff.repository";
+import { StaffRepo } from "../repositories/staff";
 import { IStaff } from "../interfaces/staff";
 import ErrorResponses from "../error/ErrorResponses";
 

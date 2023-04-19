@@ -21,8 +21,7 @@ export const singleStaff = asyncHandler(async (req, res) => {
 
 // Update single staff
 export const updateSingleStaff = asyncHandler(async (req, res) => {
-  const { name, email, password, mobile, role, gender, address }: IStaff =
-    req.body;
+  const { name, email, password, mobile, role, gender, address }: IStaff = req.body;
   let inputData: { [index: string]: string | number | IStaffAddress } = {
     name,
     password,

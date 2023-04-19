@@ -17,64 +17,42 @@ export abstract class AuthService {
   abstract find<T>(email: string): Promise<T | null>;
 
   // Update Password method for the corresponding role
-  abstract updatePassword<T>(
-    email: string,
-    newPassword: string
-  ): Promise<null | string>;
+  abstract updatePassword<T>(email: string, newPassword: string): Promise<null | string>;
 
   //
   // Generic Login, Signup and reset password methods for all users
   //
   // Login
-  async login<T extends LoginCred>(
-    email: string,
-    password: string
-  ): Promise<T> {
-    try {
-      const existingUser: T | null = await this.find(
-        email.trim().toLowerCase()
-      );
-      if (!existingUser) {
-        throw ErrorResponses.noDataFound(this.role);
-      }
-      const validPassword = await comparePassword(
-        password,
-        existingUser.password
-      );
-      if (!validPassword) {
-        throw ErrorResponses.unauthorized("Invalid Password");
-      }
-      return existingUser;
-    } catch (error) {
-      throw ErrorResponses.mongoError();
-    }
+  async login<T extends LoginCred>(email: string, password: string): Promise<T> {
+    const existingUser: T | null = await this.find(email.trim().toLowerCase());
+    if (!existingUser) throw ErrorResponses.noDataFound(this.role);
+    const validPassword = await comparePassword(password, existingUser.password);
+    if (!validPassword) throw ErrorResponses.unauthorized("Invalid Password");
+    existingUser.password = "Very encrypted :P";
+    return existingUser;
   }
 
   // Sign Up
   async signUp(data: any): Promise<Error | string | void> {
-    try {
-      let collection;
-      switch (this.role) {
-        case "chief-warden": {
-          collection = ChiefWardenModel;
-          break;
-        }
-        case "staff": {
-          collection = StaffModel;
-          break;
-        }
-        case "student": {
-          collection = StudentModel;
-        }
+    let collection;
+    switch (this.role) {
+      case "chief-warden": {
+        collection = ChiefWardenModel;
+        break;
       }
-      if (!collection) throw new Error("Error signing up " + this.role);
-      data.password = await hashPassword(data.password);
-      const newData = new collection(data);
-      await newData.save();
-      return `${data.name} signed up successfully`;
-    } catch (error) {
-      throw ErrorResponses.mongoError();
+      case "staff": {
+        collection = StaffModel;
+        break;
+      }
+      case "student": {
+        collection = StudentModel;
+      }
     }
+    if (!collection) throw new Error("Error signing up " + this.role);
+    data.password = await hashPassword(data.password);
+    const newData = new collection(data);
+    await newData.save();
+    return `${data.name} signed up successfully`;
   }
 
   // Reset Password
@@ -83,11 +61,7 @@ export abstract class AuthService {
     currentPassword: string,
     newPassword: string
   ): Promise<string | null> {
-    try {
-      await this.login(email, currentPassword);
-      return await this.updatePassword(email, newPassword);
-    } catch (error) {
-      throw ErrorResponses.mongoError();
-    }
+    await this.login(email, currentPassword);
+    return await this.updatePassword(email, newPassword);
   }
 }

@@ -12,4 +12,7 @@ export interface CheckAuth {
 
 export interface IToken {
   _id: string;
+  role: TokenRole;
 }
+
+export type TokenRole = "student" | "staff" | "chief-warden";

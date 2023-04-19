@@ -1,7 +1,7 @@
 import { ObjectId } from "mongoose";
 
 export interface IStudent {
-  _id?: string;
+  _id?: ObjectId;
   name: string;
   email: string;
   department: "science" | "humanities" | "commerce";

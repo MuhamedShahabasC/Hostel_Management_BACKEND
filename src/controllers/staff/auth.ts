@@ -2,15 +2,14 @@ import { RequestHandler } from "express";
 import asyncHandler from "express-async-handler";
 import { IStaff } from "../../interfaces/staff";
 import { dataFormattor } from "../../utils/JSON-formattor";
-import { StaffAuth } from "../../repositories/staff.repository";
+import { StaffAuth } from "../../repositories/staff";
 import { signToken } from "../../utils/tokenManager";
 
 const staffAuth = new StaffAuth();
 
 // New Staff
 export const newStaff: RequestHandler = asyncHandler(async (req, res) => {
-  const { name, email, password, mobile, role, gender, address }: IStaff =
-    req.body;
+  const { name, email, password, mobile, role, gender, address }: IStaff = req.body;
   const signUpData = {
     name,
     email,
@@ -26,8 +25,10 @@ export const newStaff: RequestHandler = asyncHandler(async (req, res) => {
 
 // Login staff
 export const login: RequestHandler = asyncHandler(async (req, res) => {
-  const { _id, email, mobile, name, role, profilePic } =
-    await staffAuth.login<IStaff>(req.body.email, req.body.password);
+  const { _id, email, mobile, name, role, profilePic } = await staffAuth.login<IStaff>(
+    req.body.email,
+    req.body.password
+  );
   res.json({
     ...dataFormattor({
       _id,
@@ -37,7 +38,7 @@ export const login: RequestHandler = asyncHandler(async (req, res) => {
       profilePic,
       department: role,
     }),
-    token: signToken(_id),
+    token: signToken(_id, "staff"),
   });
 });
 

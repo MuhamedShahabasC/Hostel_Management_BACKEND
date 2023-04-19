@@ -1,9 +1,11 @@
 import asyncHandler from "express-async-handler";
 import { dataFormattor } from "../../utils/JSON-formattor";
 import { StudentAuth } from "../../repositories/student";
+import { IStudent } from "../../interfaces/student";
+import { signToken } from "../../utils/tokenManager";
 
 // Student service
-const service = new StudentAuth()
+const service = new StudentAuth();
 
 // Student sign up
 export const newStudent = asyncHandler(async (req, res) => {
@@ -13,11 +15,22 @@ export const newStudent = asyncHandler(async (req, res) => {
 
 // Login Student
 export const login = asyncHandler(async (req, res) => {
-
-  res.json('login auth controller')
-})
+  const { _id, email, profilePic, name, mobile }: IStudent = await service.login(
+    req.body.email,
+    req.body.password
+  );
+  res.json({
+    ...dataFormattor({ _id, email, profilePic, name, mobile }),
+    token: signToken(_id!, "student"),
+  });
+});
 
 // Reset Password
 export const resetPassword = asyncHandler(async (req, res) => {
-  res.json('reset password controller')
-})
+  const resetPassword = await service.resetPassword(
+    req.params.email,
+    req.body.currentPassword,
+    req.body.newPassword
+  );
+  res.json(dataFormattor(resetPassword));
+});
