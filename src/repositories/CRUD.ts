@@ -12,13 +12,25 @@ export abstract class CRUD {
   }
 
   // findOne()
-  protected async findOne<T>(filter: Object): Promise<T | null> {
-    return this.model.findOne(filter, { __v: 0, password: 0 });
+  protected async findOne<T>(query: Object, options?: Object): Promise<T | null> {
+    return this.model.findOne(query, { __v: 0, password: 0, ...options });
   }
 
   // find()
-  protected async findAll(filter?: Object, options?: any) {
+  protected async findAll(filter?: Object, options?: Object): Promise<any | null> {
     return this.model.find({ ...filter }, { ...options, __v: 0, password: 0 }).sort({ _id: -1 });
+  }
+
+  // findAndPopulate()
+  protected async findAndPopulate(
+    populateFields: any,
+    filter?: Object,
+    options?: Object
+  ): Promise<any | null> {
+    return this.model
+      .find({ ...filter }, { ...options, __v: 0, password: 0 })
+      .populate(populateFields)
+      .sort({ _id: -1 });
   }
 
   // findByIdAndUpdate()

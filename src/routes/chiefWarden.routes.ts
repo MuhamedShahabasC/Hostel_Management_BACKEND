@@ -1,13 +1,8 @@
 import { Router } from "express";
-import {
-  allBlocks,
-  deleteBlock,
-  newBlock,
-  updateRoom,
-} from "../controllers/chiefWarden/block";
+import { allBlocks, deleteBlock, newBlock, updateRoom } from "../controllers/chiefWarden/block";
 import { login, resetPassword } from "../controllers/chiefWarden/auth";
 import { validate } from "../middlewares/validateBody";
-import { newBlockSchema, noticeSchema } from "../middlewares/yupSchema";
+import { mealPlanSchema, newBlockSchema, noticeSchema } from "../middlewares/yupSchema";
 import {
   changeVisiblity,
   newNotice,
@@ -17,12 +12,22 @@ import {
   allNotices,
 } from "../controllers/chiefWarden/notice";
 import { validate_email, validate_id } from "../middlewares/validateParams";
+import { allStudentsData } from "../controllers/chiefWarden/student";
+import {
+  allMealPlans,
+  changeAvailability,
+  newMealPlan,
+  updateMealPlan,
+} from "../controllers/staff/chef";
 
 const chiefWarden = Router();
 
-// Login
+// Authentication
 chiefWarden.post("/login", login);
 chiefWarden.patch("/auth/:email", validate_email, resetPassword);
+
+// Students
+chiefWarden.route("/students/:email?").get(allStudentsData);
 
 // Blocks and Rooms
 chiefWarden
@@ -31,6 +36,14 @@ chiefWarden
   .post(validate(newBlockSchema), newBlock)
   .patch(validate_id, updateRoom) // PENDING WORK
   .delete(validate_id, deleteBlock);
+
+// Meal Plans
+chiefWarden
+  .route("/mealPlans/:_id?")
+  .get(allMealPlans)
+  .post(validate(mealPlanSchema), newMealPlan)
+  .put(validate_id, validate(mealPlanSchema), updateMealPlan)
+  .patch(validate_id, changeAvailability);
 
 // Notices
 chiefWarden.get("/notices/all", allNotices);

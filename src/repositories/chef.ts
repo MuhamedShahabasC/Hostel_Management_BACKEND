@@ -11,10 +11,7 @@ export abstract class ChefRepo extends CRUD {
   model: Model<IMealPlan> = MealPlanModel;
 
   // Find all meal plans with optional filter
-  protected async findMealPlans(
-    filter?: Object,
-    options?: Object
-  ): Promise<IMealPlan[]> {
+  protected async findMealPlans(filter?: Object, options?: Object): Promise<IMealPlan[]> {
     const mealPlans = await this.findAll(filter, options);
     if (mealPlans.length === 0) throw ErrorResponses.noDataFound("meal plans");
     return mealPlans;
@@ -26,7 +23,7 @@ export abstract class ChefRepo extends CRUD {
   }
 
   // Find meal plan
-  protected async findMealPlan(_id: string): Promise<IMealPlan> {
+  protected async findMealPlan(_id: string): Promise<any> {
     const mealData = await this.findOne({ _id });
     if (!mealData) throw ErrorResponses.noDataFound("meal plan");
     return mealData;

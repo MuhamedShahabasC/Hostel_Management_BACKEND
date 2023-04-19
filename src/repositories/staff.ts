@@ -12,10 +12,7 @@ export class StaffAuth extends AuthService {
     return await StaffModel.findOne({ email });
   }
   // Updating Password
-  async updatePassword<IStaff>(
-    email: string,
-    newPassword: string
-  ): Promise<string | null> {
+  async updatePassword<IStaff>(email: string, newPassword: string): Promise<string | null> {
     const hashedPassword = await hashPassword(newPassword);
     await StaffModel.findOneAndUpdate(
       { email },
@@ -37,7 +34,7 @@ export abstract class StaffRepo extends CRUD {
   }
 
   // Get single staff
-  protected async single(email: string): Promise<IStaff> {
+  protected async single(email: string): Promise<IStaff | null> {
     return await this.findOne({ email });
   }
 

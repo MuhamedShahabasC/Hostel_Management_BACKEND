@@ -3,7 +3,7 @@ import { login, newStudent, resetPassword } from "../controllers/student/auth";
 import { validate } from "../middlewares/validateBody";
 import { resetPasswordSchema, studentAdmissionSchema } from "../middlewares/yupSchema";
 import { loginSchema } from "../middlewares/yupSchema";
-import { singleStudent } from "../controllers/student/CRUD";
+import { singleStudent } from "../controllers/student/crud";
 
 const student = Router();
 
@@ -18,4 +18,6 @@ student
 
 // CRUD
 student.route("/:email").get(singleStudent);
+
+
 export default student;

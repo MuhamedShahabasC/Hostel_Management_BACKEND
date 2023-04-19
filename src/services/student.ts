@@ -10,4 +10,14 @@ export class StudentService extends StudentRepo {
     if (!studentData) throw ErrorResponses.noDataFound("Student");
     return studentData;
   }
+
+  // Get all students data
+  async allStudentsData(): Promise<IStudent[] | null> {
+    const allStudentsData = await this.findAndPopulate([
+      { path: "mealPlan", select: "title" },
+      { path: "block", select: "name" },
+    ]);
+    if (allStudentsData.length < 1) throw ErrorResponses.noDataFound("students");
+    return allStudentsData;
+  }
 }
