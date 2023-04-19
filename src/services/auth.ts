@@ -24,6 +24,7 @@ export abstract class AuthService {
 
   //
   // Generic Login, Signup and reset password methods for all users
+  //
   // Login
   async login<T extends LoginCred>(
     email: string,
