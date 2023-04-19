@@ -1,4 +1,3 @@
-import { RequestHandler } from "express";
 import asyncHandler from "express-async-handler";
 import { dataFormattor } from "../../utils/JSON-formattor";
 import { IStaff, IStaffAddress } from "../../interfaces/staff";

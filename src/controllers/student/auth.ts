@@ -16,3 +16,8 @@ export const login = asyncHandler(async (req, res) => {
 
   res.json('login auth controller')
 })
+
+// Reset Password
+export const resetPassword = asyncHandler(async (req, res) => {
+  res.json('reset password controller')
+})

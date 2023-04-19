@@ -1,6 +1,6 @@
 import { Router } from "express";
-import {  allStaffs,  singleStaff,  updateProfileImage,  updateSingleStaff,} from "../controllers/staff/crud.staff";
-import {  newStaff,  login,  resetPassword,} from "../controllers/staff/auth.staff";
+import {  allStaffs,  singleStaff,  updateProfileImage,  updateSingleStaff,} from "../controllers/staff/crud";
+import {  newStaff,  login,  resetPassword,} from "../controllers/staff/auth";
 import {  loginSchema,  mealPlanSchema,  resetPasswordSchema,  staffSchema } from "../middlewares/yupSchema";
 import { validate } from "../middlewares/validateBody";
 import { validate_email, validate_id } from "../middlewares/validateParams";
