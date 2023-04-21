@@ -11,7 +11,7 @@ import {
   deleteNotice,
   allNotices,
 } from "../controllers/chiefWarden/notice";
-import { validate_email, validate_id } from "../middlewares/validateParams";
+import { validate_id } from "../middlewares/validateParams";
 import { allStudentsData } from "../controllers/chiefWarden/student";
 import {
   allMealPlans,

@@ -9,7 +9,7 @@ import { checkAuth } from "../middlewares/verifyToken";
 const student = Router();
 
 // New Admission
-student.route("/newAdmision").post(validate(studentAdmissionSchema), newStudent);
+student.route("/newAdmission").post(validate(studentAdmissionSchema), newStudent);
 
 // Authentication
 student.route("/auth").post(validate(loginSchema), login);

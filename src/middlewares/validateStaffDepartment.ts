@@ -6,10 +6,8 @@ import { TokenDepartment } from "../interfaces/auth";
 // Validating staffs accessing staff routes
 export const validateStaffRole = (inputDepartment: TokenDepartment): RequestHandler => {
   return expressAsyncHandler(async (req, res, next) => {
-    const {
-      tokenPayload: { role, department },
-    } = req.body;
-    if (role !== "staff" || inputDepartment !== department)
+    if (!req.tokenPayload) throw ErrorResponses.unauthorized("Authorization required");
+    if (req.tokenPayload.role !== "staff" || inputDepartment !== req.tokenPayload.department)
       throw ErrorResponses.unauthorized(`Route for ${inputDepartment} staff`);
     next();
   });

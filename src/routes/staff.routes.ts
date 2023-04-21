@@ -14,7 +14,7 @@ import {
 } from "../middlewares/yupSchema";
 import { validate } from "../middlewares/validateBody";
 import { validate_email, validate_id } from "../middlewares/validateParams";
-import { validateStaffRole } from "../middlewares/validateRole";
+import { validateStaffRole } from "../middlewares/validateStaffDepartment";
 import {
   allMealPlans,
   changeAvailability,
@@ -36,16 +36,16 @@ staff.route("/auth").post(validate(loginSchema), login);
 staff.use(checkAuth("staff"));
 
 // Reset password
-staff.patch("/auth", validate_email, validate(resetPasswordSchema), resetPassword);
+staff.patch("/auth", validate(resetPasswordSchema), resetPassword);
 
 // Single Staff CRUD
 staff
   .route("/")
   .get(singleStaff)
   .post(validate(staffSchema), updateSingleStaff)
-  .patch(updateProfileImage);
+  .patch(updateProfileImage); // add cloudinary
 
-// New staff and All staffs
+// New staff and All staffs => ////// to be moved to chief warden routes ////
 staff.route("/new").post(validate(staffSchema), newStaff);
 staff.get("/all", allStaffs);
 
