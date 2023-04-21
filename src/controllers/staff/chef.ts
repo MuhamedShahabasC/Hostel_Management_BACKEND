@@ -30,7 +30,7 @@ export const singleMealPlan = asyncHandler(async (req, res) => {
 
 // Updating existing meal plan
 export const updateMealPlan = asyncHandler(async (req, res) => {
-  const updatedMealPlan = await service.updateMealPlan(req.params._id, req.body);
+  await service.updateMealPlan(req.params._id, req.body); // updated data is here
   res.json(dataFormattor(`${req.body.title} plan updated successfully`));
 });
 

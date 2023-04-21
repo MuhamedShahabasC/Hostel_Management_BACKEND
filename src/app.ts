@@ -8,6 +8,10 @@ import staffRoutes from "./routes/staff.routes";
 import cors from "cors";
 import studentRoutes from "./routes/student.routes";
 
+// Custom type defitions
+import "./types/request";
+
+// Express App
 class App {
   public app: express.Application;
 
@@ -45,16 +49,17 @@ class App {
 
   // Routing
   private routes(): void {
+    // Index route
     this.app.all("/api/v1", (req: Request, res: Response) => {
       res.json("Welcome to Hostel Management App 🏨");
     });
 
+    // User routes
     this.app.use("/api/v1/students", studentRoutes);
-
     this.app.use("/api/v1/staffs", staffRoutes);
-
     this.app.use("/api/v1/chief-warden", chiefWardenRoutes);
 
+    // Checking authentication
     this.app.use("/api/v1/checkAuth", verifyAuth);
 
     // Handling 404 API endpoints

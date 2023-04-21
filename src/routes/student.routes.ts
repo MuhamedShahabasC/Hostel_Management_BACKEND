@@ -9,18 +9,18 @@ import { checkAuth } from "../middlewares/verifyToken";
 const student = Router();
 
 // New Admission
-student.route("/").post(validate(studentAdmissionSchema), newStudent);
+student.route("/newAdmision").post(validate(studentAdmissionSchema), newStudent);
 
 // Authentication
-student.route("/auth/:email").post(validate(loginSchema), login);
+student.route("/auth").post(validate(loginSchema), login);
 
-// Middleware to verify JWT Token
+// MIDDLEWARE TO VERIFY JWT TOKEN AUTHENTICATION
 student.use(checkAuth("student"));
 
 // Reset Password
-student.patch("/auth/:email", validate(resetPasswordSchema), resetPassword);
+student.patch("/auth", validate(resetPasswordSchema), resetPassword);
 
-// CRUD
-student.route("/:email").get(singleStudent);
+// Student CRUD
+student.route("/").get(singleStudent);
 
 export default student;

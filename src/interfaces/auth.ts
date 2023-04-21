@@ -10,13 +10,12 @@ export interface CheckAuth {
   mobile: string;
 }
 
+// Token
 export interface IToken {
   _id: string;
   email: string;
   role: TokenRole;
   department?: TokenDepartment;
 }
-
 export type TokenRole = "student" | "staff" | "chief-warden";
-
 export type TokenDepartment = "maintenance" | "chef" | "warden";

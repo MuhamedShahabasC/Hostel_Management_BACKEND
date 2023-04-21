@@ -45,7 +45,7 @@ export const login: RequestHandler = asyncHandler(async (req, res) => {
 // Reset Password
 export const resetPassword: RequestHandler = asyncHandler(async (req, res) => {
   const result = await staffAuth.resetPassword(
-    req.params.email,
+    req.tokenPayload?.email!,
     req.body.currentPassword,
     req.body.newPassword
   );

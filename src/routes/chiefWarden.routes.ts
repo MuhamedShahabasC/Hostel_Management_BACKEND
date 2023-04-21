@@ -30,7 +30,7 @@ chiefWarden.post("/login", login);
 chiefWarden.use("*", checkAuth("chief-warden"));
 
 // Reset Password
-chiefWarden.patch("/auth/:email", validate_email, resetPassword);
+chiefWarden.patch("/auth", resetPassword);
 
 // Blocks and Rooms
 chiefWarden

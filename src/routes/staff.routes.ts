@@ -30,23 +30,24 @@ const staff = Router();
 // -- COMMON ROUTES --
 
 // Authentication
-staff.route("/auth/:email?").post(validate(loginSchema), login);
+staff.route("/auth").post(validate(loginSchema), login);
 
 // MIDDLEWARE TO VERIFY JWT AUTHENTICATION
 staff.use(checkAuth("staff"));
 
 // Reset password
-staff.patch("/auth/:email?", validate_email, validate(resetPasswordSchema), resetPassword);
+staff.patch("/auth", validate_email, validate(resetPasswordSchema), resetPassword);
 
 // Single Staff CRUD
 staff
-  .route("/:email")
-  .get(validate_email, singleStaff)
-  .post(validate_email, validate(staffSchema), updateSingleStaff)
-  .patch(validate_email, updateProfileImage);
+  .route("/")
+  .get(singleStaff)
+  .post(validate(staffSchema), updateSingleStaff)
+  .patch(updateProfileImage);
 
 // New staff and All staffs
-staff.route("/").post(validate(staffSchema), newStaff).get(allStaffs);
+staff.route("/new").post(validate(staffSchema), newStaff);
+staff.get("/all", allStaffs);
 
 // -- CHEF ROUTES --
 

@@ -28,7 +28,7 @@ export const login = asyncHandler(async (req, res) => {
 // Reset Password
 export const resetPassword = asyncHandler(async (req, res) => {
   const resetPassword = await service.resetPassword(
-    req.body.tokenPayload.email,
+    req.tokenPayload?.email!,
     req.body.currentPassword,
     req.body.newPassword
   );

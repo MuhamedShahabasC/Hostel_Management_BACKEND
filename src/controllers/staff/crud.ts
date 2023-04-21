@@ -14,8 +14,7 @@ export const allStaffs = asyncHandler(async (req, res) => {
 
 // Single staff details
 export const singleStaff = asyncHandler(async (req, res) => {
-  const { email } = req.params;
-  const staffDetails = await service.singleStaff(email);
+  const staffDetails = await service.singleStaff(req.tokenPayload?.email!);
   res.json(dataFormattor(staffDetails));
 });
 
@@ -36,5 +35,5 @@ export const updateSingleStaff = asyncHandler(async (req, res) => {
 
 // Update profile image
 export const updateProfileImage = asyncHandler((req, res) => {
-  console.log(req);
+  console.log(req); // add cloudinary
 });
