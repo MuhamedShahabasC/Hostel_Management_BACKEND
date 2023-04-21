@@ -21,14 +21,14 @@ export const login = asyncHandler(async (req, res) => {
   );
   res.json({
     ...dataFormattor({ _id, email, profilePic, name, mobile }),
-    token: signToken(_id!, "student"),
+    token: signToken(_id!, email, "student"),
   });
 });
 
 // Reset Password
 export const resetPassword = asyncHandler(async (req, res) => {
   const resetPassword = await service.resetPassword(
-    req.params.email,
+    req.body.tokenPayload.email,
     req.body.currentPassword,
     req.body.newPassword
   );

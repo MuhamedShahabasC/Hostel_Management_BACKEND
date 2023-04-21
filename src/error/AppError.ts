@@ -1,12 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import ErrorResponses from "./ErrorResponses";
+import { JsonWebTokenError } from "jsonwebtoken";
 
-export const appError = (
-  err: Error,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const appError = (err: Error, req: Request, res: Response, next: NextFunction) => {
   // // Error Handler for development
   // console.log(err);
   // return res.status(500).json({
@@ -34,8 +30,17 @@ export const appError = (
     });
   }
 
+  // JSON Web Token Error Handler
+  if (err instanceof JsonWebTokenError) {
+    return res.status(401).json({
+      status: "fail",
+      operational: true,
+      message: "Unauthorized access restricted",
+    });
+  }
+
   // Unexpected error handler
-  console.log(err);
+  console.log("Unexpected Error: ", err);
   return res.status(500).json({
     status: "error",
     operational: false,

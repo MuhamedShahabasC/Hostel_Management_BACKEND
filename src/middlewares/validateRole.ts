@@ -1,17 +1,16 @@
 import { RequestHandler } from "express";
-import { StaffService } from "../services/staff";
 import expressAsyncHandler from "express-async-handler";
 import ErrorResponses from "../error/ErrorResponses";
+import { TokenDepartment } from "../interfaces/auth";
 
-type role = "chef" | "warden" | "maintenance";
-
-// Validating staffs accessing staff routes  
-export const validateRole = (role: role): RequestHandler => {
+// Validating staffs accessing staff routes
+export const validateStaffRole = (inputDepartment: TokenDepartment): RequestHandler => {
   return expressAsyncHandler(async (req, res, next) => {
-    const staffService = new StaffService();
-    const currentStaff = await staffService.singleStaff(req.params.email);
-    if (currentStaff.role !== role)
-      throw ErrorResponses.unauthorized(`Route for ${role} staff`);
-      next()
+    const {
+      tokenPayload: { role, department },
+    } = req.body;
+    if (role !== "staff" || inputDepartment !== department)
+      throw ErrorResponses.unauthorized(`Route for ${inputDepartment} staff`);
+    next();
   });
 };

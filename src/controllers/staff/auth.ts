@@ -38,7 +38,7 @@ export const login: RequestHandler = asyncHandler(async (req, res) => {
       profilePic,
       department: role,
     }),
-    token: signToken(_id, "staff"),
+    token: signToken(_id, email, "staff", role),
   });
 });
 

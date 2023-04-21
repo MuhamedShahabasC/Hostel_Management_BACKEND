@@ -19,15 +19,18 @@ import {
   newMealPlan,
   updateMealPlan,
 } from "../controllers/staff/chef";
+import { checkAuth } from "../middlewares/verifyToken";
 
 const chiefWarden = Router();
 
 // Authentication
 chiefWarden.post("/login", login);
-chiefWarden.patch("/auth/:email", validate_email, resetPassword);
 
-// Students
-chiefWarden.route("/students/:email?").get(allStudentsData);
+// MIDDLEWARE TO VERIFY JWT AUTHENTICATION
+chiefWarden.use("*", checkAuth("chief-warden"));
+
+// Reset Password
+chiefWarden.patch("/auth/:email", validate_email, resetPassword);
 
 // Blocks and Rooms
 chiefWarden
@@ -35,7 +38,7 @@ chiefWarden
   .get(allBlocks)
   .post(validate(newBlockSchema), newBlock)
   .patch(validate_id, updateRoom) // PENDING WORK
-  .delete(validate_id, deleteBlock);
+  .delete(validate_id, deleteBlock); // soft
 
 // Meal Plans
 chiefWarden
@@ -43,7 +46,7 @@ chiefWarden
   .get(allMealPlans)
   .post(validate(mealPlanSchema), newMealPlan)
   .put(validate_id, validate(mealPlanSchema), updateMealPlan)
-  .patch(validate_id, changeAvailability);
+  .patch(validate_id, changeAvailability); // approve
 
 // Notices
 chiefWarden.get("/notices/all", allNotices);
@@ -54,5 +57,8 @@ chiefWarden
   .put(validate_id, validate(noticeSchema), updateNotice)
   .patch(validate_id, validate(noticeSchema), changeVisiblity)
   .delete(validate_id, deleteNotice);
+
+// Students
+chiefWarden.route("/students/:email?").get(allStudentsData);
 
 export default chiefWarden;

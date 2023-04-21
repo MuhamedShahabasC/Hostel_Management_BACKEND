@@ -15,7 +15,7 @@ export const login: RequestHandler = asyncHandler(async (req, res) => {
   );
   res.json({
     ...dataFormattor({ mobile, email, name, _id }),
-    token: signToken(_id,'chief-warden'),
+    token: signToken(_id, email, "chief-warden"),
   });
 });
 
