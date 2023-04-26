@@ -6,12 +6,11 @@ import { Model } from "mongoose";
 // Notice Repository
 
 export abstract class NoticeRepo extends CRUD {
-  
   // Notice Model
   model: Model<INotice> = NoticeModel;
 
   // All notices
-  protected async getAll(){
+  protected async getAll(): Promise<INotice[] | []> {
     return await this.findAll();
   }
 
@@ -27,7 +26,7 @@ export abstract class NoticeRepo extends CRUD {
 
   // Update notice
   protected async update(_id: string, data: INotice) {
-    return await this.idAndUpdate(_id, data);
+    return await this.findByIdAndUpdate(_id, data);
   }
 
   // Delete a notice

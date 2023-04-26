@@ -23,5 +23,7 @@ export interface IStudent {
   room: string;
   block: ObjectId;
   mealPlan: ObjectId;
-  status?: "pending" | "resident" | "suspended" | "departed";
+  status?: StudentStatus;
 }
+
+export type StudentStatus = "pending" | "resident" | "rejected" | "departed";

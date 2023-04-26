@@ -1,8 +1,20 @@
 import { Router } from "express";
-import { allBlocks, deleteBlock, newBlock, updateRoom } from "../controllers/chiefWarden/block";
+import {
+  allBlocks,
+  availableRooms,
+  checkRoomAvailability,
+  deleteBlock,
+  newBlock,
+  updateRoom,
+} from "../controllers/chiefWarden/block";
 import { login, resetPassword } from "../controllers/chiefWarden/auth";
 import { validate } from "../middlewares/validateBody";
-import { mealPlanSchema, newBlockSchema, noticeSchema } from "../middlewares/yupSchema";
+import {
+  mealPlanSchema,
+  newBlockSchema,
+  noticeSchema,
+  updateStudentSchema,
+} from "../middlewares/yupSchema";
 import {
   changeVisiblity,
   newNotice,
@@ -12,7 +24,7 @@ import {
   allNotices,
 } from "../controllers/chiefWarden/notice";
 import { validate_id } from "../middlewares/validateParams";
-import { allStudentsData } from "../controllers/chiefWarden/student";
+import { allStudentsData, updateSingleStudent } from "../controllers/chiefWarden/student";
 import {
   allMealPlans,
   changeAvailability,
@@ -27,26 +39,10 @@ const chiefWarden = Router();
 chiefWarden.post("/login", login);
 
 // MIDDLEWARE TO VERIFY JWT AUTHENTICATION
-chiefWarden.use("*", checkAuth("chief-warden"));
+chiefWarden.use(checkAuth("chief-warden"));
 
 // Reset Password
 chiefWarden.patch("/auth", resetPassword);
-
-// Blocks and Rooms
-chiefWarden
-  .route("/blocks/:_id?")
-  .get(allBlocks)
-  .post(validate(newBlockSchema), newBlock)
-  .patch(validate_id, updateRoom) // PENDING WORK
-  .delete(validate_id, deleteBlock); // soft
-
-// Meal Plans
-chiefWarden
-  .route("/mealPlans/:_id?")
-  .get(allMealPlans)
-  .post(validate(mealPlanSchema), newMealPlan)
-  .put(validate_id, validate(mealPlanSchema), updateMealPlan)
-  .patch(validate_id, changeAvailability); // approve
 
 // Notices
 chiefWarden.get("/notices/all", allNotices);
@@ -58,7 +54,33 @@ chiefWarden
   .patch(validate_id, validate(noticeSchema), changeVisiblity)
   .delete(validate_id, deleteNotice);
 
+// Blocks and Rooms
+chiefWarden
+  .route("/blocks/:_id?")
+  .get(allBlocks)
+  // not yet on frontend
+  .post(validate(newBlockSchema), newBlock)
+  .patch(validate_id, updateRoom) // PENDING WORK
+  .delete(validate_id, deleteBlock); // soft
+
+chiefWarden.get("/blocks/rooms/availability/:roomCode", checkRoomAvailability);
+chiefWarden.get("/blocks/rooms/availableRooms/:_id", availableRooms);
+
+// Meal Plans
+chiefWarden
+  .route("/mealPlans/:_id?")
+  .get(allMealPlans)
+  .post(validate(mealPlanSchema), newMealPlan)
+  .put(validate_id, validate(mealPlanSchema), updateMealPlan)
+  .patch(validate_id, changeAvailability); // approve
+
 // Students
-chiefWarden.route("/students/:email?").get(allStudentsData);
+chiefWarden.get("/students/all", allStudentsData);
+chiefWarden.patch(
+  "/students/:_id",
+  validate_id,
+  validate(updateStudentSchema),
+  updateSingleStudent
+);
 
 export default chiefWarden;

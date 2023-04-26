@@ -1,9 +1,10 @@
 import { BlockRepo } from "../repositories/block";
 import { IBlock, IRoom } from "../interfaces/block";
 import { roomCreater } from "../utils/roomCreater";
+import ErrorResponses from "../error/ErrorResponses";
+import { Types } from "mongoose";
 
 export class BlockService extends BlockRepo {
-  
   // Get all blocks
   async allBlocks(): Promise<IBlock[] | null> {
     return await this.getAll();
@@ -22,7 +23,70 @@ export class BlockService extends BlockRepo {
   }
 
   // Delete a block
-  async deleteBlock(_id: string):Promise<void| null>{
-    return await this.delete(_id)
+  async deleteBlock(_id: string): Promise<void | null> {
+    return await this.delete(_id);
+  }
+
+  // Block details by _id
+  async blockDetailsById(_id: string): Promise<IBlock> {
+    const blockDetails = await this.findOne<IBlock>({ _id });
+    if (!blockDetails) throw ErrorResponses.noDataFound("block");
+    return blockDetails;
+  }
+
+  // Block details by Room Code
+  async blockDetailsByRoomCode(roomCode: string): Promise<IBlock> {
+    const blockDetails = await this.findOne<IBlock>({ code: roomCode[0] });
+    if (!blockDetails) throw ErrorResponses.noDataFound("block");
+    return blockDetails;
+  }
+
+  // Fetch a room details
+  async roomDetails(roomCode: string) {
+    const blockDetails = await this.blockDetailsByRoomCode(roomCode);
+    const roomDetails = blockDetails?.rooms?.find((room: IRoom) => room.code === roomCode);
+    if (!roomDetails) throw ErrorResponses.noDataFound("room");
+    return roomDetails;
+  }
+
+  // Get room availability
+  async getRoomAvailability(roomCode: string): Promise<string> {
+    const roomDetails = await this.roomDetails(roomCode);
+    if (!roomDetails.availability) throw ErrorResponses.customError("unavailable");
+    return `available`;
+  }
+
+  // Available rooms
+  async availableRooms(blockId: string): Promise<IRoom[]> {
+    const blockDetails = await this.blockDetailsById(blockId);
+    return blockDetails.rooms.filter(({ availability }) => availability);
+  }
+
+  // Allot a room to student
+  async allotRoom(roomCode: string, student: string) {
+    const blockDetails = await this.blockDetailsByRoomCode(roomCode);
+    if (!blockDetails._id) throw ErrorResponses.noDataFound("block");
+    await this.getRoomAvailability(roomCode);
+    return await this.updateRoomByCode(blockDetails._id, roomCode, {
+      "rooms.$.student": new Types.ObjectId(student),
+      "rooms.$.availability": false,
+    });
+  }
+
+  // Vacate room by room code
+  async vacateRoom(roomCode: string) {
+    const blockDetails = await this.blockDetailsByRoomCode(roomCode);
+    if (!blockDetails._id) throw ErrorResponses.noDataFound("block");
+    return await this.vacateRoomByCode(blockDetails._id, roomCode);
+  }
+
+  // Change room of student
+  async reassignStudent(oldRoomCode: string, newRoomCode: string) {
+    if (oldRoomCode === newRoomCode)
+      return ErrorResponses.customError("Invalid ressignment of student");
+    await this.getRoomAvailability(newRoomCode);
+    const { student } = await this.roomDetails(oldRoomCode);
+    await this.vacateRoom(oldRoomCode);
+    return await this.allotRoom(newRoomCode, student);
   }
 }

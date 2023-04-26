@@ -45,11 +45,15 @@ const blockSchema = new Schema<IBlock>({
           message: "Invalid room number",
         },
       },
-      occupant: {
+      student: {
         type: Schema.Types.ObjectId,
         ref: "Student",
       },
       occupiedOn: Date,
+      availability: {
+        type: Boolean,
+        default: true,
+      },
       createdAt: {
         type: Date,
         default: Date.now(),

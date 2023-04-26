@@ -1,6 +1,7 @@
 import { IStudent } from "src/interfaces/student";
 import { StudentRepo } from "../repositories/student";
 import ErrorResponses from "../error/ErrorResponses";
+import { ObjectId } from "mongoose";
 
 // Student Service
 export class StudentService extends StudentRepo {
@@ -11,6 +12,13 @@ export class StudentService extends StudentRepo {
     return studentData;
   }
 
+  // Student Room
+  async studentRoomById(_id: string): Promise<{ room: string; block: ObjectId }> {
+    const studentData = await this.findOne<IStudent>({ _id });
+    if (!studentData) throw ErrorResponses.noDataFound("Student");
+    return { room: studentData.room, block: studentData.block };
+  }
+
   // Get all students data
   async allStudentsData(): Promise<IStudent[] | null> {
     const allStudentsData = await this.findAndPopulate([
@@ -19,5 +27,12 @@ export class StudentService extends StudentRepo {
     ]);
     if (allStudentsData.length < 1) throw ErrorResponses.noDataFound("students");
     return allStudentsData;
+  }
+
+  // Update single student
+  async updateSingleStudent(_id: string, data: any): Promise<IStudent> {
+    const updatedData = await this.findByIdAndUpdate(_id, data);
+    if (!updatedData) throw ErrorResponses.noDataFound("student");
+    return updatedData;
   }
 }

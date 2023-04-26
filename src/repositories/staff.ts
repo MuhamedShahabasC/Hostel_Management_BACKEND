@@ -41,6 +41,6 @@ export abstract class StaffRepo extends CRUD {
   // Update single staff
   protected async update(email: string, data: any): Promise<IStaff> {
     data.password = await hashPassword(data.password);
-    return await this.OneAndUpdate(email, data);
+    return await this.findOneAndUpdate({email}, data);
   }
 }

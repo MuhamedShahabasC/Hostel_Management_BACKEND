@@ -7,27 +7,18 @@ export const loginSchema = yup.object().shape({
     .string()
     .trim()
     .required()
-    .test("isvalidEmail", "Invalid e-Mail", (arg) =>
-      /[a-z0-9]+@floreat.edu.com/i.test(arg)
-    ),
+    .test("isvalidEmail", "Invalid e-Mail", (arg) => /[a-z0-9]+@floreat.edu.com/i.test(arg)),
   password: yup.string().trim().required().min(8).max(16),
 });
 
 // Staff Schema
 export const staffSchema = yup.object().shape({
-  name: yup
-    .string()
-    .required()
-    .trim()
-    .min(4, "Invalid Name")
-    .max(16, "Invalid Name"),
+  name: yup.string().required().trim().min(4, "Invalid Name").max(16, "Invalid Name"),
   email: yup
     .string()
     .trim()
     .required()
-    .test("isvalidEmail", "Invalid e-Mail", (arg) =>
-      /[a-z0-9]+@floreat.edu.com/i.test(arg)
-    ),
+    .test("isvalidEmail", "Invalid e-Mail", (arg) => /[a-z0-9]+@floreat.edu.com/i.test(arg)),
   password: yup.string().trim().required().min(8).max(16),
   mobile: yup
     .string()
@@ -118,14 +109,8 @@ export const noticeSchema = yup.object().shape({
     .min(10, "Message must be longer than 10 characters")
     .max(200, "Message must be shorter than 200 characters"),
   audience: yup.object().shape({
-    student: yup
-      .bool()
-      .required("Specify audience")
-      .oneOf([true, false], "Specify audience"),
-    staff: yup
-      .bool()
-      .required("Specify audience")
-      .oneOf([true, false], "Specify audience"),
+    student: yup.bool().required("Specify audience").oneOf([true, false], "Specify audience"),
+    staff: yup.bool().required("Specify audience").oneOf([true, false], "Specify audience"),
   }),
   visibility: yup.bool().oneOf([true, false], "Must be true or false"),
   date: yup.date(),
@@ -180,9 +165,7 @@ export const studentAdmissionSchema = yup.object().shape({
     .trim()
     .lowercase()
     .required()
-    .test("isvalidEmail", "Invalid e-Mail", (arg) =>
-      /[a-z0-9]+@floreat.edu.com/i.test(arg)
-    ),
+    .test("isvalidEmail", "Invalid e-Mail", (arg) => /[a-z0-9]+@floreat.edu.com/i.test(arg)),
   name: yup
     .string()
     .required()
@@ -222,53 +205,26 @@ export const studentAdmissionSchema = yup.object().shape({
     .trim()
     .matches(/^[0-9]{10}$/, "Invalid mobile number"),
   address: yup.object().shape({
-    building: yup
-      .string()
-      .required()
-      .trim()
-      .min(4, "Invalid building")
-      .max(16, "Invalid building"),
-    city: yup
-      .string()
-      .required()
-      .trim()
-      .min(4, "Invalid city")
-      .max(16, "Invalid city"),
+    building: yup.string().required().trim().min(4, "Invalid building").max(16, "Invalid building"),
+    city: yup.string().required().trim().min(4, "Invalid city").max(16, "Invalid city"),
     pin: yup
       .string()
       .trim()
       .required()
       .matches(/^[0-9]{6}$/, "Invalid Pin Code"),
-    state: yup
-      .string()
-      .required()
-      .trim()
-      .min(4, "Invalid state")
-      .max(16, "Invalid state"),
-    country: yup
-      .string()
-      .required()
-      .trim()
-      .min(4, "Invalid country")
-      .max(16, "Invalid country"),
+    state: yup.string().required().trim().min(4, "Invalid state").max(16, "Invalid state"),
+    country: yup.string().required().trim().min(4, "Invalid country").max(16, "Invalid country"),
   }),
   bloodGroup: yup
     .string()
     .required()
-    .oneOf(
-      ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
-      "Invalid Blood Group"
-    ),
+    .oneOf(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"], "Invalid Blood Group"),
   remarks: yup
     .string()
     .trim()
     .min(4, "Remarks must be longer than 4 characters")
     .max(250, "Remarks must be shorter than 250 characters"),
-  room: yup
-    .string()
-    .trim()
-    .required("Room is required")
-    .max(3, "Invalid room code"),
+  room: yup.string().trim().required("Room is required").max(3, "Invalid room code"),
   mealPlan: yup
     .string()
     .trim()
@@ -279,4 +235,28 @@ export const studentAdmissionSchema = yup.object().shape({
     .trim()
     .required()
     .test("Valid MongoDB _id", "Invalid Room", (arg) => isValidObjectId(arg!)),
+});
+
+// Update student data
+export const updateStudentSchema = yup.object().shape({
+  room: yup
+    .string()
+    .required("Room is required")
+    .trim()
+    .test("roomCode", "Must be exactly 3 characters", (roomCode) => roomCode.length === 3),
+  oldRoom: yup
+    .string()
+    .required("Room is required")
+    .trim()
+    .test("roomCode", "Must be exactly 3 characters", (roomCode) => roomCode.length === 3),
+  status: yup
+    .string()
+    .trim()
+    .required("Student status is required")
+    .oneOf(["resident", "rejected", "departed"], "Invalid student status"),
+  oldStatus: yup
+    .string()
+    .trim()
+    .required("Student status is required")
+    .oneOf(["pending", "resident"], "Invalid student status"),
 });

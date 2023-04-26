@@ -13,8 +13,7 @@ const studentSchema = new Schema<IStudent>(
       maxlength: [20, "Name must be shorter than 20 characters"],
       trim: true,
       validate: {
-        validator: (name: string) =>
-          validator.isAlpha(name.trim().replaceAll(" ", "")),
+        validator: (name: string) => validator.isAlpha(name.trim().replaceAll(" ", "")),
         message: "Invalid Name",
       },
     },
@@ -65,8 +64,7 @@ const studentSchema = new Schema<IStudent>(
       maxlength: [20, "Guardian name must be shorter than 20 characters"],
       trim: true,
       validate: {
-        validator: (name: string) =>
-          validator.isAlpha(name.trim().replaceAll(" ", "")),
+        validator: (name: string) => validator.isAlpha(name.trim().replaceAll(" ", "")),
         message: "Invalid guardian name",
       },
     },
@@ -155,7 +153,7 @@ const studentSchema = new Schema<IStudent>(
       type: String,
       default: "pending",
       enum: {
-        values: ["pending", "resident", "suspended", "departed"],
+        values: ["pending", "rejected", "resident", "departed"],
         message: "Invalid status ({VALUE})",
       },
     },

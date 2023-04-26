@@ -31,6 +31,6 @@ export abstract class ChefRepo extends CRUD {
 
   // Update meal plan
   protected async update(_id: string, data: IMealPlan): Promise<IMealPlan> {
-    return await this.idAndUpdate(_id, data);
+    return await this.findByIdAndUpdate(_id, data);
   }
 }

@@ -28,4 +28,9 @@ export default class ErrorResponses extends Error {
   static endPointNotFound(url: string): ErrorResponses {
     return new ErrorResponses(404, `Cannot find ${url} on this server.`);
   }
+
+  // Invalid data
+  static customError(message: string): ErrorResponses {
+    return new ErrorResponses(400, message);
+  }
 }
