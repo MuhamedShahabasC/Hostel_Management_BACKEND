@@ -14,7 +14,7 @@ import {
   newBlockSchema,
   noticeSchema,
   updateStudentSchema,
-} from "../middlewares/yupSchema";
+} from "../utils/yupSchema";
 import {
   changeVisiblity,
   newNotice,

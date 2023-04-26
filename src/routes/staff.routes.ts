@@ -6,12 +6,7 @@ import {
   updateSingleStaff,
 } from "../controllers/staff/crud";
 import { newStaff, login, resetPassword } from "../controllers/staff/auth";
-import {
-  loginSchema,
-  mealPlanSchema,
-  resetPasswordSchema,
-  staffSchema,
-} from "../middlewares/yupSchema";
+import { loginSchema, mealPlanSchema, resetPasswordSchema, staffSchema, updateProfilePicSchema } from "../utils/yupSchema";
 import { validate } from "../middlewares/validateBody";
 import { validate_email, validate_id } from "../middlewares/validateParams";
 import { validateStaffRole } from "../middlewares/validateStaffDepartment";
@@ -37,6 +32,9 @@ staff.use(checkAuth("staff"));
 
 // Reset password
 staff.patch("/auth", validate(resetPasswordSchema), resetPassword);
+
+// Update profile picture
+staff.patch("/profilePic", validate(updateProfilePicSchema), updateProfileImage);
 
 // Single Staff CRUD
 staff

@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { login, newStudent, resetPassword } from "../controllers/student/auth";
 import { validate } from "../middlewares/validateBody";
-import { resetPasswordSchema, studentAdmissionSchema } from "../middlewares/yupSchema";
-import { loginSchema } from "../middlewares/yupSchema";
+import { resetPasswordSchema, studentAdmissionSchema } from "../utils/yupSchema";
+import { loginSchema } from "../utils/yupSchema";
 import { singleStudent } from "../controllers/student/crud";
 import { checkAuth } from "../middlewares/verifyToken";
 import { showActiveMealPlans } from "../controllers/staff/chef";

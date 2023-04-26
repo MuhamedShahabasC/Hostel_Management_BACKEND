@@ -4,6 +4,7 @@ import { StudentService } from "../../services/student";
 import { BlockService } from "../../services/block";
 import { StudentStatus } from "../../interfaces/student";
 import ErrorResponses from "../../error/ErrorResponses";
+import { presetMailTemplates, sendMail } from "../../utils/sendMail";
 
 // Services
 const studentService = new StudentService();
@@ -19,11 +20,15 @@ export const allStudentsData = asyncHandler(async (req, res) => {
 export const updateSingleStudent = asyncHandler(async (req, res) => {
   switch (req.body.status as StudentStatus) {
     case "resident":
-      if (req.body.oldStatus === "pending") {
-        await roomService.allotRoom(req.body.room, req.params._id);
-        await studentService.updateSingleStudent(req.params._id, req.body);
-      } else if (req.body.oldStatus === "resident") {
-        await roomService.reassignStudent(req.body.oldRoom, req.body.room);
+      if (req.body.oldStatus === "pending" || req.body.oldStatus === "resident") {
+        if (req.body.oldStatus === "pending") {
+          await roomService.allotRoom(req.body.room, req.params._id);
+          sendMail(presetMailTemplates.newAdmission(req.body.student, req.body.room));
+        }
+        if (req.body.oldStatus === "resident") {
+          await roomService.reassignStudent(req.body.oldRoom, req.body.room);
+          sendMail(presetMailTemplates.roomUpdated(req.body.student, req.body.room));
+        }
         await studentService.updateSingleStudent(req.params._id, req.body);
       } else {
         throw ErrorResponses.customError("Student must be pending or a resident");
@@ -32,15 +37,19 @@ export const updateSingleStudent = asyncHandler(async (req, res) => {
     case "rejected":
       if (req.body.oldStatus === "pending") {
         await studentService.updateSingleStudent(req.params._id, req.body);
+        sendMail(presetMailTemplates.rejectedAdmission(req.body.student));
       } else {
         throw ErrorResponses.customError("Only pending students can be rejected");
       }
       break;
     case "departed":
       if (req.body.oldStatus === "resident") {
-        await roomService.vacateRoom(req.body.oldRoom);
-        delete req.body.room;
-        await studentService.updateSingleStudent(req.params._id, req.body);
+        {
+          await roomService.vacateRoom(req.body.oldRoom);
+          delete req.body.room;
+          await studentService.updateSingleStudent(req.params._id, req.body);
+          sendMail(presetMailTemplates.departedStudent(req.body.student));
+        }
       } else {
         throw ErrorResponses.customError("Only resident students can depart");
       }

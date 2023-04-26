@@ -17,3 +17,9 @@ export interface INotice {
   date?: Date;
   visibility?: boolean
 }
+
+export interface EmailTemplate {
+  email: string;
+  body: string;
+  subject: string
+}

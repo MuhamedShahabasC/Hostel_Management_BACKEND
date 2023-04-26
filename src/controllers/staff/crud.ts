@@ -2,6 +2,7 @@ import asyncHandler from "express-async-handler";
 import { dataFormattor } from "../../utils/JSON-formattor";
 import { IStaff, IStaffAddress } from "../../interfaces/staff";
 import { StaffService } from "../../services/staff";
+import { cloudinary } from "../../utils/uploadImage";
 
 // Staff service instantiation
 const service = new StaffService();
@@ -34,6 +35,14 @@ export const updateSingleStaff = asyncHandler(async (req, res) => {
 });
 
 // Update profile image
-export const updateProfileImage = asyncHandler((req, res) => {
-  console.log(req); // add cloudinary
+export const updateProfileImage = asyncHandler(async (req, res) => {
+  const { email } = req?.tokenPayload!;
+  const { profilePic } = req.body;
+  const { url } = await cloudinary.uploader.upload(profilePic, {
+    folder: "Hostel Management Project/staffs",
+    format: "webp",
+    unique_filename: true,
+  });
+  await service.updateStaff(email, { profilePic: url });
+  res.json(dataFormattor({ url }));
 });
