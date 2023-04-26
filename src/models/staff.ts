@@ -23,7 +23,9 @@ const staffSchema = new Schema<IStaff>(
       lowercase: true,
       required: [true, "A Staff must have an email."],
       validate: {
-        validator: validator.isEmail as any,
+        validator: function (email: string) {
+          return /[a-z0-9]+@[a-z0-9]+.com/i.test(email);
+        },
         message: "Invalid e-Mail",
       },
     },

@@ -24,7 +24,7 @@ const studentSchema = new Schema<IStudent>(
       required: [true, "A student must have an email."],
       validate: {
         validator: function (email: string) {
-          return /[a-z0-9]+@floreat.edu.com/i.test(email);
+          return /[a-z0-9]+@[a-z0-9]+.com/i.test(email);
         },
         message: "Invalid e-Mail",
       },

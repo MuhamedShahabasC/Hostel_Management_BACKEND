@@ -19,7 +19,9 @@ const chiefWardenSchema = new Schema<IChiefWarden>({
     lowercase: true,
     required: [true, "Chief Warden must have an email."],
     validate: {
-      validator: validator.isEmail as any,
+      validator: function (email: string) {
+        return /[a-z0-9]+@[a-z0-9]+.com/i.test(email);
+      },
       message: "Invalid e-Mail",
     },
   },
@@ -37,7 +39,4 @@ const chiefWardenSchema = new Schema<IChiefWarden>({
   },
 });
 
-export const ChiefWardenModel: Model<IChiefWarden> = model(
-  "ChiefWarden",
-  chiefWardenSchema
-);
+export const ChiefWardenModel: Model<IChiefWarden> = model("ChiefWarden", chiefWardenSchema);

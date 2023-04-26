@@ -5,10 +5,12 @@ import { resetPasswordSchema, studentAdmissionSchema } from "../middlewares/yupS
 import { loginSchema } from "../middlewares/yupSchema";
 import { singleStudent } from "../controllers/student/crud";
 import { checkAuth } from "../middlewares/verifyToken";
+import { showActiveMealPlans } from "../controllers/staff/chef";
 
 const student = Router();
 
 // New Admission
+student.route("/newAdmisison/mealPlans").get(showActiveMealPlans);
 student.route("/newAdmission").post(validate(studentAdmissionSchema), newStudent);
 
 // Authentication
