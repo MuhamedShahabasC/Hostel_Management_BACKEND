@@ -34,12 +34,12 @@ export abstract class CRUD {
   }
 
   // findByIdAndUpdate()
-  protected async findByIdAndUpdate(_id: string, data: any) {
+  protected async findByIdAndUpdate(_id: string, data: object) {
     return this.model.findByIdAndUpdate(_id, data, { runValidators: true, new: true });
   }
 
   // findOneAndUpdate()
-  protected async findOneAndUpdate(filter: object, data: any) {
+  protected async findOneAndUpdate(filter: object, data: object) {
     return this.model.findOneAndUpdate(filter, data, {
       runValidators: true,
       new: true,

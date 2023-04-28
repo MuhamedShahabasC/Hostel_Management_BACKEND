@@ -30,7 +30,7 @@ export class StudentService extends StudentRepo {
   }
 
   // Update single student
-  async updateSingleStudent(_id: string, data: any): Promise<IStudent> {
+  async updateSingleStudent(_id: string, data: object): Promise<IStudent> {
     const updatedData = await this.findByIdAndUpdate(_id, data);
     if (!updatedData) throw ErrorResponses.noDataFound("student");
     return updatedData;

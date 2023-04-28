@@ -4,9 +4,11 @@ import { StudentAuth } from "../../repositories/student";
 import { IStudent } from "../../interfaces/student";
 import { signToken } from "../../utils/tokenManager";
 import ErrorResponses from "../../error/ErrorResponses";
+import { StudentService } from "../../services/student";
 
 // Student service
 const service = new StudentAuth();
+const studentService = new StudentService();
 
 // Student sign up
 export const newStudent = asyncHandler(async (req, res) => {

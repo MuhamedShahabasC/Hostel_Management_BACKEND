@@ -40,15 +40,12 @@ staff.use(checkAuth("staff"));
 // Reset password
 staff.patch("/auth", validate(resetPasswordSchema), resetPassword);
 
-// Update profile picture
-staff.patch("/profilePic", validate(updateProfilePicSchema), updateProfileImage);
-
 // Single Staff CRUD
 staff
   .route("/")
   .get(singleStaff)
   .post(validate(staffSchema), updateSingleStaff)
-  .patch(updateProfileImage); // add cloudinary
+  .patch(validate(updateProfilePicSchema), updateProfileImage);
 
 // New staff and All staffs => ////// to be moved to chief warden routes ////
 staff.route("/new").post(validate(staffSchema), newStaff);
