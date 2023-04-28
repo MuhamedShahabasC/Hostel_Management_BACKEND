@@ -10,8 +10,8 @@ export abstract class NoticeRepo extends CRUD {
   model: Model<INotice> = NoticeModel;
 
   // All notices
-  protected async getAll(): Promise<INotice[] | []> {
-    return await this.findAll();
+  protected async findAllNotices(query?: object): Promise<INotice[] | []> {
+    return await this.findAll(query);
   }
 
   // New notice

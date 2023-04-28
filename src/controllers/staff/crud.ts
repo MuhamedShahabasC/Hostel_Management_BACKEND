@@ -4,7 +4,7 @@ import { IStaff, IStaffAddress } from "../../interfaces/staff";
 import { StaffService } from "../../services/staff";
 import { cloudinary } from "../../utils/uploadImage";
 
-// Staff service instantiation
+// Staff service
 const service = new StaffService();
 
 // Getting all staffs' data

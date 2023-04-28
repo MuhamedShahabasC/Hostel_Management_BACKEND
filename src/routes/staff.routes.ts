@@ -6,9 +6,15 @@ import {
   updateSingleStaff,
 } from "../controllers/staff/crud";
 import { newStaff, login, resetPassword } from "../controllers/staff/auth";
-import { loginSchema, mealPlanSchema, resetPasswordSchema, staffSchema, updateProfilePicSchema } from "../utils/yupSchema";
+import {
+  loginSchema,
+  mealPlanSchema,
+  resetPasswordSchema,
+  staffSchema,
+  updateProfilePicSchema,
+} from "../utils/yupSchema";
 import { validate } from "../middlewares/validateBody";
-import { validate_email, validate_id } from "../middlewares/validateParams";
+import { validate_id } from "../middlewares/validateParams";
 import { validateStaffRole } from "../middlewares/validateStaffDepartment";
 import {
   allMealPlans,
@@ -19,6 +25,7 @@ import {
   updateMealPlan,
 } from "../controllers/staff/chef";
 import { checkAuth } from "../middlewares/verifyToken";
+import { notices } from "../controllers/staff/staff";
 
 const staff = Router();
 
@@ -46,6 +53,9 @@ staff
 // New staff and All staffs => ////// to be moved to chief warden routes ////
 staff.route("/new").post(validate(staffSchema), newStaff);
 staff.get("/all", allStaffs);
+
+// Notices
+staff.get("/notices", notices);
 
 // -- CHEF ROUTES --
 

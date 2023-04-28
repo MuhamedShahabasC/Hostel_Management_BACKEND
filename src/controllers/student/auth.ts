@@ -3,6 +3,7 @@ import { dataFormattor } from "../../utils/JSON-formattor";
 import { StudentAuth } from "../../repositories/student";
 import { IStudent } from "../../interfaces/student";
 import { signToken } from "../../utils/tokenManager";
+import ErrorResponses from "../../error/ErrorResponses";
 
 // Student service
 const service = new StudentAuth();
@@ -15,10 +16,11 @@ export const newStudent = asyncHandler(async (req, res) => {
 
 // Login Student
 export const login = asyncHandler(async (req, res) => {
-  const { _id, email, profilePic, name, mobile }: IStudent = await service.login(
+  const { _id, email, profilePic, name, mobile, status }: IStudent = await service.login(
     req.body.email,
     req.body.password
   );
+  if (status !== "resident") throw ErrorResponses.customError(`${status} student`.toUpperCase());
   res.json({
     ...dataFormattor({ _id, email, profilePic, name, mobile }),
     token: signToken(_id!, email, "student"),

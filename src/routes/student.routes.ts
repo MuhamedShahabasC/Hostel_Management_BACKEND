@@ -3,7 +3,7 @@ import { login, newStudent, resetPassword } from "../controllers/student/auth";
 import { validate } from "../middlewares/validateBody";
 import { resetPasswordSchema, studentAdmissionSchema } from "../utils/yupSchema";
 import { loginSchema } from "../utils/yupSchema";
-import { singleStudent } from "../controllers/student/crud";
+import { availableMealPlans, notices, singleStudent } from "../controllers/student/student";
 import { checkAuth } from "../middlewares/verifyToken";
 import { showActiveMealPlans } from "../controllers/staff/chef";
 
@@ -13,7 +13,7 @@ const student = Router();
 student.route("/newAdmisison/mealPlans").get(showActiveMealPlans);
 student.route("/newAdmission").post(validate(studentAdmissionSchema), newStudent);
 
-// Authentication
+// Login
 student.route("/auth").post(validate(loginSchema), login);
 
 // MIDDLEWARE TO VERIFY JWT TOKEN AUTHENTICATION
@@ -24,5 +24,11 @@ student.patch("/auth", validate(resetPasswordSchema), resetPassword);
 
 // Student CRUD
 student.route("/").get(singleStudent);
+
+// Notices
+student.route("/notices").get(notices);
+
+// Meal plans
+student.route("/mealPlans").get(availableMealPlans);
 
 export default student;

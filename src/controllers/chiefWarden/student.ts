@@ -59,3 +59,9 @@ export const updateSingleStudent = asyncHandler(async (req, res) => {
   }
   res.json(dataFormattor("Student updated"));
 });
+
+// Fetch all students email addresses
+export const allStudentsEmail = asyncHandler(async (req, res) => {
+  const allEmails = await studentService.allStudentsEmail();
+  res.json(dataFormattor(allEmails));
+});

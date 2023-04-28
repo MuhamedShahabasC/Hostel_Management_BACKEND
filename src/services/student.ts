@@ -7,9 +7,9 @@ import { ObjectId } from "mongoose";
 export class StudentService extends StudentRepo {
   // Single student data
   async singleStudentData(email: string): Promise<IStudent | null> {
-    const studentData = await this.findOne<IStudent>({ email });
+    const studentData = await this.findAndPopulate("mealPlan", { email });
     if (!studentData) throw ErrorResponses.noDataFound("Student");
-    return studentData;
+    return studentData[0];
   }
 
   // Student Room

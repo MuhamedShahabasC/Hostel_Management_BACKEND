@@ -22,9 +22,14 @@ import {
   singleNotice,
   deleteNotice,
   allNotices,
+  noticeStatistics,
 } from "../controllers/chiefWarden/notice";
 import { validate_id } from "../middlewares/validateParams";
-import { allStudentsData, updateSingleStudent } from "../controllers/chiefWarden/student";
+import {
+  allStudentsData,
+  allStudentsEmail,
+  updateSingleStudent,
+} from "../controllers/chiefWarden/student";
 import {
   allMealPlans,
   changeAvailability,
@@ -36,7 +41,7 @@ import { checkAuth } from "../middlewares/verifyToken";
 const chiefWarden = Router();
 
 // Authentication
-chiefWarden.post("/login", login);
+chiefWarden.post("/auth", login);
 
 // MIDDLEWARE TO VERIFY JWT AUTHENTICATION
 chiefWarden.use(checkAuth("chief-warden"));
@@ -46,6 +51,7 @@ chiefWarden.patch("/auth", resetPassword);
 
 // Notices
 chiefWarden.get("/notices/all", allNotices);
+chiefWarden.get("/notices/statistics", noticeStatistics);
 chiefWarden
   .route("/notices/:_id?")
   .get(validate_id, singleNotice)
@@ -62,7 +68,6 @@ chiefWarden
   .post(validate(newBlockSchema), newBlock)
   .patch(validate_id, updateRoom) // PENDING WORK
   .delete(validate_id, deleteBlock); // soft
-
 chiefWarden.get("/blocks/rooms/availability/:roomCode", checkRoomAvailability);
 chiefWarden.get("/blocks/rooms/availableRooms/:_id", availableRooms);
 
@@ -76,6 +81,7 @@ chiefWarden
 
 // Students
 chiefWarden.get("/students/all", allStudentsData);
+chiefWarden.get("/students/emails", allStudentsEmail);
 chiefWarden.patch(
   "/students/:_id",
   validate_id,

@@ -1,6 +1,9 @@
+import { config } from "dotenv";
+config();
+//
 // Image upload
 // Module: Cloudinary
-
+//
 import { v2 as cloudinary } from "cloudinary";
 
 // Cofiguration of Cloudinary

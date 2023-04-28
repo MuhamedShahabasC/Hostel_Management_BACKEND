@@ -40,3 +40,10 @@ export const deleteNotice = asyncHandler(async (req, res) => {
   await service.deleteNotice(req.params._id);
   res.json(dataFormattor("Notice deleted successfully"));
 });
+
+// Show data of notices for chief warden dashboard
+export const noticeStatistics = asyncHandler(async (req, res) => {
+  const allNotices = await service.allNotices();
+  const activeNotices = await service.activeNotices();
+  res.json(dataFormattor([activeNotices.length, allNotices.length]));
+});
