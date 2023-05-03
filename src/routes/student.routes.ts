@@ -3,14 +3,23 @@ import { login, newStudent, resetPassword } from "../controllers/student/auth";
 import { validate } from "../middlewares/validateBody";
 import { resetPasswordSchema, studentAdmissionSchema } from "../utils/yupSchema";
 import { loginSchema } from "../utils/yupSchema";
-import { availableMealPlans, mealPlan, notices, singleStudent, updateProfileImage, updateStudentData } from "../controllers/student/student";
+import {
+  availableMealPlans,
+  mealPlan,
+  notices,
+  singleStudent,
+  updateProfileImage,
+  updateStudentData,
+} from "../controllers/student/student";
 import { checkAuth } from "../middlewares/verifyToken";
 import { showActiveMealPlans } from "../controllers/staff/chef";
+import { allBlocks } from "../controllers/chiefWarden/block";
 
 const student = Router();
 
 // New Admission
-student.route("/newAdmisison/mealPlans").get(showActiveMealPlans);
+student.route("/newAdmission/mealPlans").get(showActiveMealPlans);
+student.route("/newAdmission/blocks").get(allBlocks);
 student.route("/newAdmission").post(validate(studentAdmissionSchema), newStudent);
 
 // Login

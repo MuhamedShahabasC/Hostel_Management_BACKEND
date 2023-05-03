@@ -266,6 +266,7 @@ export const updateStudentSchema = yup.object().shape({
       .trim()
       .min(4, "Invalid student name")
       .max(20, "Invalid student name"),
+    mealPlan: yup.string().trim().required("Meal plan is required"),
     email: yup
       .string()
       .required("Student email is required")

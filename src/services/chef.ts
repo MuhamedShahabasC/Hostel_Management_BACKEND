@@ -11,7 +11,7 @@ export class ChefService extends ChefRepo {
 
   // Active meal plans
   async showActivePlans(): Promise<IMealPlan[]> {
-    return await this.findAll({ active: true })
+    return await this.findAll({ active: true });
   }
 
   // Adding meal plan
@@ -25,8 +25,18 @@ export class ChefService extends ChefRepo {
   }
 
   // Updating meal plan
-  async updateMealPlan(_id: string, data: IMealPlan): Promise<IMealPlan> {
+  async updateMealPlan(_id: string, data: any): Promise<IMealPlan> {
     return await this.update(_id, data);
+  }
+
+  // Add students to meal plan
+  async subscribe(_id: string): Promise<IMealPlan> {
+    return await this.update(_id, { $inc: { subscribers: 1 } });
+  }
+
+  // Reduce subscribers from meal plan
+  async unSubscribe(_id: string): Promise<IMealPlan> {
+    return await this.update(_id, { $inc: { subscribers: -1 } });
   }
 
   // Change visibitly of meal plan
@@ -34,8 +44,6 @@ export class ChefService extends ChefRepo {
     const mealPlan = await this.findMealPlan(_id);
     mealPlan.active = !mealPlan.active;
     await this.update(_id, mealPlan);
-    return `${mealPlan.title} plan made ${
-      mealPlan.active ? "active" : "in-active"
-    }`;
+    return `${mealPlan.title} plan made ${mealPlan.active ? "active" : "in-active"}`;
   }
 }

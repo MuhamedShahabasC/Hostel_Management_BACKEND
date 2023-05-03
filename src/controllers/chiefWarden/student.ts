@@ -5,10 +5,12 @@ import { BlockService } from "../../services/block";
 import { StudentStatus } from "../../interfaces/student";
 import ErrorResponses from "../../error/ErrorResponses";
 import { presetMailTemplates, sendMail } from "../../utils/sendMail";
+import { ChefService } from "../../services/chef";
 
 // Services
 const studentService = new StudentService();
 const roomService = new BlockService();
+const chefService = new ChefService();
 
 // Get all students data
 export const allStudentsData = asyncHandler(async (req, res) => {
@@ -23,6 +25,7 @@ export const updateSingleStudent = asyncHandler(async (req, res) => {
       if (req.body.oldStatus === "pending" || req.body.oldStatus === "resident") {
         if (req.body.oldStatus === "pending") {
           await roomService.allotRoom(req.body.room, req.params._id);
+          await chefService.subscribe(req.body.student.mealPlan);
           sendMail(presetMailTemplates.newAdmission(req.body.student, req.body.room));
         }
         if (req.body.oldStatus === "resident") {
@@ -47,6 +50,7 @@ export const updateSingleStudent = asyncHandler(async (req, res) => {
         {
           await roomService.vacateRoom(req.body.oldRoom);
           delete req.body.room;
+          await chefService.unSubscribe(req.body.student.mealPlan);
           await studentService.updateSingleStudent(req.params._id, req.body);
           sendMail(presetMailTemplates.departedStudent(req.body.student));
         }
