@@ -16,6 +16,11 @@ export abstract class CRUD {
     return this.model.findOne(query, { __v: 0, password: 0, ...options });
   }
 
+  // findOneAndPopulate()
+  protected async findOneAndPopulate(query: Object, populateFields: any, options?: Object) {
+    return this.model.findOne(query, { __v: 0, password: 0, ...options }).populate(populateFields);
+  }
+
   // find()
   protected async findAll(filter?: Object, options?: Object): Promise<any | null> {
     return this.model.find({ ...filter }, { ...options, __v: 0, password: 0 }).sort({ _id: -1 });

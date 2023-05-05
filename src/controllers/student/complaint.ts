@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import { ComplaintService } from "../../services/complaint";
 import { dataFormattor } from "../../utils/JSON-formattor";
+import { presetMailTemplates, sendMail } from "../../utils/sendMail";
 
 const service = new ComplaintService();
 
@@ -8,7 +9,8 @@ const service = new ComplaintService();
 export const newComplaint = asyncHandler(async (req, res) => {
   req.body.student = req.tokenPayload?._id;
   const data = await service.newComplaint(req.body);
-  res.json(dataFormattor(data));
+  sendMail(presetMailTemplates.newComplaint(req.tokenPayload?.email!, data._id));
+  res.json(dataFormattor("Complaint filed successfully"));
 });
 
 // All complaints for corresponding student

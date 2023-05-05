@@ -9,7 +9,7 @@ export class ComplaintRepo extends CRUD {
   model: Model<IComplaint> = ComplaintModel;
 
   // New complaint
-  async newComplaint(data: IComplaintInput) {
+  async createComplaint(data: IComplaintInput) {
     return await this.create(data);
   }
 
@@ -32,10 +32,4 @@ export class ComplaintRepo extends CRUD {
     return allComplaints;
   }
 
-  // Single complaint
-  async getSingleComplaint(_id: string): Promise<IComplaint> {
-    const singleComplaint = await this.findOne<IComplaint>({ _id });
-    if (!singleComplaint) throw ErrorResponses.noDataFound("complaint");
-    return singleComplaint;
-  }
 }
