@@ -51,7 +51,7 @@ const chiefWarden = Router();
 chiefWarden.post("/auth", login);
 
 // MIDDLEWARE TO VERIFY JWT AUTHENTICATION
-// chiefWarden.use(checkAuth("chief-warden"));
+chiefWarden.use(checkAuth("chief-warden"));
 
 // Reset Password
 chiefWarden.patch("/auth", resetPassword);

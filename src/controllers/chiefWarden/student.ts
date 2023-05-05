@@ -14,7 +14,16 @@ const chefService = new ChefService();
 
 // Get all students data
 export const allStudentsData = asyncHandler(async (req, res) => {
-  const allStudentsData = await studentService.allStudentsData();
+  const filterObj = { ...req.query };
+  for (const filter in filterObj) {
+    if (!filterObj[filter] || !/^(name|status)$/.test(filter)) delete filterObj[filter];
+  }
+  if (filterObj.name)
+    filterObj.name = {
+      $regex: filterObj.name,
+      $options: "i",
+    };
+  const allStudentsData = await studentService.allStudentsData(filterObj);
   res.json(dataFormattor(allStudentsData));
 });
 
