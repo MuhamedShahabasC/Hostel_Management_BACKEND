@@ -43,4 +43,20 @@ export abstract class StaffRepo extends CRUD {
     if (data.password) data.password = await hashPassword(data.password);
     return await this.findOneAndUpdate({ email }, data);
   }
+
+  // Get all staff emails
+  async allStaffsEmail(): Promise<string[]> {
+    const aggregatedResult = await this.model.aggregate([
+      {
+        $match: {},
+      },
+      {
+        $project: {
+          email: 1,
+          _id: 0,
+        },
+      },
+    ]);
+    return aggregatedResult.map((emailObj) => emailObj.email);
+  }
 }

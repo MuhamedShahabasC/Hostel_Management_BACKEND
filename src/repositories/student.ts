@@ -20,7 +20,7 @@ export abstract class StudentRepo extends CRUD {
   }
 
   // Get all student emails
-  async allStudentsEmail() {
+  async allStudentsEmail(): Promise<string[]> {
     const aggregatedResult = await this.model.aggregate([
       {
         $match: {},
@@ -32,7 +32,7 @@ export abstract class StudentRepo extends CRUD {
         },
       },
     ]);
-    return aggregatedResult.map(emailObj => emailObj.email);
+    return aggregatedResult.map((emailObj) => emailObj.email);
   }
 }
 
