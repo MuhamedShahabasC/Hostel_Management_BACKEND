@@ -1,6 +1,7 @@
 import { CRUD } from "./CRUD";
 import { IBlock } from "../interfaces/block";
 import { BlockModel } from "../models/block";
+import ErrorResponses from "src/error/ErrorResponses";
 
 export abstract class BlockRepo extends CRUD {
   // Block model
@@ -37,5 +38,33 @@ export abstract class BlockRepo extends CRUD {
       { _id, "rooms.code": roomCode },
       { $unset: { "rooms.$.student": 1 }, $set: { "rooms.$.availability": true } }
     );
+  }
+
+  // Total Room occupancy
+  protected async totalOccupancy(): Promise<any> {
+    let allBlocksData = await this.model.aggregate([
+      {
+        $match: {},
+      },
+      {
+        $group: {
+          _id: null,
+          occupancy: { $sum: "$occupancy" },
+          totalRooms: { $sum: { $size: "$rooms" } },
+        },
+      },
+    ]);
+    allBlocksData = allBlocksData[0];
+    const activeRoomsData = await this.model.aggregate([
+      { $match: {} },
+      {
+        $unwind: "$rooms",
+      },
+    ]);
+    const availableRooms = activeRoomsData.filter(({ rooms }) => rooms.availability).length;
+    return {
+      ...allBlocksData,
+      availableRooms,
+    };
   }
 }

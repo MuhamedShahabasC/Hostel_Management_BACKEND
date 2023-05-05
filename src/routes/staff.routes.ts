@@ -26,7 +26,7 @@ import {
   updateMealPlan,
 } from "../controllers/staff/chef";
 import { checkAuth } from "../middlewares/verifyToken";
-import { notices } from "../controllers/staff/staff";
+import { dashboardStatistics, notices } from "../controllers/staff/staff";
 import { complaints, updateComplaint } from "../controllers/staff/complaint";
 
 const staff = Router();
@@ -52,6 +52,9 @@ staff
 // New staff and All staffs => ////// to be moved to chief warden routes ////
 staff.route("/new").post(validate(staffSchema), newStaff);
 staff.get("/all", allStaffs);
+
+// Dashboard statistics
+staff.route("/dashboard").get(dashboardStatistics);
 
 // Notices
 staff.get("/notices", notices);

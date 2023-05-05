@@ -21,8 +21,15 @@ export class ComplaintService extends ComplaintRepo {
   }
 
   // Complaints for single staff
-  async complaintsByStaff(_id: string) {
-    return await this.allComplaints({ staff: _id });
+  async complaintsByStaff(_id: string, filter?: Object) {
+    return await this.allComplaints({ staff: _id, ...filter });
+  }
+
+  // Complaint statistics of single staff
+  async complaintStatisticsByStaff(staff: string) {
+    const allComplaints = await this.allComplaints({ staff });
+    const resolvedComplaints = allComplaints.filter(({ status }) => status === "resolved").length;
+    return { title: "Complaints", count: resolvedComplaints, total: allComplaints.length };
   }
 
   // Complaints for single student

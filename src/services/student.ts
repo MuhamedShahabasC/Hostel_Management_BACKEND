@@ -20,13 +20,21 @@ export class StudentService extends StudentRepo {
   }
 
   // Get all students data
-  async allStudentsData(): Promise<IStudent[] | null> {
-    const allStudentsData = await this.findAndPopulate([
-      { path: "mealPlan", select: "title" },
-      { path: "block", select: "name" },
-    ]);
+  async allStudentsData(filter: Object = {}): Promise<IStudent[] | null> {
+    const allStudentsData = await this.findAndPopulate(
+      [
+        { path: "mealPlan", select: "title" },
+        { path: "block", select: "name" },
+      ],
+      filter
+    );
     if (allStudentsData.length < 1) throw ErrorResponses.noDataFound("students");
     return allStudentsData;
+  }
+
+  // All resident Students
+  async residentStudents(): Promise<IStudent[] | null> {
+    return await this.allStudentsData({status: 'resident'});
   }
 
   // Update single student

@@ -89,4 +89,20 @@ export class BlockService extends BlockRepo {
     await this.vacateRoom(oldRoomCode);
     return await this.allotRoom(newRoomCode, student);
   }
+
+  // Total occupancy
+  async hostelOccupancy(): Promise<{
+    _id: null;
+    occupancy: number;
+    totalRooms: number;
+    availableRooms: number;
+  } | null> {
+    try {
+      let totalOccupancy = await this.totalOccupancy();
+      if (totalOccupancy.length === 0) throw ErrorResponses.customError("Couldnot fetch occupancy");
+      return totalOccupancy;
+    } catch (error) {
+      throw ErrorResponses.customError("Error fetching statistics");
+    }
+  }
 }

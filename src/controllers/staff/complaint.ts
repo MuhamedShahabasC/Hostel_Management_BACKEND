@@ -7,7 +7,13 @@ const service = new ComplaintService();
 
 // Complaints for corresponding staff
 export const complaints = asyncHandler(async (req, res) => {
-  const complaints = await service.complaintsByStaff(req.tokenPayload?._id!);
+  const { status } = req.query;
+  const complaints = await service.complaintsByStaff(
+    req.tokenPayload?._id!,
+    status && {
+      status: status,
+    }
+  );
   res.json(dataFormattor(complaints));
 });
 
