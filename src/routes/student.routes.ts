@@ -18,7 +18,7 @@ import {
 import { checkAuth } from "../middlewares/verifyToken";
 import { showActiveMealPlans } from "../controllers/staff/chef";
 import { allBlocks } from "../controllers/chiefWarden/block";
-import { newComplaint } from "../controllers/student/complaint";
+import { complaints, newComplaint } from "../controllers/student/complaint";
 
 const student = Router();
 
@@ -40,8 +40,8 @@ student.patch("/auth", validate(resetPasswordSchema), resetPassword);
 student.route("/").get(singleStudent).patch(updateProfileImage).post(updateStudentData);
 student.route("/mealPlan").get(mealPlan);
 
-// Complaint
-student.route("/complaints").post(validate(newComplaintSchema), newComplaint);
+// Complaints
+student.route("/complaints").get(complaints).post(validate(newComplaintSchema), newComplaint);
 
 // Notices
 student.route("/notices").get(notices);

@@ -11,6 +11,7 @@ import {
   mealPlanSchema,
   resetPasswordSchema,
   staffSchema,
+  updateComplaintByStaff,
   updateProfilePicSchema,
 } from "../utils/yupSchema";
 import { validate } from "../middlewares/validateBody";
@@ -26,6 +27,7 @@ import {
 } from "../controllers/staff/chef";
 import { checkAuth } from "../middlewares/verifyToken";
 import { notices } from "../controllers/staff/staff";
+import { complaints, updateComplaint } from "../controllers/staff/complaint";
 
 const staff = Router();
 
@@ -53,6 +55,12 @@ staff.get("/all", allStaffs);
 
 // Notices
 staff.get("/notices", notices);
+
+// Complaints
+staff
+  .route("/complaints/:_id?")
+  .get(complaints)
+  .patch(validate_id, validate(updateComplaintByStaff), updateComplaint);
 
 // -- CHEF ROUTES --
 

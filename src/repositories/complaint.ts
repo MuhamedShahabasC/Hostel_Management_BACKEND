@@ -14,17 +14,20 @@ export class ComplaintRepo extends CRUD {
   }
 
   // All complaints
-  async allComplaints(): Promise<IComplaint[]> {
-    const allComplaints = await this.findAndPopulate([
-      {
-        select: "name _id email",
-        path: "student",
-      },
-      {
-        select: "name _id email",
-        path: "staff",
-      },
-    ]);
+  async allComplaints(filter: object = {}): Promise<IComplaint[]> {
+    const allComplaints = await this.findAndPopulate(
+      [
+        {
+          select: "name _id email",
+          path: "student",
+        },
+        {
+          select: "name _id email",
+          path: "staff",
+        },
+      ],
+      filter
+    );
     if (allComplaints.length === 0) throw ErrorResponses.noDataFound("complaints");
     return allComplaints;
   }

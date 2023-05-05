@@ -14,4 +14,14 @@ export class ComplaintService extends ComplaintRepo {
     await this.findByIdAndUpdate(_id, data);
     return "Complaint Updated";
   }
+
+  // Complaints for single staff
+  async complaintsByStaff(_id: string) {
+    return await this.allComplaints({ staff: _id });
+  }
+  
+  // Complaints for single student
+  async complaintsByStudent(_id: string) {
+    return await this.allComplaints({ student: _id });
+  }
 }

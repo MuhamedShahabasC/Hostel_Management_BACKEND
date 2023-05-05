@@ -10,3 +10,9 @@ export const newComplaint = asyncHandler(async (req, res) => {
   const data = await service.newComplaint(req.body);
   res.json(dataFormattor(data));
 });
+
+// All complaints for corresponding student
+export const complaints = asyncHandler(async (req, res) => {
+  const allComplaints = await service.complaintsByStudent(req.tokenPayload?._id!);
+  res.json(dataFormattor(allComplaints));
+});
