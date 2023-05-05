@@ -44,8 +44,7 @@ class App {
   // Body Parser
   private bodyParser(): void {
     this.app.use(express.urlencoded({ extended: true }));
-    this.app.use(express.json());
-    // this.app.use(express.json({ limit: "2mb" }));
+    this.app.use(express.json({ limit: "2mb" }));
   }
 
   // Routing
