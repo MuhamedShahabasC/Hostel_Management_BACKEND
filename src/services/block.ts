@@ -62,14 +62,14 @@ export class BlockService extends BlockRepo {
     return blockDetails.rooms.filter(({ availability }) => availability);
   }
 
-  // Allot a room to student
-  async allotRoom(roomCode: string, student: string) {
+  // Allot / Change room
+  async allotRoom(roomCode: string, student: string, resident: boolean = false) {
     const blockDetails = await this.blockDetailsByRoomCode(roomCode);
     if (!blockDetails._id) throw ErrorResponses.noDataFound("block");
     await this.getRoomAvailability(roomCode);
     return await this.updateRoomByCode(blockDetails._id, roomCode, {
-      "rooms.$.student": new Types.ObjectId(student),
-      "rooms.$.availability": false,
+      $set: { "rooms.$.student": new Types.ObjectId(student), "rooms.$.availability": false },
+      $inc: { occupancy: resident ? 0 : 1 },
     });
   }
 
@@ -87,7 +87,7 @@ export class BlockService extends BlockRepo {
     await this.getRoomAvailability(newRoomCode);
     const { student } = await this.roomDetails(oldRoomCode);
     await this.vacateRoom(oldRoomCode);
-    return await this.allotRoom(newRoomCode, student);
+    return await this.allotRoom(newRoomCode, student, true);
   }
 
   // Total occupancy

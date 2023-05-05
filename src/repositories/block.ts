@@ -29,14 +29,18 @@ export abstract class BlockRepo extends CRUD {
 
   // Update room by code
   protected async updateRoomByCode(_id: string, roomCode: string, data: any) {
-    return await this.findOneAndUpdate({ _id, "rooms.code": roomCode }, { $set: data });
+    return await this.findOneAndUpdate({ _id, "rooms.code": roomCode }, data);
   }
 
   // Vacate room by _id and code
   protected async vacateRoomByCode(_id: string, roomCode: string): Promise<IBlock> {
     return await this.findOneAndUpdate(
       { _id, "rooms.code": roomCode },
-      { $unset: { "rooms.$.student": 1 }, $set: { "rooms.$.availability": true } }
+      {
+        $unset: { "rooms.$.student": 1 },
+        $set: { "rooms.$.availability": true },
+        $inc: { occupancy: -1 },
+      }
     );
   }
 
