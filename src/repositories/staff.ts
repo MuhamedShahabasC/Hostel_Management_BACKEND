@@ -30,7 +30,7 @@ export abstract class StaffRepo extends CRUD {
 
   // Fetching all staffs
   protected async getAll(): Promise<IStaff[]> {
-    return await this.findAll({ password: 0 });
+    return await this.findAll();
   }
 
   // Get single staff

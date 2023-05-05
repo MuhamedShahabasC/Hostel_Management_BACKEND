@@ -1,7 +1,11 @@
 import { Router } from "express";
 import { login, newStudent, resetPassword } from "../controllers/student/auth";
 import { validate } from "../middlewares/validateBody";
-import { resetPasswordSchema, studentAdmissionSchema } from "../utils/yupSchema";
+import {
+  newComplaintSchema,
+  resetPasswordSchema,
+  studentAdmissionSchema,
+} from "../utils/yupSchema";
 import { loginSchema } from "../utils/yupSchema";
 import {
   availableMealPlans,
@@ -14,6 +18,7 @@ import {
 import { checkAuth } from "../middlewares/verifyToken";
 import { showActiveMealPlans } from "../controllers/staff/chef";
 import { allBlocks } from "../controllers/chiefWarden/block";
+import { newComplaint } from "../controllers/student/complaint";
 
 const student = Router();
 
@@ -34,6 +39,9 @@ student.patch("/auth", validate(resetPasswordSchema), resetPassword);
 // Student CRUD
 student.route("/").get(singleStudent).patch(updateProfileImage).post(updateStudentData);
 student.route("/mealPlan").get(mealPlan);
+
+// Complaint
+student.route("/complaints").post(validate(newComplaintSchema), newComplaint);
 
 // Notices
 student.route("/notices").get(notices);

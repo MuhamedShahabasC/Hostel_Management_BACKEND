@@ -1,5 +1,5 @@
 import { StaffRepo } from "../repositories/staff";
-import { IStaff } from "../interfaces/staff";
+import { Department, IStaff } from "../interfaces/staff";
 import ErrorResponses from "../error/ErrorResponses";
 
 export class StaffService extends StaffRepo {
@@ -10,6 +10,13 @@ export class StaffService extends StaffRepo {
     return data;
   }
 
+  // Fetch staffs by department
+  async staffsByDept(department: Department) {
+    const staffs = await this.findAll({ role: department });
+    if (staffs.lenth === 0) throw ErrorResponses.noDataFound(`${department} staff`);
+    return staffs;
+  }
+
   // Get single staff data
   async singleStaff(email: string): Promise<IStaff> {
     const staffData = await this.single(email);
@@ -18,7 +25,7 @@ export class StaffService extends StaffRepo {
   }
 
   // Update staff details
-  async updateStaff(email: string,data: any): Promise<IStaff | void> {
-    return await this.update(email,data);
+  async updateStaff(email: string, data: any): Promise<IStaff | void> {
+    return await this.update(email, data);
   }
 }

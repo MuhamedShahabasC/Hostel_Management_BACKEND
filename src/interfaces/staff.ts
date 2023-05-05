@@ -19,7 +19,9 @@ export interface IStaff extends Document {
   address: IStaffAddress;
 }
 
-export interface IMealPlan extends Document{
+export type Department = "maintenance" | "chef" | "warden";
+
+export interface IMealPlan extends Document {
   title: string;
   price: number;
   breakfast: string;
@@ -27,5 +29,5 @@ export interface IMealPlan extends Document{
   evening: string;
   dinner: string;
   active?: boolean;
-  subscribers?: number
+  subscribers?: number;
 }

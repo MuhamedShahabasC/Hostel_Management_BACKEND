@@ -279,3 +279,79 @@ export const updateStudentSchema = yup.object().shape({
 export const updateProfilePicSchema = yup.object().shape({
   profilePic: yup.string().required("Image is required").trim(),
 });
+
+// New Complaint
+export const newComplaintSchema = yup.object().shape({
+  message: yup
+    .string()
+    .required("Message is required")
+    .trim()
+    .min(10, "Message must be longer than 10 characters")
+    .max(200, "Message must be shorter than 200 characters"),
+  department: yup
+    .string()
+    .trim()
+    .required("Complaint department is required")
+    .oneOf(["maintenance", "chef", "warden"], "Invalid department"),
+});
+
+// Update complaint
+export const updateComplaintSchema = yup.object().shape({
+  staff: yup
+    .string()
+    .trim()
+    .required()
+    .test("Valid MongoDB _id", "Invalid staff", (arg) => isValidObjectId(arg!)),
+  status: yup
+    .string()
+    .trim()
+    .required("Complaint status is required")
+    .oneOf(["initiated", "approval", "rejected", "issued", "resolved"], "Invalid Complaint status"),
+  oldStatus: yup
+    .string()
+    .trim()
+    .required("Complaint status is required")
+    .oneOf(["initiated", "approval", "rejected", "issued", "resolved"], "Invalid Complaint status"),
+  remarks: yup
+    .string()
+    .trim()
+    .min(4, "Remarks must be longer than 4 characters")
+    .max(250, "Remarks must be shorter than 250 characters"),
+});
+
+// Existing complaint
+export const complaintSchema = yup.object().shape({
+  student: yup
+    .string()
+    .trim()
+    .required()
+    .test("Valid MongoDB _id", "Invalid Student", (arg) => isValidObjectId(arg!)),
+  staff: yup
+    .string()
+    .trim()
+    .required()
+    .test("Valid MongoDB _id", "Invalid staff", (arg) => isValidObjectId(arg!)),
+  message: yup
+    .string()
+    .required("Message is required")
+    .trim()
+    .min(10, "Message must be longer than 10 characters")
+    .max(200, "Message must be shorter than 200 characters"),
+  status: yup
+    .string()
+    .trim()
+    .required("Complaint status is required")
+    .oneOf(["initiated", "approval", "rejected", "issued", "resolved"], "Invalid Complaint status"),
+  department: yup
+    .string()
+    .trim()
+    .required("Complaint department is required")
+    .oneOf(["maintenance", "chef", "warden"], "Invalid department"),
+  createdAt: yup.string().trim().required("Created date is required"),
+  updatedAt: yup.string().trim().required("Updated date is required"),
+  remarks: yup
+    .string()
+    .trim()
+    .min(4, "Remarks must be longer than 4 characters")
+    .max(250, "Remarks must be shorter than 250 characters"),
+});

@@ -13,6 +13,7 @@ import {
   mealPlanSchema,
   newBlockSchema,
   noticeSchema,
+  updateComplaintSchema,
   updateStudentSchema,
 } from "../utils/yupSchema";
 import {
@@ -37,6 +38,12 @@ import {
   updateMealPlan,
 } from "../controllers/staff/chef";
 import { checkAuth } from "../middlewares/verifyToken";
+import {
+  allComplaints,
+  singleComplaint,
+  updateComplaint,
+} from "../controllers/chiefWarden/complaint";
+import { staffsByDept } from "../controllers/chiefWarden/staff";
 
 const chiefWarden = Router();
 
@@ -59,6 +66,14 @@ chiefWarden
   .put(validate_id, validate(noticeSchema), updateNotice)
   .patch(validate_id, validate(noticeSchema), changeVisiblity)
   .delete(validate_id, deleteNotice);
+
+// Complaints
+chiefWarden.get("/complaints", allComplaints);
+chiefWarden.use("/complaints/:_id", validate_id);
+chiefWarden
+  .route("/complaints/:_id")
+  .get(singleComplaint)
+  .patch(validate(updateComplaintSchema), updateComplaint);
 
 // Blocks and Rooms
 chiefWarden
@@ -88,5 +103,8 @@ chiefWarden.patch(
   validate(updateStudentSchema),
   updateSingleStudent
 );
+
+// Staffs
+chiefWarden.get("/staffs/department/:department", staffsByDept);
 
 export default chiefWarden;
