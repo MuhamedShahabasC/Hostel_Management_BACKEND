@@ -1,8 +1,13 @@
+import { config } from "dotenv";
+// Configuring dotenv
+config();
 import nodemailer from "nodemailer";
-import { EmailTemplate } from "src/interfaces/chiefWarden";
+import { EmailTemplate } from "../interfaces/chiefWarden";
+
 //
-// Send mail to students
+// Send mail to users
 // Module: Nodemailer
+// Trasnporter Service: SendGrid
 //
 
 export const sendMail = ({
@@ -16,10 +21,14 @@ export const sendMail = ({
 }) => {
   // Transporter
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: "SendGrid",
     auth: {
-      user: process.env.TRANSPORTER_USERNAME,
+      user: process.env.TRANSPORTER_APIKEY,
       pass: process.env.TRANSPORTER_PASSWORD,
+    },
+    tls: {
+      ciphers: "SSLv3",
+      rejectUnauthorized: false,
     },
   });
 
