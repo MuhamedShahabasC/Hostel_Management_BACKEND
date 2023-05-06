@@ -13,8 +13,11 @@ export const newComplaint = asyncHandler(async (req, res) => {
   res.json(dataFormattor("Complaint filed successfully"));
 });
 
-// All complaints for corresponding student
+// All complaints for corresponding student with filtering
 export const complaints = asyncHandler(async (req, res) => {
-  const allComplaints = await service.complaintsByStudent(req.tokenPayload?._id!);
+  const filterObj = { ...req.query };
+  for (const filter in filterObj)
+    if (!filterObj[filter] || filter !== "status") delete filterObj[filter];
+  const allComplaints = await service.complaintsByStudent(req.tokenPayload?._id!, filterObj);
   res.json(dataFormattor(allComplaints));
 });

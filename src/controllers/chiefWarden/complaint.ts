@@ -7,7 +7,10 @@ const service = new ComplaintService();
 
 // Fetch all complaints
 export const allComplaints = asyncHandler(async (req, res) => {
-  const allComplaints = await service.allComplaints();
+  const filterObj = { ...req.query };
+  for (const filter in filterObj)
+    if (!filterObj[filter] || filter !== "status") delete filterObj[filter];
+  const allComplaints = await service.allComplaints(filterObj);
   res.json(dataFormattor(allComplaints));
 });
 

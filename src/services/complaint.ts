@@ -33,8 +33,8 @@ export class ComplaintService extends ComplaintRepo {
   }
 
   // Complaints for single student
-  async complaintsByStudent(_id: string) {
-    return await this.allComplaints({ student: _id });
+  async complaintsByStudent(_id: string, status: object = {}) {
+    return await this.allComplaints({ student: _id, ...status });
   }
 
   // Single complaint
