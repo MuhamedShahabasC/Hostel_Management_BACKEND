@@ -3,6 +3,7 @@ import { IStaff } from "../interfaces/staff";
 import { AuthRoles, AuthService } from "../services/auth";
 import { hashPassword } from "../utils/passwordManager";
 import { CRUD } from "./CRUD";
+import ErrorResponses from "../error/ErrorResponses";
 
 export class StaffAuth extends AuthService {
   // Role of User
@@ -39,9 +40,11 @@ export abstract class StaffRepo extends CRUD {
   }
 
   // Update single staff
-  protected async update(email: string, data: any): Promise<IStaff> {
+  protected async update(email: string, data: any) {
     if (data.password) data.password = await hashPassword(data.password);
-    return await this.findOneAndUpdate({ email }, data);
+    const updatedStaff = await this.findOneAndUpdate<IStaff>({ email }, data);
+    if (!updatedStaff) throw ErrorResponses.noDataFound("staff");
+    return updatedStaff;
   }
 
   // Get all staff emails

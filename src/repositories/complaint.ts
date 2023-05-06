@@ -6,11 +6,12 @@ import ErrorResponses from "../error/ErrorResponses";
 
 // Complaint repository
 export class ComplaintRepo extends CRUD {
+  // Complaint Model
   model: Model<IComplaint> = ComplaintModel;
 
   // New complaint
   async createComplaint(data: IComplaintInput) {
-    return await this.create(data);
+    return await this.create<IComplaint>(data);
   }
 
   // All complaints
@@ -31,5 +32,4 @@ export class ComplaintRepo extends CRUD {
     if (allComplaints.length === 0) throw ErrorResponses.noDataFound("complaints");
     return allComplaints;
   }
-
 }

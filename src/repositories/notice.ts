@@ -31,6 +31,6 @@ export abstract class NoticeRepo extends CRUD {
 
   // Delete a notice
   protected async remove(_id: string) {
-    return await this.idAndDelete({ _id });
+    return await this.findByIdAndDelete<INotice>({ _id });
   }
 }

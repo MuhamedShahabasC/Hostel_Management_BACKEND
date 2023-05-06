@@ -33,7 +33,7 @@ export abstract class AuthService {
   }
 
   // Sign Up
-  async signUp(data: any): Promise<Error | string | void> {
+  async signUp(data: any): Promise<string | void> {
     let collection;
     switch (this.role) {
       case "chief-warden": {

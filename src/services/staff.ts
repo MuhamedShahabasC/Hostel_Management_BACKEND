@@ -12,8 +12,8 @@ export class StaffService extends StaffRepo {
 
   // Fetch staffs by department
   async staffsByDept(department: Department) {
-    const staffs = await this.findAll({ role: department });
-    if (staffs.lenth === 0) throw ErrorResponses.noDataFound(`${department} staff`);
+    const staffs = await this.findAll<IStaff>({ role: department });
+    if (staffs.length === 0) throw ErrorResponses.noDataFound(`${department} staff`);
     return staffs;
   }
 

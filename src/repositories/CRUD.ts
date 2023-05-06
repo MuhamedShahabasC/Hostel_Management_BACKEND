@@ -7,7 +7,7 @@ export abstract class CRUD {
   abstract model: Model<any>;
 
   // create()
-  protected async create(data: any) {
+  protected async create<T>(data: any): Promise<T> {
     return this.model.create(data);
   }
 
@@ -22,7 +22,7 @@ export abstract class CRUD {
   }
 
   // find()
-  protected async findAll(filter?: Object, options?: Object): Promise<any | null> {
+  protected async findAll<T>(filter?: Object, options?: Object): Promise<T[]> {
     return this.model.find({ ...filter }, { ...options, __v: 0, password: 0 }).sort({ _id: -1 });
   }
 
@@ -39,12 +39,12 @@ export abstract class CRUD {
   }
 
   // findByIdAndUpdate()
-  protected async findByIdAndUpdate(_id: string, data: object) {
+  protected async findByIdAndUpdate<T>(_id: string, data: object): Promise<T | null> {
     return this.model.findByIdAndUpdate(_id, data, { runValidators: true, new: true });
   }
 
   // findOneAndUpdate()
-  protected async findOneAndUpdate(filter: object, data: object) {
+  protected async findOneAndUpdate<T>(filter: object, data: object): Promise<T | null> {
     return this.model.findOneAndUpdate(filter, data, {
       runValidators: true,
       new: true,
@@ -52,7 +52,7 @@ export abstract class CRUD {
   }
 
   // findByIdAndDelete()
-  protected async idAndDelete(filter: Object) {
+  protected async findByIdAndDelete<T>(filter: Object): Promise<T | null> {
     return this.model.findByIdAndDelete(filter);
   }
 }

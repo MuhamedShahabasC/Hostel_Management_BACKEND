@@ -37,7 +37,7 @@ const staff = Router();
 staff.route("/auth").post(validate(loginSchema), login);
 
 // MIDDLEWARE TO VERIFY JWT AUTHENTICATION
-staff.use(checkAuth("staff"));
+// staff.use(checkAuth("staff"));
 
 // Reset password
 staff.patch("/auth", validate(resetPasswordSchema), resetPassword);

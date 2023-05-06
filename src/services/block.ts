@@ -23,8 +23,8 @@ export class BlockService extends BlockRepo {
   }
 
   // Delete a block
-  async deleteBlock(_id: string): Promise<void | null> {
-    return await this.delete(_id);
+  async deleteBlock(_id: string): Promise<IBlock | null> {
+    return await this.deleteBlockById(_id);
   }
 
   // Block details by _id

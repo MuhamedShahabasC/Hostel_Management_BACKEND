@@ -11,26 +11,28 @@ export abstract class ChefRepo extends CRUD {
   model: Model<IMealPlan> = MealPlanModel;
 
   // Find all meal plans with optional filter
-  protected async findMealPlans(filter?: Object, options?: Object): Promise<IMealPlan[]> {
-    const mealPlans = await this.findAll(filter, options);
+  protected async findMealPlans(filter?: Object, options?: Object) {
+    const mealPlans = await this.findAll<IMealPlan>(filter, options);
     if (mealPlans.length === 0) throw ErrorResponses.noDataFound("meal plans");
     return mealPlans;
   }
 
   // Create new meal plan
-  protected async createPlan(data: IMealPlan): Promise<void> {
-    return await this.create(data);
+  protected async createPlan(data: IMealPlan) {
+    return await this.create<IMealPlan>(data);
   }
 
   // Find meal plan
-  protected async findMealPlan(_id: string): Promise<any> {
-    const mealData = await this.findOne({ _id });
+  protected async findMealPlan(_id: string) {
+    const mealData = await this.findOne<IMealPlan>({ _id });
     if (!mealData) throw ErrorResponses.noDataFound("meal plan");
     return mealData;
   }
 
   // Update meal plan
-  protected async update(_id: string, data: any): Promise<IMealPlan> {
-    return await this.findByIdAndUpdate(_id, data);
+  protected async update(_id: string, data: any) {
+    const updatedMealPlan = await this.findByIdAndUpdate<IMealPlan>(_id, data);
+    if (!updatedMealPlan) throw ErrorResponses.noDataFound("updated meal plan");
+    return updatedMealPlan;
   }
 }

@@ -34,12 +34,12 @@ export class StudentService extends StudentRepo {
 
   // All resident Students
   async residentStudents(): Promise<IStudent[] | null> {
-    return await this.allStudentsData({status: 'resident'});
+    return await this.allStudentsData({ status: "resident" });
   }
 
   // Update single student
-  async updateSingleStudent(_id: string, data: object): Promise<IStudent> {
-    const updatedData = await this.findByIdAndUpdate(_id, data);
+  async updateSingleStudent(_id: string, data: object) {
+    const updatedData = await this.findByIdAndUpdate<IStudent>(_id, data);
     if (!updatedData) throw ErrorResponses.noDataFound("student");
     return updatedData;
   }

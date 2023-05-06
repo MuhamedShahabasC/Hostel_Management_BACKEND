@@ -1,4 +1,4 @@
-import { IComplaintInput, IComplaintPopulated } from "src/interfaces/complaint";
+import { IComplaint, IComplaintInput, IComplaintPopulated } from "src/interfaces/complaint";
 import ErrorResponses from "../error/ErrorResponses";
 import { ComplaintRepo } from "../repositories/complaint";
 
@@ -17,7 +17,9 @@ export class ComplaintService extends ComplaintRepo {
       data.oldStatus === "resolved"
     )
       throw ErrorResponses.customError("Invalid Status");
-    return await this.findByIdAndUpdate(_id, data);
+    const updatedComplaint = await this.findByIdAndUpdate<IComplaint>(_id, data);
+    if (!updatedComplaint) throw ErrorResponses.noDataFound("complaint");
+    return updatedComplaint;
   }
 
   // Complaints for single staff

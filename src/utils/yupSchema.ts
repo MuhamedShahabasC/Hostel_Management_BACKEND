@@ -24,7 +24,7 @@ export const staffSchema = yup.object().shape({
     .string()
     .trim()
     .matches(/^[0-9]{10}$/, "Invalid mobile number"),
-  role: yup.mixed().oneOf(["warden", "chef"]).required(),
+  role: yup.mixed().oneOf(["warden", "chef", "maintenance"]).required(),
   gender: yup.mixed().oneOf(["male", "female"]).required(),
   profilePic: yup.string().trim(),
   address: yup.object().shape({

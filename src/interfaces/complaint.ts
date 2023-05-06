@@ -1,11 +1,5 @@
 import { Document, ObjectId } from "mongoose";
 
-export interface IComplaint extends IComplaintInput {
-  createdAt?: string;
-  updatedAt?: string;
-  remarks?: string;
-}
-
 export interface IComplaintPopulated extends Document {
   student: {
     _id: ObjectId;
@@ -24,10 +18,16 @@ export interface IComplaintPopulated extends Document {
   remarks?: string;
 }
 
-export interface IComplaintInput {
+export interface IComplaintInput extends Document{
   student: ObjectId;
   message: string;
   status: "initiated" | "rejected" | "issued" | "resolved" | "approval";
   staff: ObjectId;
   department: "maintenance" | "chef" | "warden";
+}
+
+export interface IComplaint extends IComplaintInput {
+  createdAt?: string;
+  updatedAt?: string;
+  remarks?: string;
 }

@@ -15,7 +15,7 @@ export class ChefService extends ChefRepo {
   }
 
   // Adding meal plan
-  async newMealPlan(data: IMealPlan): Promise<void> {
+  async newMealPlan(data: IMealPlan) {
     return await this.createPlan(data);
   }
 
