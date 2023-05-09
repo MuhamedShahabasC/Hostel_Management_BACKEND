@@ -273,6 +273,8 @@ export const updateStudentSchema = yup.object().shape({
       .trim()
       .test("isvalidEmail", "Invalid e-Mail", (arg) => /[a-z0-9]+@[a-z0-9]+.com/i.test(arg)),
   }),
+  // paidPayment: yup.string().trim().required("Paid Payment is required"),
+  // balancePayment: yup.string().trim().required("Balance amount is required"),
 });
 
 // Update profile Image
@@ -368,4 +370,13 @@ export const updateComplaintByStaff = yup.object().shape({
     .trim()
     .min(4, "Remarks must be longer than 4 characters")
     .max(250, "Remarks must be shorter than 250 characters"),
+});
+
+// Payment Schema for warden
+export const monthlyPaymentSchema = yup.object().shape({
+  additionalAmount: yup
+    .number()
+    .required()
+    .integer("Invalid Number")
+    .moreThan(-1, "Invalid Number"),
 });

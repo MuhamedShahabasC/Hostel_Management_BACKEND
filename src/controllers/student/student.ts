@@ -10,7 +10,7 @@ const noticeService = new NoticeService();
 
 // Get single student data
 export const singleStudent = asyncHandler(async (req, res) => {
-  const studentData = await service.singleStudentData(req.tokenPayload?.email!);
+  const studentData = await service.singleStudentById(req.tokenPayload?._id!);
   res.json(dataFormattor(studentData));
 });
 
@@ -36,7 +36,7 @@ export const updateProfileImage = asyncHandler(async (req, res) => {
 
 // Selected meal plan
 export const mealPlan = asyncHandler(async (req, res) => {
-  const studentData = await service.singleStudentData(req.tokenPayload?.email!);
+  const studentData = await service.singleStudentById(req.tokenPayload?._id!);
   res.json(dataFormattor(studentData?.mealPlan));
 });
 

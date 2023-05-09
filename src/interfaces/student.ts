@@ -1,4 +1,5 @@
 import { ObjectId } from "mongoose";
+import { IMealPlan } from "./staff";
 
 export interface IStudent {
   _id?: ObjectId;
@@ -23,7 +24,14 @@ export interface IStudent {
   room: string;
   block: ObjectId;
   mealPlan: ObjectId;
-  status?: StudentStatus;
+  status: StudentStatus;
+  paidPayment: number;
+  balancePayment: number;
+  lastBilledMonth: string;
+}
+
+export interface PopulatedStudent extends Omit<IStudent, "mealPlan"> {
+  mealPlan: IMealPlan;
 }
 
 export type StudentStatus = "pending" | "resident" | "rejected" | "departed";

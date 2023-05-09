@@ -74,10 +74,10 @@ export class BlockService extends BlockRepo {
   }
 
   // Vacate room by room code
-  async vacateRoom(roomCode: string) {
+  async vacateRoom(roomCode: string, resident: boolean = false) {
     const blockDetails = await this.blockDetailsByRoomCode(roomCode);
     if (!blockDetails._id) throw ErrorResponses.noDataFound("block");
-    return await this.vacateRoomByCode(blockDetails._id, roomCode);
+    return await this.vacateRoomByCode(blockDetails._id, roomCode, resident);
   }
 
   // Change room of student
@@ -86,7 +86,7 @@ export class BlockService extends BlockRepo {
       return ErrorResponses.customError("Invalid ressignment of student");
     await this.getRoomAvailability(newRoomCode);
     const { student } = await this.roomDetails(oldRoomCode);
-    await this.vacateRoom(oldRoomCode);
+    await this.vacateRoom(oldRoomCode, true);
     return await this.allotRoom(newRoomCode, student, true);
   }
 
@@ -98,9 +98,7 @@ export class BlockService extends BlockRepo {
     availableRooms: number;
   } | null> {
     try {
-      let totalOccupancy = await this.totalOccupancy();
-      if (totalOccupancy.length === 0) throw ErrorResponses.customError("Couldnot fetch occupancy");
-      return totalOccupancy;
+      return await this.totalOccupancy();
     } catch (error) {
       throw ErrorResponses.customError("Error fetching statistics");
     }

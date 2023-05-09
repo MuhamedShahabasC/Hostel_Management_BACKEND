@@ -14,6 +14,7 @@ const chefService = new ChefService();
 
 // Get all students data
 export const allStudentsData = asyncHandler(async (req, res) => {
+  // Refactoring query
   const filterObj = { ...req.query };
   for (const filter in filterObj) {
     if (!filterObj[filter] || !/^(name|status)$/.test(filter)) delete filterObj[filter];

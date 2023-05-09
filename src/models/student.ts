@@ -157,6 +157,18 @@ const studentSchema = new Schema<IStudent>(
         message: "Invalid status ({VALUE})",
       },
     },
+    paidPayment: {
+      type: Number,
+      default: 0,
+    },
+    balancePayment: {
+      type: Number,
+      default: 7500,
+    },
+    lastBilledMonth: {
+      type: String,
+      default: "Unbilled",
+    },
   },
   { timestamps: true }
 );

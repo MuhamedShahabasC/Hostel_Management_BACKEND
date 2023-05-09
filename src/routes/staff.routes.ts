@@ -9,6 +9,7 @@ import { newStaff, login, resetPassword } from "../controllers/staff/auth";
 import {
   loginSchema,
   mealPlanSchema,
+  monthlyPaymentSchema,
   resetPasswordSchema,
   staffSchema,
   updateComplaintByStaff,
@@ -28,6 +29,7 @@ import {
 import { checkAuth } from "../middlewares/verifyToken";
 import { dashboardStatistics, notices } from "../controllers/staff/staff";
 import { complaints, updateComplaint } from "../controllers/staff/complaint";
+import { allStudents, updateStudentPayment } from "../controllers/staff/warden";
 
 const staff = Router();
 
@@ -37,7 +39,7 @@ const staff = Router();
 staff.route("/auth").post(validate(loginSchema), login);
 
 // MIDDLEWARE TO VERIFY JWT AUTHENTICATION
-// staff.use(checkAuth("staff"));
+staff.use(checkAuth("staff"));
 
 // Reset password
 staff.patch("/auth", validate(resetPasswordSchema), resetPassword);
@@ -65,8 +67,16 @@ staff
   .get(complaints)
   .patch(validate_id, validate(updateComplaintByStaff), updateComplaint);
 
-// -- CHEF ROUTES --
+// -- WARDEN ROUTES --
+// MIDDLEWARE TO VERIFY JWT AUTHENTICATION AND WARDEN ROLE
+staff.use(["/students/", "/payments/"], validateStaffRole("warden"));
 
+staff
+  .route("/students/:_id?")
+  .get(allStudents)
+  .patch(validate_id, validate(monthlyPaymentSchema), updateStudentPayment);
+
+// -- CHEF ROUTES --
 // MIDDLEWARE TO VERIFY JWT AUTHENTICATION AND CHEF ROLE
 staff.use("/meals/", validateStaffRole("chef"));
 

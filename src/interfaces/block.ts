@@ -15,3 +15,10 @@ export interface IBlock {
   rooms: IRoom[];
   occupancy: number;
 }
+
+export interface TotalRoomOccupancy {
+  _id: null;
+  occupancy: number;
+  totalRooms: number;
+  availableRooms: number;
+}
