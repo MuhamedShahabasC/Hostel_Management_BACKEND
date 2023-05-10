@@ -22,6 +22,7 @@ import { showActiveMealPlans } from "../controllers/staff/chef";
 import { allBlocks } from "../controllers/chiefWarden/block";
 import { complaints, newComplaint } from "../controllers/student/complaint";
 import { allPayments, initiatePayment, successfulPayment } from "../controllers/student/payment";
+import { allChatMessages } from "../controllers/student/chat";
 
 const student = Router();
 
@@ -51,6 +52,9 @@ student.route("/notices").get(notices);
 
 // Meal plans
 student.route("/mealPlans").get(availableMealPlans);
+
+// Chat
+student.route("/chats").get(allChatMessages);
 
 // Payments
 student

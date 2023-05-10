@@ -1,5 +1,8 @@
-import { UserChat, UserMessage } from "src/interfaces/chat";
+import { UserChat, ChatMessage } from "../interfaces/chat";
 import { io } from "../config/socket";
+import { ChatService } from "../services/chat";
+
+const chatService = new ChatService();
 
 export const socketAPI = () => {
   let users: UserChat[] = [];
@@ -22,17 +25,24 @@ export const socketAPI = () => {
     });
 
     // Send a message
-    socket.on("sendMessage", ({ role, message, userName, userId,profilePic }: UserMessage) => {
-      const messageData = {
-        userId,
-        userName,
-        profilePic,
-        role,
-        message,
-      };
-      // Seperate rooms for student and staff
-      io.to(role).emit("getMessage", messageData);
-    });
+    socket.on(
+      "sendMessage",
+      async ({ role, message, userName, userId, profilePic }: ChatMessage) => {
+        const messageData = {
+          userId,
+          userName,
+          profilePic,
+          role,
+          message,
+          date: Date.now(),
+        };
+
+        // Save message to mongoDB
+        await chatService.createMessage(messageData);
+        // Seperate rooms for student and staff
+        io.to(role).emit("getMessage", messageData);
+      }
+    );
 
     // Disconnect user
     socket.on("disconnect", () => {
