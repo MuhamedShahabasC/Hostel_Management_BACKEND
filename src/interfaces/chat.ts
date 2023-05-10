@@ -10,4 +10,5 @@ export interface UserMessage {
   userName: string;
   role: string;
   message: string;
+  profilePic: string;
 }

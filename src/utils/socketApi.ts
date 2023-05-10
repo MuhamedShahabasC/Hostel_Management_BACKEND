@@ -22,10 +22,11 @@ export const socketAPI = () => {
     });
 
     // Send a message
-    socket.on("sendMessage", ({ role, message, userName, userId }: UserMessage) => {
+    socket.on("sendMessage", ({ role, message, userName, userId,profilePic }: UserMessage) => {
       const messageData = {
         userId,
         userName,
+        profilePic,
         role,
         message,
       };
