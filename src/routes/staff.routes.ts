@@ -30,6 +30,7 @@ import { checkAuth } from "../middlewares/verifyToken";
 import { dashboardStatistics, notices } from "../controllers/staff/staff";
 import { complaints, updateComplaint } from "../controllers/staff/complaint";
 import { allStudents, updateStudentPayment } from "../controllers/staff/warden";
+import { allPayments } from "../controllers/staff/payments";
 
 const staff = Router();
 
@@ -75,6 +76,8 @@ staff
   .route("/students/:_id?")
   .get(allStudents)
   .patch(validate_id, validate(monthlyPaymentSchema), updateStudentPayment);
+
+staff.route("/payments").get(allPayments);
 
 // -- CHEF ROUTES --
 // MIDDLEWARE TO VERIFY JWT AUTHENTICATION AND CHEF ROLE

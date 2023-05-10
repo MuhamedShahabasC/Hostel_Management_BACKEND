@@ -7,5 +7,13 @@ export interface IPayment extends Document {
   date: Date;
   balancePayment: number;
   paidPayment: number;
-  verified: boolean;
+}
+
+export interface INewPayment {
+  student: string;
+  refId: string;
+  amount: number;
+  date: number;
+  balancePayment: number;
+  paidPayment: number;
 }

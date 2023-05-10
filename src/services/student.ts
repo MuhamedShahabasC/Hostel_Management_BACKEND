@@ -50,4 +50,11 @@ export class StudentService extends StudentRepo {
     if (!studentData) throw ErrorResponses.noDataFound("Student");
     return studentData[0];
   }
+
+  // Add payment to student
+  async addPayment(student: string, amountInPaisa: number): Promise<IStudent> {
+    return await this.updateSingleStudent(student, {
+      $inc: { paidPayment: amountInPaisa / 100, balancePayment: -(amountInPaisa / 100) },
+    });
+  }
 }

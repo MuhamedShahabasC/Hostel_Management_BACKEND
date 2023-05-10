@@ -1,5 +1,5 @@
 import { Model, Schema, model } from "mongoose";
-import { IPayment } from "src/interfaces/payment";
+import { IPayment } from "../interfaces/payment";
 
 const paymentSchema = new Schema<IPayment>({
   student: {
@@ -27,10 +27,6 @@ const paymentSchema = new Schema<IPayment>({
   paidPayment: {
     type: Number,
     required: [true, "Please specify the paid amount of the student"],
-  },
-  verified: {
-    type: Boolean,
-    default: false,
   },
 });
 

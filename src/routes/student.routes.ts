@@ -3,8 +3,10 @@ import { login, newStudent, resetPassword } from "../controllers/student/auth";
 import { validate } from "../middlewares/validateBody";
 import {
   newComplaintSchema,
+  newPaymentSchema,
   resetPasswordSchema,
   studentAdmissionSchema,
+  successfulPaymentSchema,
 } from "../utils/yupSchema";
 import { loginSchema } from "../utils/yupSchema";
 import {
@@ -19,6 +21,7 @@ import { checkAuth } from "../middlewares/verifyToken";
 import { showActiveMealPlans } from "../controllers/staff/chef";
 import { allBlocks } from "../controllers/chiefWarden/block";
 import { complaints, newComplaint } from "../controllers/student/complaint";
+import { allPayments, initiatePayment, successfulPayment } from "../controllers/student/payment";
 
 const student = Router();
 
@@ -48,5 +51,12 @@ student.route("/notices").get(notices);
 
 // Meal plans
 student.route("/mealPlans").get(availableMealPlans);
+
+// Payments
+student
+  .route("/payments")
+  .get(allPayments)
+  .patch(validate(newPaymentSchema), initiatePayment)
+  .post(validate(successfulPaymentSchema), successfulPayment);
 
 export default student;
