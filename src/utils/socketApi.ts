@@ -16,8 +16,6 @@ export const socketAPI = () => {
   };
 
   io.on("connection", (socket) => {
-    console.log(`user connected with id:${socket.id}`);
-
     // Add new user
     socket.on("join", (data) => {
       addUser(data.role, socket.id);
@@ -39,14 +37,14 @@ export const socketAPI = () => {
 
         // Save message to mongoDB
         await chatService.createMessage(messageData);
-        // Seperate rooms for student and staff
+
+        // Send message to the room
         io.to(role).emit("getMessage", messageData);
       }
     );
 
     // Disconnect user
     socket.on("disconnect", () => {
-      console.log(`user with id:${socket.id} has disconnected`);
       removeUser(socket.id);
       io.emit("getUsers", users);
     });

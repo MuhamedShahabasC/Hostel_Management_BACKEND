@@ -44,6 +44,7 @@ import {
   updateComplaint,
 } from "../controllers/chiefWarden/complaint";
 import { staffsByDept } from "../controllers/chiefWarden/staff";
+import { allChatMessages } from "../controllers/chiefWarden/chat";
 
 const chiefWarden = Router();
 
@@ -55,6 +56,9 @@ chiefWarden.use(checkAuth("chief-warden"));
 
 // Reset Password
 chiefWarden.patch("/auth", resetPassword);
+
+// Chat
+chiefWarden.get('/chats/:room', allChatMessages)
 
 // Notices
 chiefWarden.get("/notices/all", allNotices);

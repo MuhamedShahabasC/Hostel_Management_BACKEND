@@ -31,6 +31,7 @@ import { dashboardStatistics, notices } from "../controllers/staff/staff";
 import { complaints, updateComplaint } from "../controllers/staff/complaint";
 import { allStudents, updateStudentPayment } from "../controllers/staff/warden";
 import { allPayments } from "../controllers/staff/payments";
+import { allChatMessages } from "../controllers/staff/chat";
 
 const staff = Router();
 
@@ -58,6 +59,9 @@ staff.get("/all", allStaffs);
 
 // Dashboard statistics
 staff.route("/dashboard").get(dashboardStatistics);
+
+// Chat
+staff.route("/chats").get(allChatMessages);
 
 // Notices
 staff.get("/notices", notices);

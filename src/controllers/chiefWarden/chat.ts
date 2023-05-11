@@ -4,8 +4,9 @@ import { dataFormattor } from "../../utils/JSON-formattor";
 
 const chatService = new ChatService();
 
-// All student chats
+// All chats by room
 export const allChatMessages = asyncHandler(async (req, res) => {
-  const allChatMessages = await chatService.getAllMessages("student");
+  if (!/^(student|staff)$/.test(req.params.room)) req.params.room = "student";
+  const allChatMessages = await chatService.getAllMessages(req.params.room as "student" | "staff");
   res.json(dataFormattor(allChatMessages));
 });
