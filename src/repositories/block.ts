@@ -12,9 +12,14 @@ export abstract class BlockRepo extends CRUD {
     return await this.findAll<IBlock>();
   }
 
-  // Update room by code
-  protected async updateRoomByCode(_id: string, roomCode: string, data: any) {
+  // Update room by block ID
+  protected async updateRoomByBlockId(_id: string, roomCode: string, data: any) {
     return await this.findOneAndUpdate<IBlock>({ _id, "rooms.code": roomCode }, data);
+  }
+
+  // Update room by code
+  protected async updateRoomByCode(roomCode: string, data: any) {
+    return await this.findOneAndUpdate<IBlock>({ code: roomCode[0], "rooms.code": roomCode }, data);
   }
 
   // Vacate room by _id and code

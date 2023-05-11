@@ -32,6 +32,7 @@ import { complaints, updateComplaint } from "../controllers/staff/complaint";
 import { allStudents, updateStudentPayment } from "../controllers/staff/warden";
 import { allPayments } from "../controllers/staff/payments";
 import { allChatMessages } from "../controllers/staff/chat";
+import { allBlocksData, blockData, changeRoomAvailability } from "../controllers/staff/maintenance";
 
 const staff = Router();
 
@@ -95,5 +96,13 @@ staff
   .post(validate(mealPlanSchema), newMealPlan)
   .put(validate_id, validate(mealPlanSchema), updateMealPlan)
   .patch(validate_id, changeAvailability);
+
+// -- MAINTENANCE ROUTES --
+// MIDDLEWARE TO VERIFY JWT AUTHENTICATION AND MAINTENANCE ROLE
+staff.use("/maintenance/", validateStaffRole("maintenance"));
+
+staff.route("/maintenance").get(allBlocksData);
+staff.route("/maintenance/room/:code").patch(changeRoomAvailability);
+staff.route("/maintenance/:name").get(blockData);
 
 export default staff;

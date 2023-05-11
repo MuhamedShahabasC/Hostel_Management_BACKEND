@@ -9,7 +9,7 @@ export const dataFormattor = (data: any) => {
       count: data.length,
       data,
     };
-  } else if (typeof data === "string") {
+  } else if (typeof data === "string" || typeof data === "number") {
     return {
       status,
       message: data,
