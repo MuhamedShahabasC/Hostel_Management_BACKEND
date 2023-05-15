@@ -34,9 +34,9 @@ import { allPayments } from "../controllers/staff/payments";
 import { allChatMessages } from "../controllers/staff/chat";
 import { allBlocksData, blockData, changeRoomAvailability } from "../controllers/staff/maintenance";
 
-const staff = Router();
+// ------- STAFF ROUTES ------- //
 
-// -- COMMON ROUTES --
+const staff = Router();
 
 // Authentication
 staff.route("/auth").post(validate(loginSchema), login);
@@ -53,8 +53,6 @@ staff
   .get(singleStaff)
   .post(validate(staffSchema), updateSingleStaff)
   .patch(validate(updateProfilePicSchema), updateProfileImage);
-
-// New staff and All staffs => ////// to be moved to chief warden routes ////
 staff.route("/new").post(validate(staffSchema), newStaff);
 staff.get("/all", allStaffs);
 

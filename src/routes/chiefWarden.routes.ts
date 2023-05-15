@@ -13,6 +13,7 @@ import {
   mealPlanSchema,
   newBlockSchema,
   noticeSchema,
+  staffSchema,
   updateComplaintSchema,
   updateStudentSchema,
 } from "../utils/yupSchema";
@@ -40,11 +41,15 @@ import {
 import { checkAuth } from "../middlewares/verifyToken";
 import {
   allComplaints,
+  complaintsByStaff,
   singleComplaint,
   updateComplaint,
 } from "../controllers/chiefWarden/complaint";
-import { staffsByDept } from "../controllers/chiefWarden/staff";
+import { allStaffsData, newStaff, staffsByDept } from "../controllers/chiefWarden/staff";
 import { allChatMessages } from "../controllers/chiefWarden/chat";
+
+
+// ------- CHIEF WARDEN ROUTES ------- //
 
 const chiefWarden = Router();
 
@@ -58,7 +63,7 @@ chiefWarden.use(checkAuth("chief-warden"));
 chiefWarden.patch("/auth", resetPassword);
 
 // Chat
-chiefWarden.get('/chats/:room', allChatMessages)
+chiefWarden.get("/chats/:room", allChatMessages);
 
 // Notices
 chiefWarden.get("/notices/all", allNotices);
@@ -71,22 +76,13 @@ chiefWarden
   .patch(validate_id, validate(noticeSchema), changeVisiblity)
   .delete(validate_id, deleteNotice);
 
-// Complaints
-chiefWarden.get("/complaints", allComplaints);
-chiefWarden.use("/complaints/:_id", validate_id);
-chiefWarden
-  .route("/complaints/:_id")
-  .get(singleComplaint)
-  .patch(validate(updateComplaintSchema), updateComplaint);
-
 // Blocks and Rooms
 chiefWarden
   .route("/blocks/:_id?")
   .get(allBlocks)
-  // not yet on frontend
   .post(validate(newBlockSchema), newBlock)
-  .patch(validate_id, updateRoom) // PENDING WORK
-  .delete(validate_id, deleteBlock); // soft
+  .patch(validate_id, updateRoom)
+  .delete(validate_id, deleteBlock);
 chiefWarden.get("/blocks/rooms/availability/:roomCode", checkRoomAvailability);
 chiefWarden.get("/blocks/rooms/availableRooms/:_id", availableRooms);
 
@@ -96,7 +92,15 @@ chiefWarden
   .get(allMealPlans)
   .post(validate(mealPlanSchema), newMealPlan)
   .put(validate_id, validate(mealPlanSchema), updateMealPlan)
-  .patch(validate_id, changeAvailability); // approve
+  .patch(validate_id, changeAvailability);
+
+// Complaints
+chiefWarden.get("/complaints", allComplaints);
+chiefWarden.use("/complaints/:_id", validate_id);
+chiefWarden
+  .route("/complaints/:_id")
+  .get(singleComplaint)
+  .patch(validate(updateComplaintSchema), updateComplaint);
 
 // Students
 chiefWarden.get("/students/all", allStudentsData);
@@ -109,6 +113,8 @@ chiefWarden.patch(
 );
 
 // Staffs
+chiefWarden.route("/staffs").get(allStaffsData).post(validate(staffSchema), newStaff);
+chiefWarden.get("/staffs/:_id", validate_id, complaintsByStaff);
 chiefWarden.get("/staffs/department/:department", staffsByDept);
 
 export default chiefWarden;

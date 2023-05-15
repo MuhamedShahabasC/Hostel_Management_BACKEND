@@ -30,8 +30,8 @@ export abstract class StaffRepo extends CRUD {
   model = StaffModel;
 
   // Fetching all staffs
-  protected async getAll(): Promise<IStaff[]> {
-    return await this.findAll();
+  protected async allStaffsByFilter(filter?: any): Promise<IStaff[]> {
+    return await this.findAll(filter);
   }
 
   // Get single staff

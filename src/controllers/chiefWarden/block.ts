@@ -2,9 +2,6 @@ import asyncHandler from "express-async-handler";
 import { dataFormattor } from "../../utils/JSON-formattor";
 import { BlockService } from "../../services/block";
 
-// todo
-// 1. update room : ? Student data referece required
-
 // Block service
 const service = new BlockService();
 

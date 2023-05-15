@@ -4,8 +4,8 @@ import ErrorResponses from "../error/ErrorResponses";
 
 export class StaffService extends StaffRepo {
   // Get all staffs' data
-  async allStaffs(): Promise<IStaff[]> {
-    const data = await this.getAll();
+  async allStaffs(filter?: Object): Promise<IStaff[]> {
+    const data = await this.allStaffsByFilter(filter);
     if (data.length === 0) throw ErrorResponses.noDataFound("Staffs' data");
     return data;
   }

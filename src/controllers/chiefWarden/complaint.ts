@@ -34,3 +34,9 @@ export const updateComplaint = asyncHandler(async (req, res) => {
   );
   res.json(dataFormattor(updatedComplaint));
 });
+
+// Complaints by staff
+export const complaintsByStaff = asyncHandler(async (req, res) => {
+  const complaintsByStaff = await service.complaintStatisticsByStaff(req.params._id);
+  res.json(dataFormattor(complaintsByStaff));
+});

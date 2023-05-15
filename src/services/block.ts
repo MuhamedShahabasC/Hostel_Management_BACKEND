@@ -131,10 +131,8 @@ export class BlockService extends BlockRepo {
 
   // Change availability of room
   async changeRoomAvailability(roomCode: string) {
-    console.log(roomCode);
     if (!/[A-Z]\d{2}/g.test(roomCode)) throw ErrorResponses.customError("Invalid room");
     const availability = await this.getRoomAvailability(roomCode);
-    console.log(!availability);
     return await this.updateRoomByCode(roomCode, { "rooms.$.availability": !availability });
   }
 }

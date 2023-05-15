@@ -8,7 +8,7 @@ import { signToken } from "../../utils/tokenManager";
 const staffAuth = new StaffAuth();
 
 // New Staff
-export const newStaff: RequestHandler = asyncHandler(async (req, res) => {
+export const newStaff = asyncHandler(async (req, res) => {
   const { name, email, password, mobile, role, gender, address }: IStaff = req.body;
   const signUpData = {
     name,

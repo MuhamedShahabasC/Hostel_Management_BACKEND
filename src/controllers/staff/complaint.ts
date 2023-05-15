@@ -19,7 +19,6 @@ export const complaints = asyncHandler(async (req, res) => {
 
 // Update remarks of complaint and status to 'approval'
 export const updateComplaint = asyncHandler(async (req, res) => {
-  console.log(req.body, req.params);
   const updateComplaint = await service.updateComplaint(req.params._id, req.body);
   res.json(dataFormattor(updateComplaint));
 });

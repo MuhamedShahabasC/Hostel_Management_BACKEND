@@ -24,6 +24,8 @@ import { complaints, newComplaint } from "../controllers/student/complaint";
 import { allPayments, initiatePayment, successfulPayment } from "../controllers/student/payment";
 import { allChatMessages } from "../controllers/student/chat";
 
+// ------- STUDENT ROUTES ------- //
+
 const student = Router();
 
 // New Admission
