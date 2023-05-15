@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import ErrorResponses from "./ErrorResponses";
 import { JsonWebTokenError } from "jsonwebtoken";
 
-export const appError = (err: Error, req: Request, res: Response, next: NextFunction) => {
+const appError = (err: Error, req: Request, res: Response, next: NextFunction) => {
   // // Error Handler for development
   // console.log(err);
   // return res.status(500).json({
