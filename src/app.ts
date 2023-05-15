@@ -6,7 +6,7 @@ import { endPointNotFound, verifyAuth } from "./routes/utility";
 import staffRoutes from "./routes/staff.routes";
 import cors from "cors";
 import studentRoutes from "./routes/student.routes";
-import { appError as globalErrorHandler } from "./error/appError";
+import globalErrorHandler from "src/error/appError";
 
 // Custom type defitions
 import "./types/request";
