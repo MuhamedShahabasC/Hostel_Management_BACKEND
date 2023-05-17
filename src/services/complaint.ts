@@ -39,12 +39,13 @@ export class ComplaintService extends ComplaintRepo {
         count: resolvedComplaints,
         total: allComplaints.length,
       };
-    } catch (error) {}
-    return {
-      title: "Complaints",
-      count: 0,
-      total: 0,
-    };
+    } catch (error) {
+      return {
+        title: "Complaints",
+        count: 0,
+        total: 0,
+      };
+    }
   }
 
   // Complaints for single student
@@ -60,5 +61,26 @@ export class ComplaintService extends ComplaintRepo {
     ]);
     if (!singleComplaint) throw ErrorResponses.noDataFound("complaint");
     return singleComplaint;
+  }
+
+  // Complaints statistics for chief warden
+  async statistics() {
+    try {
+      const allComplaints = await this.allComplaints();
+      const resolvedComplaints = allComplaints?.filter(
+        ({ status }) => status === "resolved"
+      ).length;
+      return {
+        title: "Complaints",
+        count: resolvedComplaints,
+        total: allComplaints.length,
+      };
+    } catch (error) {
+      return {
+        title: "Complaints",
+        count: 0,
+        total: 0,
+      };
+    }
   }
 }

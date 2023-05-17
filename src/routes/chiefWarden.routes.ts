@@ -6,6 +6,7 @@ import {
   changeRoomAvailability,
   checkRoomAvailability,
   deleteBlock,
+  hostelOccupancy,
   newBlock,
   updateRoom,
 } from "../controllers/chiefWarden/block";
@@ -45,6 +46,7 @@ import { checkAuth } from "../middlewares/verifyToken";
 import {
   allComplaints,
   complaintsByStaff,
+  complaintsStatistics,
   singleComplaint,
   updateComplaint,
 } from "../controllers/chiefWarden/complaint";
@@ -80,15 +82,16 @@ chiefWarden
   .delete(validate_id, deleteNotice);
 
 // Blocks and Rooms
+chiefWarden.get("/blocks/rooms/availability/:roomCode", checkRoomAvailability);
+chiefWarden.get("/blocks/rooms/availableRooms/:_id", availableRooms);
+chiefWarden.get("/blocks/name/:name", blockData);
+chiefWarden.get("/blocks/occupancyStatistics", hostelOccupancy);
 chiefWarden
   .route("/blocks/:_id?")
   .get(allBlocks)
   .post(validate(newBlockSchema), newBlock)
   .patch(validate_id, updateRoom)
   .delete(validate_id, deleteBlock);
-chiefWarden.get("/blocks/rooms/availability/:roomCode", checkRoomAvailability);
-chiefWarden.get("/blocks/rooms/availableRooms/:_id", availableRooms);
-chiefWarden.get("/blocks/name/:name", blockData);
 
 // Meal Plans
 chiefWarden
@@ -100,6 +103,7 @@ chiefWarden
 
 // Complaints
 chiefWarden.get("/complaints", allComplaints);
+chiefWarden.get("/complaints/statistics", complaintsStatistics);
 chiefWarden.use("/complaints/:_id", validate_id);
 chiefWarden
   .route("/complaints/:_id")

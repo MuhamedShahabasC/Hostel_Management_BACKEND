@@ -135,4 +135,9 @@ export class BlockService extends BlockRepo {
     const availability = await this.getRoomAvailability(roomCode);
     return await this.updateRoomByCode(roomCode, { "rooms.$.availability": !availability });
   }
+
+  // // Hostel occupancy statistics
+  // async hostelOccupancyStatistics(){
+    
+  // }
 }

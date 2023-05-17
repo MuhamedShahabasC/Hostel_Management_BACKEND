@@ -53,3 +53,9 @@ export const changeRoomAvailability = asyncHandler(async (req, res) => {
   await service.changeRoomAvailability(req.params.code);
   res.json(dataFormattor(`${req.params.code} updated`));
 });
+
+// Hostel occupancy statistics
+export const hostelOccupancy = asyncHandler(async (req, res) => {
+  const hostelOccupancy = await service.hostelOccupancy();
+  res.json(dataFormattor(hostelOccupancy));
+});

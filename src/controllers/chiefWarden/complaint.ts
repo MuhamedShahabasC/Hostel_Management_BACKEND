@@ -40,3 +40,9 @@ export const complaintsByStaff = asyncHandler(async (req, res) => {
   const complaintsByStaff = await service.complaintStatisticsByStaff(req.params._id);
   res.json(dataFormattor(complaintsByStaff));
 });
+
+// Complaints statistics
+export const complaintsStatistics = asyncHandler(async (req, res) => {
+  const complaintsStatistics = await service.statistics();
+  res.json(dataFormattor(complaintsStatistics));
+});
