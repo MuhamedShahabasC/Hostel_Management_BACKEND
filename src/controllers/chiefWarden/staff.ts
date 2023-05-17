@@ -3,6 +3,7 @@ import { StaffService } from "../../services/staff";
 import { dataFormattor } from "../../utils/JSON-formattor";
 import { Department, IStaff } from "../../interfaces/staff";
 import { StaffAuth } from "../../repositories/staff";
+import { presetMailTemplates, sendMail } from "../../utils/sendMail";
 
 const staffService = new StaffService();
 const staffAuth = new StaffAuth();
@@ -10,6 +11,9 @@ const staffAuth = new StaffAuth();
 // New Staff
 export const newStaff = asyncHandler(async (req, res) => {
   await staffAuth.signUp(req.body);
+  sendMail(
+    presetMailTemplates.newStaff(req.body.email, req.body.name, req.body.role, req.body.password)
+  );
   res.json(dataFormattor(`Signed up successfully`));
 });
 

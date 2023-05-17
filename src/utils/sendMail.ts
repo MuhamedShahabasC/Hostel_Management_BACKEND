@@ -164,4 +164,23 @@ export const presetMailTemplates = {
       Chief Warden</p>`,
     };
   },
+  newStaff(email: string, name: string, role: string,password: string): EmailTemplate {
+    return {
+      email,
+      subject: `Welcome, ${name} | School Hostel`,
+      body: `Greetings of the day,<br/>
+      <b>Hi, ${name}</b>
+      <br/>
+      <p>Welcome to the School Hostel, </p>
+      <br/>
+      <p>You will the joining the ${role} team from today onwards.</p>
+      <h4>Email: ${email}</h4>
+      <h4>Password: ${password}</h4>
+      <br/>    
+      Please make sure you login to the school hostel portal and change your current password in the profile tab.
+      <br/>
+      <p>Best regards,<br/>
+      Chief Warden</p>`,
+    };
+  },
 };
