@@ -9,13 +9,13 @@ export const allPayments = asyncHandler(async (req, res) => {
   // Refactoring query
   const filterObj = { ...req.query };
   for (const filter in filterObj) {
-    if (!filterObj[filter] || filter !== "student") delete filterObj[filter];
+    if (!filterObj[filter] || filter !== "refId") delete filterObj[filter];
   }
-  if (filterObj.student)
-    filterObj.student = {
-      $regex: filterObj.student,
+  if (filterObj.refId)
+    filterObj.refId = {
+      $regex: filterObj.refId,
       $options: "i",
     };
-  const allPayments = await paymentService.allPayments({ "student.name": filterObj.student });
+  const allPayments = await paymentService.allPayments(filterObj);
   res.json(dataFormattor(allPayments));
 });

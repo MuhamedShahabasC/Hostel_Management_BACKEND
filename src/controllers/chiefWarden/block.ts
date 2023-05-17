@@ -44,7 +44,6 @@ export const availableRooms = asyncHandler(async (req, res) => {
 
 // Block data with filtering
 export const blockData = asyncHandler(async (req, res) => {
-  console.log(req.params.name);
   const blockData = await service.blockDetailsByName(req.params.name[0]);
   res.json(dataFormattor(blockData));
 });

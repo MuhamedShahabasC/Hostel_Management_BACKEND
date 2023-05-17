@@ -50,6 +50,7 @@ import {
 } from "../controllers/chiefWarden/complaint";
 import { allStaffsData, newStaff, staffsByDept } from "../controllers/chiefWarden/staff";
 import { allChatMessages } from "../controllers/chiefWarden/chat";
+import { yearlyRevenue } from "../controllers/chiefWarden/payment";
 
 // ------- CHIEF WARDEN ROUTES ------- //
 
@@ -120,5 +121,8 @@ chiefWarden.patch(
 chiefWarden.route("/staffs").get(allStaffsData).post(validate(staffSchema), newStaff);
 chiefWarden.get("/staffs/:_id", validate_id, complaintsByStaff);
 chiefWarden.get("/staffs/department/:department", staffsByDept);
+
+// Payments
+chiefWarden.get("/payments/yearlyRevenue", yearlyRevenue);
 
 export default chiefWarden;

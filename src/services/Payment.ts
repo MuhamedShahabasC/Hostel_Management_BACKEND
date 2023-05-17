@@ -19,4 +19,18 @@ export class PaymentService extends PaymentRepo {
   async newPayment(data: INewPayment): Promise<IPayment> {
     return this.createPayment(data);
   }
+
+  // Yearly revenue
+  async yearlyRevenue(): Promise<{ month: number; totalPayments: number; revenue: number }[]> {
+    const revenueData = await this.yearlyRevenueDataByYear();
+    const yearlyData: { month: number; totalPayments: number; revenue: number }[] = [];
+    for (let i = 1; i <= 12; i++) {
+      yearlyData.push({ month: i, totalPayments: 0, revenue: 0 });
+    }
+    revenueData.forEach((monthlyData) => {
+      yearlyData[monthlyData._id.month - 1].totalPayments = monthlyData.totalPayments;
+      yearlyData[monthlyData._id.month - 1].revenue = monthlyData.revenue;
+    });
+    return yearlyData;
+  }
 }
