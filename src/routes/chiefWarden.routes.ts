@@ -2,6 +2,8 @@ import { Router } from "express";
 import {
   allBlocks,
   availableRooms,
+  blockData,
+  changeRoomAvailability,
   checkRoomAvailability,
   deleteBlock,
   newBlock,
@@ -30,6 +32,7 @@ import { validate_id } from "../middlewares/validateParams";
 import {
   allStudentsData,
   allStudentsEmail,
+  paymentStatistics,
   updateSingleStudent,
 } from "../controllers/chiefWarden/student";
 import {
@@ -47,7 +50,6 @@ import {
 } from "../controllers/chiefWarden/complaint";
 import { allStaffsData, newStaff, staffsByDept } from "../controllers/chiefWarden/staff";
 import { allChatMessages } from "../controllers/chiefWarden/chat";
-
 
 // ------- CHIEF WARDEN ROUTES ------- //
 
@@ -85,6 +87,7 @@ chiefWarden
   .delete(validate_id, deleteBlock);
 chiefWarden.get("/blocks/rooms/availability/:roomCode", checkRoomAvailability);
 chiefWarden.get("/blocks/rooms/availableRooms/:_id", availableRooms);
+chiefWarden.get("/blocks/name/:name", blockData);
 
 // Meal Plans
 chiefWarden
@@ -105,6 +108,7 @@ chiefWarden
 // Students
 chiefWarden.get("/students/all", allStudentsData);
 chiefWarden.get("/students/emails", allStudentsEmail);
+chiefWarden.get("/students/paymentStatus", paymentStatistics);
 chiefWarden.patch(
   "/students/:_id",
   validate_id,

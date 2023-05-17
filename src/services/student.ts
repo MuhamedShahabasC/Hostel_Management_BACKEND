@@ -57,4 +57,9 @@ export class StudentService extends StudentRepo {
       $inc: { paidPayment: amountInPaisa / 100, balancePayment: -(amountInPaisa / 100) },
     });
   }
+
+  // Payment Statistics of all students
+  async paymentStatistics(): Promise<{ paid: number; pending: number }> {
+    return await this.paymentStatData();
+  }
 }

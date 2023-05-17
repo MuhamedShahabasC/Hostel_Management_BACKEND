@@ -34,6 +34,24 @@ export abstract class StudentRepo extends CRUD {
     ]);
     return aggregatedResult.map((emailObj) => emailObj.email);
   }
+
+  // Payments status of all students
+  async paymentStatData(): Promise<{ paid: number; pending: number }> {
+    const aggregatedResult = await this.model.aggregate([
+      {
+        $match: {},
+      },
+      {
+        $group: {
+          _id: null,
+          paid: { $sum: "$paidPayment" },
+          pending: { $sum: "$balancePayment" },
+        },
+      },
+    ]);
+    delete aggregatedResult[0]._id;
+    return aggregatedResult[0];
+  }
 }
 
 // Student Auth respository

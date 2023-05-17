@@ -28,6 +28,18 @@ export const allStudentsData = asyncHandler(async (req, res) => {
   res.json(dataFormattor(allStudentsData));
 });
 
+// Fetch all students email addresses
+export const allStudentsEmail = asyncHandler(async (req, res) => {
+  const allEmails = await studentService.allStudentsEmail();
+  res.json(dataFormattor(allEmails));
+});
+
+// Payment statistics of all students
+export const paymentStatistics = asyncHandler(async (req, res) => {
+  const paymentStatistics = await studentService.paymentStatistics();
+  res.json(dataFormattor(paymentStatistics));
+});
+
 // Update single student room and status
 export const updateSingleStudent = asyncHandler(async (req, res) => {
   switch (req.body.status as StudentStatus) {
@@ -72,10 +84,4 @@ export const updateSingleStudent = asyncHandler(async (req, res) => {
       throw ErrorResponses.customError("Change status from default");
   }
   res.json(dataFormattor("Student updated"));
-});
-
-// Fetch all students email addresses
-export const allStudentsEmail = asyncHandler(async (req, res) => {
-  const allEmails = await studentService.allStudentsEmail();
-  res.json(dataFormattor(allEmails));
 });

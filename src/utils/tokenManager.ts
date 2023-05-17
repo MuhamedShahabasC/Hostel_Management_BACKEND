@@ -18,6 +18,4 @@ export const signToken = (
 };
 
 // Verify token
-export const verifyToken = (token: string) => {
-  return verify(token, process.env.JWT_SECRET as string);
-};
+export const verifyToken = (token: string) => verify(token, process.env.JWT_SECRET as string);

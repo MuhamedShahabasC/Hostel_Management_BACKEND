@@ -41,3 +41,16 @@ export const availableRooms = asyncHandler(async (req, res) => {
   const availableRooms = await service.availableRooms(req.params._id);
   res.json(dataFormattor(availableRooms));
 });
+
+// Block data with filtering
+export const blockData = asyncHandler(async (req, res) => {
+  console.log(req.params.name);
+  const blockData = await service.blockDetailsByName(req.params.name[0]);
+  res.json(dataFormattor(blockData));
+});
+
+// Change room availability
+export const changeRoomAvailability = asyncHandler(async (req, res) => {
+  await service.changeRoomAvailability(req.params.code);
+  res.json(dataFormattor(`${req.params.code} updated`));
+});
