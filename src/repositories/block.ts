@@ -58,10 +58,6 @@ export abstract class BlockRepo extends CRUD {
       },
     ]);
     const availableRooms = activeRoomsData.filter(({ rooms }) => rooms.availability).length;
-    console.log({
-      ...allBlocksData,
-      availableRooms,
-    })
     return {
       ...allBlocksData,
       availableRooms,
